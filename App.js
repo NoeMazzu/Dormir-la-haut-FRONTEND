@@ -56,7 +56,7 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
+     //! CHANGER LE MAPSCREEN VERS LOADING SCREEN
 export default function App() {
   AsyncStorage.clear()
   return (
@@ -64,7 +64,7 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Loading" component={LoadingScreen} />
+            <Stack.Screen name="MapScreen" component={MapScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
