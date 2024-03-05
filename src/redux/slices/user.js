@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { username: null },
+  initialState: { username: null, token: null, coordinate:{latitude: null, longitude: null} },
   reducers: {
     setUser: (state, action) => {
       state.username = action.payload;
