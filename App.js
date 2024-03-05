@@ -5,6 +5,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const reducers = combineReducers({
   /* ACOMPLETER AVEC LE NOM DES REDUCERS */
@@ -17,14 +19,25 @@ const store = configureStore({
 });
 const persistor = persistStore(store);
 
+const TabNavigator = () => {
+  return (
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <View style={styles.container}>
-          <Text>Open up App.js to start working on your app!</Text>
-          <StatusBar style="auto" />
-        </View>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );
