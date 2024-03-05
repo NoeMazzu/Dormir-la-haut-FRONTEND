@@ -5,7 +5,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
-import AuthScreen from './src/screens/AuthScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 const reducers = combineReducers({
   /* ACOMPLETER AVEC LE NOM DES REDUCERS */
@@ -23,7 +23,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <View style={styles.container}>
-          <AuthScreen/>
+          <RegisterScreen/>
         </View>
       </PersistGate>
     </Provider>
