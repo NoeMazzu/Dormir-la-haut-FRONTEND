@@ -1,12 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userSlice = createSlice({
+const initialState = {
+  value: { username: null, token: null ,location :{longitude: null, latitude: null} },
+};
+
+export const userSlice = createSlice({
   name: "user",
-  initialState: { username: null, token: null, coordinate:{latitude: null, longitude: null} },
+  initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.username = action.payload;
+    setUsername: (state, action) => {
+      state.value.username = action.payload;
     },
+    setToken: (state, action) => {
+      state.value.token = action.payload;
+    },
+    setLocation: (state, action) => {
+      state.value.location = action.payload;
+    }
   },
 });
 

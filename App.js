@@ -6,19 +6,10 @@ import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import ProfileScreen from "./src/screens/ProfileScreen";
-import ChecklistsScreen from "./src/screens/ChecklistsScreen";
-import MeteoScreen from "./src/screens/MeteoScreen";
-import NewsScreen from "./src/screens/NewsScreen";
-import PhotosScreen from "./src/screens/PhotosScreen";
-import MapScreen from "./src/screens/MapScreen";
-import RegisterScreen from "./src/screens/RegisterScreen";
-import LoginScreen from "./src/screens/LoginScreen";
 import user from "./src/redux/slices/user";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { LoadingScreen, HomeScreen } from './src/screens'
+import { LoadingScreen, HomeScreen, ChecklistsScreen, LoginScreen, MapScreen, MeteoScreen, NewsScreen, PhotosScreen, ProfileScreen,RegisterScreen  } from './src/screens'
 
 
 const Stack = createNativeStackNavigator();
