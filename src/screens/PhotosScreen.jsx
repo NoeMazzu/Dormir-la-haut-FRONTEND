@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function NewsScreen () {
+export default function PhotosScreen () {
     return <View style={styles.container}>
-      NewsScreen
+        <Text>PhotosScreen</Text>
     </View>
 }
 

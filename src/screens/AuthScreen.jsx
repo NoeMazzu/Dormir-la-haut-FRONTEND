@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 
-export default function ChecklistsScreen () {
+export default function AuthScreen () {
     return <View style={styles.container}>
-        ChecklistsScreen
+        <Text>AuthScreen</Text>
     </View>
 }
 
