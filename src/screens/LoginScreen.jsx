@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   return (
     
     <ImageBackground
@@ -23,11 +23,11 @@ const LoginScreen = () => {
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('LoadingScreen')}>
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signupButton}>
-            <Text style={styles.buttonText}>Se Connecter</Text>
+            <Text style={styles.buttonText2}>Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   cancelButton: {
-    backgroundColor: "#35357F",
+    backgroundColor: "#C23434",
     padding: 15,
     margin: 10,
     borderRadius: 10,
@@ -80,7 +80,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#000000",
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  buttonText2: {
+    color: "#000",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,

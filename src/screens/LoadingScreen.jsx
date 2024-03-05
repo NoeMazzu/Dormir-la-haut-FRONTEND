@@ -7,7 +7,8 @@ import {
   ImageBackground,
 } from "react-native";
 
-const LoadingScreen = () => {
+
+const LoadingScreen = ({ navigation }) => {
     
   return (
     <ImageBackground
@@ -16,10 +17,10 @@ const LoadingScreen = () => {
       style={styles.background}
     >
       <View style={styles.filtre}>
-        <TouchableOpacity style={styles.signup}>
+        <TouchableOpacity style={styles.signup} onPress={() => navigation.navigate('RegisterScreen')} >
           <Text style={styles.buttonTextI}>S'inscrire</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signin}>
+        <TouchableOpacity style={styles.signin} onPress={() => navigation.navigate('LoginScreen')}>
           <Text style={styles.buttonTextU}>Se connecter</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.forgotPassword}>
