@@ -1,14 +1,21 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
+import { useState } from "react";
+const LoginScreen = ({ navigation }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
 
-const LoginScreen = () => {
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
   return (
     
     <ImageBackground
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
+      onLoad={handleImageLoad}
     >
+            {imageLoaded ? (
       <View style={styles.filter}>
         <Text style={styles.title}>Se connecter</Text>
         <TextInput
@@ -18,20 +25,20 @@ const LoginScreen = () => {
         />
         <TextInput
           style={styles.input}
-          placeholder="Mot de passe"
+          placeholder="Password"
           placeholderTextColor="#808080"
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('LoadingScreen')}>
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signupButton}>
-            <Text style={styles.buttonText}>Se Connecter</Text>
+            <Text style={styles.buttonText2}>Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>
-      
+      ) : null}
     </ImageBackground>
     
   );
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   cancelButton: {
-    backgroundColor: "#35357F",
+    backgroundColor: "#C23434",
     padding: 15,
     margin: 10,
     borderRadius: 10,
@@ -80,7 +87,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#000000",
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  buttonText2: {
+    color: "#000",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,

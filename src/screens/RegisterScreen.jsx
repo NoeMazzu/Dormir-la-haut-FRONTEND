@@ -2,7 +2,12 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({navigation}) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
     
         const [prenom, setPrenom] = useState("");
         const [nom, setNom] = useState("");
@@ -11,7 +16,7 @@ const RegisterScreen = () => {
         const [password, setPassword] = useState("");
       
         const handleInscription = () => {
-            fetch("https://dormir-la-haut-backend.vercel.app/signup", {
+            fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -25,15 +30,11 @@ const RegisterScreen = () => {
               .then((response) => response.json())
               .then((data) => {
                 if (data.result) {
-                  dispatch(
-                    login({ mail: email, password: password })
-                  );
                   setPrenom("");
                   setNom("");
                   setUsername("");
                   setEmail("");
                   setPassword('');
-                  
                 }
               });
           };
@@ -43,7 +44,8 @@ const RegisterScreen = () => {
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
-    >
+      onLoad={handleImageLoad}
+    >{imageLoaded ? (
       <View style={styles.filter}>
         <Text style={styles.title}>S'inscrire</Text>
         <Text style={styles.desc}>
@@ -51,50 +53,50 @@ const RegisterScreen = () => {
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Prénom"
+          placeholder="FirstName"
           placeholderTextColor="#808080"
           value={prenom}
           onChangeText={(text) => setPrenom(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Nom"
+          placeholder="LastName"
           placeholderTextColor="#808080"
           value={nom}
           onChangeText={(text) => setNom(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Nom d'utilisateur"
+          placeholder="Username"
           placeholderTextColor="#808080"
           value={username}
           onChangeText={(text) => setUsername(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="mail"
+          placeholder="E-mail"
           placeholderTextColor="#808080"
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="password"
+          placeholder="Password"
           placeholderTextColor="#808080"
           value={password}
           onChangeText={(text) => setPassword(text)}
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton}>
+          <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('LoadingScreen')}>
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signupButton} onPress={handleInscription}>
-            <Text style={styles.buttonText}>S'inscrire</Text>
+            <Text style={styles.buttonText2}>S'inscrire</Text>
           </TouchableOpacity>
         </View>
       </View>
-      
+       ) : null}
     </ImageBackground>
     
   );
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   cancelButton: {
-    backgroundColor: "#35357F",
+    backgroundColor: "#C23434",
     padding: 15,
     margin: 10,
     borderRadius: 10,
@@ -143,11 +145,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    color: "#000000",
+    color: "#fff",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
   },
+  buttonText2: {
+    color: "#000",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
   title: {
     color: '#ffffff',
     fontSize: 60,
