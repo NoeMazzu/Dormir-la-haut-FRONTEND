@@ -1,6 +1,5 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import Footer from "../components/Footer";
 import LittleNews from "../components/LittleNews";
 
 const NewsScreen = ({ navigation }) => {
@@ -74,7 +73,6 @@ const NewsScreen = ({ navigation }) => {
           />
         ))}
       </ScrollView>
-      <Footer />
     </View>
   );
 };
