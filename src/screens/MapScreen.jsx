@@ -10,7 +10,6 @@ export default function MapScreen() {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.poi);
         const markers = data.poi.map((data, i) => {
           return <Marker key={i} coordinate={{ latitude: data.coordinates.latitude, longitude: data.coordinates.longitude }} title={data.name} />;
         })
@@ -21,7 +20,7 @@ export default function MapScreen() {
   return (
     <View>
       <MapView
-        mapeType="hybrid"
+        mapType="terrain"
         initialRegion={{
           latitude: 45.7,
           longitude: 6.4,
