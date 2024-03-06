@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
+import MeteoCard from "../components/MeteoCard";
 
 export default function MeteoScreen () {
     return <View style={styles.container}>
        <Text>MeteoScreen</Text>
+        <MeteoCard/>
     </View>
 }
 
