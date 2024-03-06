@@ -1,59 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LittleNews from "../components/LittleNews";
 
 const NewsScreen = ({ navigation }) => {
-  // Exemple de données pour les actualités
-  const newsData = [
-    {
-      title: "Nouvelle 1",
-      description: "Description de la nouvelle 1.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-  ];
+  const [actuData, setActuData] = useState([]);
+
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/newsApi")
+      .then((response) => response.json())
+      .then((data) => {
+        // Utilise la fonction filter pour éliminer les doublons basés sur le titre
+        const uniqueActuData = data.articles.filter(
+          (article, index, arr) =>
+            index === arr.findIndex((a) => a.title === article.title)
+        );
+
+        setActuData(uniqueActuData);
+      });
+  }, []);
+
+  const actu = actuData.map((data, i) => {
+    const limitedDescription =
+      data.description.length > 75
+        ? data.description.substring(0, 75) + "..."
+        : data.description;
+    const limitedTitle =
+      data.title.length > 40 ? data.title.substring(0, 40) + "..." : data.title;
+
+    return (
+      <LittleNews
+        key={i}
+        title={limitedTitle}
+        description={limitedDescription}
+      />
+    );
+  });
 
   return (
     <View style={styles.filter}>
@@ -62,16 +43,7 @@ const NewsScreen = ({ navigation }) => {
       {/* Utilisez ScrollView pour permettre le défilement */}
       <ScrollView style={styles.scrollView}>
         {/* Utilisez la méthode map pour créer un composant LittleNews pour chaque actualité */}
-        {newsData.map((news, index) => (
-          <LittleNews
-            key={index}
-            title={news.title}
-            description={news.description}
-            onPress={() => {
-              // Gérer l'événement du bouton ici
-            }}
-          />
-        ))}
+        {actu}
       </ScrollView>
     </View>
   );

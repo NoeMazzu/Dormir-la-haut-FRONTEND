@@ -9,8 +9,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import user from "./src/redux/slices/user";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LoadingScreen, HomeScreen, ChecklistsScreen, LoginScreen, MapScreen, MeteoScreen, NewsScreen, PhotosScreen, ProfileScreen,RegisterScreen  } from './src/screens'
-
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { StyleSheet } from "react-native";
+import { Provider } from "react-redux";
+import { persistReducer, persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import user from "./src/redux/slices/user";
+import {
+  ChecklistsScreen,
+  HomeScreen,
+  LoginScreen,
+  MapScreen,
+  MeteoScreen,
+  NewsScreen,
+  PhotosScreen,
+  ProfileScreen,
+  RegisterScreen,
+} from "./src/screens";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,6 +65,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  // AsyncStorage.clear()
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

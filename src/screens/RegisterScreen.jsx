@@ -1,108 +1,179 @@
-import React from "react";
-import { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  Dimensions,
+} from "react-native";
+import * as Location from "expo-location";
+import { useDispatch } from "react-redux";
+import { setLocation } from "../redux/slices/user";
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const firstNameInputRef = useRef(null);
+  const lastNameInputRef = useRef(null);
+  const userNameInputRef = useRef(null);
+  const MailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
-    
-        const [prenom, setPrenom] = useState("");
-        const [nom, setNom] = useState("");
-        const [username, setUsername] = useState('');
-        const [email, setEmail] = useState("");
-        const [password, setPassword] = useState("");
-      
-        const handleInscription = () => {
-            fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                firstName: prenom,
-                lastName: nom,
-                userName: username,
-                mail: email,
-                password: password,
-              }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.result) {
-                  setPrenom("");
-                  setNom("");
-                  setUsername("");
-                  setEmail("");
-                  setPassword('');
-                }
-              });
-          };
+
+  // Fonction pour demander la permission de géolocalisation
+  const requestLocationPermission = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      setError("La permission de géolocalisation est requise.");
+    } else if (status === "granted") {
+      Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+        console.log("LOC", location.coords);
+        dispatch(setLocation(location.coords));
+      });
+    }
+  };
+
+  const handleInscription = () => {
+    if (userNameInputRef && userNameInputRef.textValue.length < 4) {
+      return setError("Le nom d'utilisateur doit avoir au moins 4 caractères.");
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (MailInputRef && !emailRegex.test(MailInputRef.textValue)) {
+      setError("Veuillez entrer une adresse e-mail valide.");
+      return;
+    }
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
+
+    if (passwordInputRef && !passwordRegex.test(passwordInputRef.textValue)) {
+      setError(
+        "Le mot de passe doit avoir 9 caractères, au moins une lettre, un chiffre et un caractère spécial."
+      );
+      return;
+    }
+
+    requestLocationPermission();
+
+    // fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     firstName: firstNameInputRef.textValue,
+    //     lastName: lastNameInputRef.textValue,
+    //     userName: userNameInputRef.textValue,
+    //     mail: MailInputRef.textValue,
+    //     password: passwordInputRef.textValue,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data.result) {
+    //       firstNameInputRef.textValue = "";
+    //       lastNameInputRef.textValue = "";
+    //       userNameInputRef.textValue = "";
+    //       MailInputRef.textValue = "";
+    //       passwordInputRef.textValue = "";
+
+    //     } else {
+    //       setError(data.error);
+    //     }
+    //   }).catch(err => console.log(err));
+  };
+
   return (
-    
     <ImageBackground
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}
-    >{imageLoaded ? (
-      <View style={styles.filter}>
-        <Text style={styles.title}>S'inscrire</Text>
-        <Text style={styles.desc}>
-          Veuillez remplir tous les champs suivants pour créer votre compte
-        </Text>
-        <TextInput
-          style={styles.input}
-          placeholder="FirstName"
-          placeholderTextColor="#808080"
-          value={prenom}
-          onChangeText={(text) => setPrenom(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="LastName"
-          placeholderTextColor="#808080"
-          value={nom}
-          onChangeText={(text) => setNom(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor="#808080"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="E-mail"
-          placeholderTextColor="#808080"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#808080"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          secureTextEntry
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('LoadingScreen')}>
-            <Text style={styles.buttonText}>Annuler</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.signupButton} onPress={handleInscription}>
-            <Text style={styles.buttonText2}>S'inscrire</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-       ) : null}
+    >
+      {imageLoaded ? (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1, height: Dimensions.get("window").height }}
+        >
+          <View style={styles.filter}>
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            <Text style={styles.title}>S'inscrire</Text>
+            <Text style={styles.desc}>
+              Veuillez remplir tous les champs suivants pour créer votre compte
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder="FirstName"
+              placeholderTextColor="#808080"
+              ref={firstNameInputRef}
+              onChangeText={(text) => (firstNameInputRef.textValue = text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="LastName"
+              placeholderTextColor="#808080"
+              ref={lastNameInputRef}
+              onChangeText={(text) => (lastNameInputRef.textValue = text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor="#808080"
+              ref={userNameInputRef}
+              onChangeText={(text) => (userNameInputRef.textValue = text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="E-mail"
+              placeholderTextColor="#808080"
+              ref={MailInputRef}
+              onChangeText={(text) => (MailInputRef.textValue = text)}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="#808080"
+              ref={passwordInputRef}
+              onChangeText={(text) => (passwordInputRef.textValue = text)}
+              secureTextEntry
+            />
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => navigation.navigate("LoadingScreen")}
+              >
+                <Text style={styles.buttonText}>Annuler</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.signupButton}
+                onPress={() => {
+                  handleInscription();
+                }}
+              >
+                <Text style={styles.buttonText2}>S'inscrire</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      ) : null}
     </ImageBackground>
-    
   );
 };
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: "#FF0000",
+    textAlign: "center",
+    fontSize: 16,
+    marginVertical: 10,
+  },
   background: {
     flex: 1,
     width: "100%",
@@ -158,15 +229,14 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 60,
-    
   },
   desc: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
     textAlign: "center",
-    width: '70%', 
+    width: "70%",
     marginBottom: 20,
   },
 });
