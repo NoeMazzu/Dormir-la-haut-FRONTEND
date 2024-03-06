@@ -64,30 +64,30 @@ const RegisterScreen = ({ navigation }) => {
 
     requestLocationPermission();
 
-    // fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     firstName: firstNameInputRef.textValue,
-    //     lastName: lastNameInputRef.textValue,
-    //     userName: userNameInputRef.textValue,
-    //     mail: MailInputRef.textValue,
-    //     password: passwordInputRef.textValue,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.result) {
-    //       firstNameInputRef.textValue = "";
-    //       lastNameInputRef.textValue = "";
-    //       userNameInputRef.textValue = "";
-    //       MailInputRef.textValue = "";
-    //       passwordInputRef.textValue = "";
+    fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: firstNameInputRef.textValue,
+        lastName: lastNameInputRef.textValue,
+        userName: userNameInputRef.textValue,
+        mail: MailInputRef.textValue,
+        password: passwordInputRef.textValue,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          firstNameInputRef.textValue = "";
+          lastNameInputRef.textValue = "";
+          userNameInputRef.textValue = "";
+          MailInputRef.textValue = "";
+          passwordInputRef.textValue = "";
 
-    //     } else {
-    //       setError(data.error);
-    //     }
-    //   }).catch(err => console.log(err));
+        } else {
+          setError(data.error);
+        }
+      }).catch(err => console.log(err));
   };
 
   return (
@@ -157,7 +157,7 @@ const RegisterScreen = ({ navigation }) => {
                   handleInscription();
                 }}
               >
-                <Text style={styles.buttonText2}>S'inscrire</Text>
+                <Text style={styles.buttonText2} onPress={() => navigation.navigate('TabNavigator')}>S'inscrire</Text>
               </TouchableOpacity>
             </View>
           </View>
