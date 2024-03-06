@@ -111,7 +111,6 @@ export default function MapScreen() {
         longitudeDelta: 2,
       }}
       style={styles.map}
-      mapType="hybrid"
     >
       <Marker
         title="My position"
