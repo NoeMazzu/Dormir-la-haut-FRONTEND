@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LittleNews from "../components/LittleNews";
+import ModalNews from "../components/ModalNews";
 
 const NewsScreen = ({ navigation }) => {
   const [actuData, setActuData] = useState([]);
+  const [selectedNews, setSelectedNews] = useState(null);
 
   useEffect(() => {
     fetch("https://dormir-la-haut-backend.vercel.app/newsApi")
       .then((response) => response.json())
       .then((data) => {
-        // Utilise la fonction filter pour éliminer les doublons basés sur le titre
         const uniqueActuData = data.articles.filter(
           (article, index, arr) =>
             index === arr.findIndex((a) => a.title === article.title)
@@ -18,6 +19,14 @@ const NewsScreen = ({ navigation }) => {
         setActuData(uniqueActuData);
       });
   }, []);
+
+  const handleNewsClick = (index) => {
+    setSelectedNews(actuData[index]);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedNews(null);
+  };
 
   const actu = actuData.map((data, i) => {
     const limitedDescription =
@@ -32,6 +41,7 @@ const NewsScreen = ({ navigation }) => {
         key={i}
         title={limitedTitle}
         description={limitedDescription}
+        onPress={() => handleNewsClick(i)}
       />
     );
   });
@@ -40,11 +50,18 @@ const NewsScreen = ({ navigation }) => {
     <View style={styles.filter}>
       <Text style={styles.title}>Actualités</Text>
 
-      {/* Utilisez ScrollView pour permettre le défilement */}
-      <ScrollView style={styles.scrollView}>
-        {/* Utilisez la méthode map pour créer un composant LittleNews pour chaque actualité */}
-        {actu}
-      </ScrollView>
+      <ScrollView style={styles.scrollView}>{actu}</ScrollView>
+
+      {selectedNews && (
+        <ModalNews
+          title={selectedNews.title}
+          description={selectedNews.description}
+          visible={!!selectedNews}
+          onClose={handleCloseModal}
+          image={selectedNews.urlToImage}
+          date={selectedNews.publishedAt}
+        />
+      )}
     </View>
   );
 };
