@@ -54,7 +54,7 @@ const LoginScreen = ({ navigation }) => {
             {imageLoaded ? (
       <View style={styles.filter}>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        <Text style={styles.title}>Se connecter</Text>
+        <Text style={styles.title} onPress={() => navigation.navigate('TabNavigator')}>Se connecter</Text>
         <TextInput
           style={styles.input}
           placeholder="E-mail"
