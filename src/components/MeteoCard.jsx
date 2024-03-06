@@ -1,12 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, Image, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
-export default function MeteoCard() {
+export default function MeteoCard(props) {
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>
         <View style={[styles.lesBaugesWrapper, styles.parentWrapperFlexBox]}>
-          <Text style={[styles.lesBauges, styles.lesTypo]}>Les Bauges</Text>
+          <Text style={[styles.lesBauges, styles.lesTypo]}>{props.massif}</Text>
         </View>
         <View style={[styles.badgeMeteoParent, styles.parentWrapperFlexBox]}>
           <View style={[styles.badgeMeteo, styles.badgeFrameFlexBox]}>
@@ -23,36 +24,20 @@ export default function MeteoCard() {
       <View style={[styles.frameGroup, styles.frameSpaceBlock]}>
         <View style={[styles.frameContainer, styles.frameSpaceBlock]}>
           <View style={[styles.image32Wrapper, styles.parentWrapperFlexBox]}>
-            <Image
-              style={styles.image32Icon}
-              contentFit="cover"
-              source={require("../assets/image-32.png")}
-            />
+            <FontAwesome name={props.weatherIcon} size={24} color='#161D46' />
           </View>
           <View style={[styles.image30Parent, styles.parentWrapperFlexBox]}>
-            <Image
-              style={styles.image30Icon}
-              contentFit="cover"
-              source={require("../assets/image-30.png")}
-            />
-            <Image
-              style={styles.image32Icon1}
-              contentFit="cover"
-              source={require("../assets/image-321.png")}
-            />
+            <FontAwesome name='thermometer-full' size={16} color='#161D46' />
+            <FontAwesome name='wind' size={16} color='#161D46' />
           </View>
           <View style={[styles.tempParent, styles.frameSpaceBlock]}>
-            <Text style={[styles.temp, styles.tempTypo]}>13°</Text>
-            <Text style={[styles.wind, styles.windTypo]}>25 km/h - S/SE</Text>
+            <Text style={[styles.temp, styles.tempTypo]}>{props.temp} </Text>
+            <Text style={[styles.wind, styles.windTypo]}>{props.windSpe}  km/h - {props.windOri} </Text>
           </View>
         </View>
         <View style={styles.beraParent}>
           <Text style={[styles.bera, styles.beraTypo]}>BERA</Text>
-          <Image
-            style={styles.iconLayout}
-            contentFit="cover"
-            source={require("../assets/arrowrightcircle.png")}
-          />
+          <FontAwesome name='arrow-circle-right' size={16} color='#161D46' />
         </View>
       </View>
     </View>
@@ -75,7 +60,7 @@ const styles = StyleSheet.create({
       overflow: "hidden",
     },
     meteoParentSpaceBlock: {
-      padding: Padding.p_5xs,
+      padding: 8,
       alignItems: "center",
     },
     parentWrapperFlexBox: {
@@ -86,11 +71,11 @@ const styles = StyleSheet.create({
       height: 13,
       width: 90,
       textAlign: "center",
-      fontSize: FontSize.size_xs,
+      fontSize: 12,
       justifyContent: "center",
       alignItems: "center",
       display: "flex",
-      fontFamily: FontFamily.iBMPlexMonoBold,
+      fontFamily: "JosefinSans-Bold",
       fontWeight: "700",
     },
     badgeFrameFlexBox: {
@@ -99,9 +84,9 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     todayFlexBox: {
-      fontFamily: FontFamily.josefinSansBold,
+      fontFamily: "JosefinSans-Bold",
       textAlign: "center",
-      fontSize: FontSize.size_xs,
+      fontSize: 12,
       alignSelf: "stretch",
       justifyContent: "center",
       alignItems: "center",
@@ -110,15 +95,15 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     frameSpaceBlock: {
-      paddingHorizontal: Padding.p_5xs,
+      paddingHorizontal: 8,
       alignSelf: "stretch",
       overflow: "hidden",
     },
     tempTypo: {
       height: 15,
       width: 101,
-      fontSize: FontSize.size_3xs,
-      fontFamily: FontFamily.josefinSansBold,
+      fontSize: 10,
+      fontFamily: "JosefinSans-Bold",
       alignItems: "center",
       display: "flex",
       textAlign: "left",
@@ -128,8 +113,8 @@ const styles = StyleSheet.create({
       marginTop: 4,
       height: 15,
       width: 101,
-      fontSize: FontSize.size_3xs,
-      fontFamily: FontFamily.josefinSansBold,
+      fontSize: 10,
+      fontFamily: "JosefinSans-Bold",
       alignItems: "center",
       display: "flex",
       textAlign: "left",
@@ -138,8 +123,8 @@ const styles = StyleSheet.create({
     beraTypo: {
       width: 50,
       height: 24,
-      fontSize: FontSize.size_3xs,
-      fontFamily: FontFamily.josefinSansBold,
+      fontSize: 10,
+      fontFamily: "JosefinSans-Bold",
       textAlign: "center",
       justifyContent: "center",
       alignItems: "center",
@@ -151,10 +136,10 @@ const styles = StyleSheet.create({
       height: 88,
       width: 328,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
-      borderRadius: Border.br_base,
-      padding: Padding.p_5xs,
+      borderRadius: 16,
+      padding: 8,
       overflow: "hidden",
     },
     iconLayout: {
@@ -170,9 +155,9 @@ const styles = StyleSheet.create({
       alignItems: "center",
       display: "flex",
       textAlign: "left",
-      fontFamily: FontFamily.iBMPlexMonoBold,
+      fontFamily: "JosefinSans-Bold",
       fontWeight: "700",
-      color: Color.colorWhite,
+      color:  "#fff",
       top: 8,
       position: "absolute",
     },
@@ -190,75 +175,75 @@ const styles = StyleSheet.create({
     },
     menuBottomadd: {
       top: 794,
-      borderTopLeftRadius: Border.br_5xs,
-      borderTopRightRadius: Border.br_5xs,
+      borderTopLeftRadius: 8,
+      borderTopRightRadius: 8,
       height: 50,
-      paddingHorizontal: Padding.p_base,
-      paddingVertical: Padding.p_9xs,
+      paddingHorizontal: 16,
+      paddingVertical: 4,
       justifyContent: "center",
       flexDirection: "row",
-      backgroundColor: Color.colorDarkslateblue_100,
+      backgroundColor: " #35357f",
       alignItems: "center",
     },
     lesBauges: {
-      color: Color.colorBlack,
+      color:  "#000",
     },
     lesBaugesWrapper: {
       width: 104,
-      padding: Padding.p_5xs,
+      padding: 8,
       alignItems: "center",
       flexDirection: "row",
     },
     today: {
-      color: Color.colorWhite,
+      color:  "#fff",
     },
     badgeMeteo: {
-      paddingHorizontal: Padding.p_9xs,
+      paddingHorizontal: 4,
       width: 54,
-      borderRadius: Border.br_5xs,
+      borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor: Color.colorBlack,
+      backgroundColor:  "#000",
     },
     today1: {
-      color: Color.colorBlack,
+      color:  "#000",
     },
     badgeMeteo1: {
-      paddingHorizontal: Padding.p_9xs,
+      paddingHorizontal: 4,
       width: 54,
-      borderRadius: Border.br_5xs,
+      borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor: Color.colorWhite,
+      backgroundColor:  "#fff",
       marginLeft: 8,
     },
     badgeMeteo2: {
-      paddingHorizontal: Padding.p_9xs,
+      paddingHorizontal: 4,
       width: 54,
-      borderRadius: Border.br_5xs,
+      borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor: Color.colorBlack,
+      backgroundColor:  "#000",
       marginLeft: 8,
     },
     badgeMeteoParent: {
       marginLeft: 8,
-      padding: Padding.p_5xs,
+      padding: 8,
       alignItems: "center",
       flexDirection: "row",
     },
@@ -291,14 +276,14 @@ const styles = StyleSheet.create({
       justifyContent: "center",
     },
     temp: {
-      color: Color.colorBlack,
+      color:  "#000",
     },
     wind: {
-      color: Color.colorBlack,
+      color:  "#000",
     },
     tempParent: {
       width: 123,
-      paddingVertical: Padding.p_7xs,
+      paddingVertical: 6,
       marginLeft: 8,
     },
     frameContainer: {
@@ -308,7 +293,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     bera: {
-      color: Color.colorBlack,
+      color:  "#000",
     },
     beraParent: {
       width: 84,
@@ -329,43 +314,43 @@ const styles = StyleSheet.create({
       height: 88,
       width: 328,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
-      borderRadius: Border.br_base,
-      backgroundColor: Color.colorWhite,
-      padding: Padding.p_5xs,
+      borderRadius: 16,
+      backgroundColor:  "#fff",
+      padding: 8,
       overflow: "hidden",
     },
     lesBauges1: {
-      color: Color.colorWhite,
+      color:  "#fff",
     },
     badgeMeteo3: {
-      paddingHorizontal: Padding.p_9xs,
+      paddingHorizontal: 4,
       width: 54,
-      borderRadius: Border.br_5xs,
+      borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor: Color.colorBlack,
+      borderColor:  "#000",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor: Color.colorWhite,
+      backgroundColor:  "#fff",
     },
     temp1: {
-      color: Color.colorWhite,
+      color:  "#fff",
     },
     wind1: {
-      color: Color.colorWhite,
+      color:  "#fff",
     },
     bera1: {
-      color: Color.colorWhite,
+      color:  "#fff",
     },
     meteoCard1: {
-      backgroundColor: Color.colorDarkslateblue_100,
+      backgroundColor: " #35357f",
     },
     meteoCard2: {
-      backgroundColor: Color.colorWhite,
+      backgroundColor:  "#fff",
       marginTop: 32,
     },
     meteoCardParent: {
