@@ -5,10 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
-
 } from "react-native";
 import { useState } from "react";
-
 
 const LoadingScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -20,7 +18,7 @@ const LoadingScreen = ({ navigation }) => {
     
     <ImageBackground
     
-      source={require("../assets/Image-background.jpg")}
+      source={require("../../src/assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}
@@ -39,7 +37,6 @@ const LoadingScreen = ({ navigation }) => {
       </View>
       ) : null}
     </ImageBackground>
-    
   );
 };
 

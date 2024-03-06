@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const LittleNews = ({ title, description, onPress }) => {
+const LittleNews = ({ title, description, onPress, image }) => {
   return (
     <View style={styles.newsContainer}>
       <View style={styles.newsContent}>

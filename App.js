@@ -1,16 +1,14 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import user from "./src/redux/slices/user";
-import {LoadingScreen,
+import {
   ChecklistsScreen,
   HomeScreen,
   LoginScreen,
@@ -21,8 +19,6 @@ import {LoadingScreen,
   ProfileScreen,
   RegisterScreen,
 } from "./src/screens";
-
-library.add(fas);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,12 +38,12 @@ const persistor = persistStore(store);
 const HomeStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Map" component={MapScreen} />
-      <Stack.Screen name="Photos" component={PhotosScreen} />
-      <Stack.Screen name="News" component={NewsScreen} />
-      <Stack.Screen name="Meteo" component={MeteoScreen} />
-      <Stack.Screen name="Checklists" component={ChecklistsScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="MapScreen" component={MapScreen} />
+      <Stack.Screen name="PhotosScreen" component={PhotosScreen} />
+      <Stack.Screen name="NewsScreen" component={NewsScreen} />
+      <Stack.Screen name="MeteoScreen" component={MeteoScreen} />
+      <Stack.Screen name="ChecklistsScreen" component={ChecklistsScreen} />
     </Stack.Navigator>
   );
 };
@@ -60,14 +56,15 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-//! CHANGER LE MAPSCREEN VERS LOADING SCREEN
+
 export default function App() {
+  // AsyncStorage.clear()
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MeteoScreen" component={MeteoScreen} />
+            <Stack.Screen name="NewsScreen" component={NewsScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
