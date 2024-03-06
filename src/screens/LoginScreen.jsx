@@ -1,9 +1,12 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform,  } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform, Dimensions} from "react-native";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setToken } from "../redux/slices/user";
 const LoginScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
@@ -35,6 +38,8 @@ const LoginScreen = ({ navigation }) => {
             setEmail("");
             setPassword('');
             setError("");
+            dispatch(setToken(data.token));
+            
           }else {       
             setError(data.error);
           }
@@ -54,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
             {imageLoaded ? (
       <View style={styles.filter}>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
-        <Text style={styles.title} onPress={() => navigation.navigate('TabNavigator')}>Se connecter</Text>
+        <Text style={styles.title}>Se connecter</Text>
         <TextInput
           style={styles.input}
           placeholder="E-mail"
@@ -71,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signupButton} onPress={handleConnection}>
-            <Text style={styles.buttonText2}>Se Connecter</Text>
+            <Text style={styles.buttonText2}  onPress={() => navigation.navigate('TabNavigator')}>Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>
