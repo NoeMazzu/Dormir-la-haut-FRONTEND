@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View,Image } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function MeteoCard(props) {
+  console.log(props)
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>
@@ -24,7 +25,8 @@ export default function MeteoCard(props) {
       <View style={[styles.frameGroup, styles.frameSpaceBlock]}>
         <View style={[styles.frameContainer, styles.frameSpaceBlock]}>
           <View style={[styles.image32Wrapper, styles.parentWrapperFlexBox]}>
-            <FontAwesome name={props.weatherIcon} size={24} color='#161D46' />
+            {/*TODO -- Mise à jour icone */}
+            <Image source={{ uri: props.weatherIcon }} style={styles.weatherIcon} />
           </View>
           <View style={[styles.image30Parent, styles.parentWrapperFlexBox]}>
             <FontAwesome name='thermometer-full' size={16} color='#161D46' />
@@ -373,5 +375,9 @@ const styles = StyleSheet.create({
       height: 844,
       overflow: "hidden",
       flex: 1,
+    },
+    weatherIcon: {
+      width: 24,
+      height: 24,
     },
   });

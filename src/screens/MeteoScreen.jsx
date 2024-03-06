@@ -11,7 +11,7 @@ export default function MeteoScreen() {
     console.log("URL:",url)
     fetch(url)
       .then((response) => response.json())
-      .then((data) => (console.log(data), setMeteoData(data.meteoInfos)));
+      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
   }, []);
 
   console.log("MeteoData:",meteoData)
@@ -19,11 +19,11 @@ export default function MeteoScreen() {
     return (
       <MeteoCard
         key={i}
-        massif={data.meteoInfos.massif}
-        weatherIcon={data.meteoInfos.weather}
-        temp = {data.meteoInfos.temp}
-        windSpe = {data.meteoInfos.windSpe}
-        windOri = {data.meteoInfos.windOri}
+        massif={data.massif}
+        weatherIcon={`https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`}
+        temp = {data.temp}
+        windSpe = {data.windSpe}
+        windOri = {data.windOri}
       />
     );
   });
