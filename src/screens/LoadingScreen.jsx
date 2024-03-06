@@ -5,17 +5,27 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+
 } from "react-native";
+import { useState } from "react";
 
 
 const LoadingScreen = ({ navigation }) => {
-    
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
   return (
+    
     <ImageBackground
+    
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
+      onLoad={handleImageLoad}
     >
+      {imageLoaded ? (
       <View style={styles.filtre}>
         <TouchableOpacity style={styles.signup} onPress={() => navigation.navigate('RegisterScreen')} >
           <Text style={styles.buttonTextI}>S'inscrire</Text>
@@ -27,7 +37,9 @@ const LoadingScreen = ({ navigation }) => {
           <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
       </View>
+      ) : null}
     </ImageBackground>
+    
   );
 };
 

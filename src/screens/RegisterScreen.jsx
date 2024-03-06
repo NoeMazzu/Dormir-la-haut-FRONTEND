@@ -3,6 +3,11 @@ import { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
 
 const RegisterScreen = ({navigation}) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
     
         const [prenom, setPrenom] = useState("");
         const [nom, setNom] = useState("");
@@ -39,7 +44,8 @@ const RegisterScreen = ({navigation}) => {
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
-    >
+      onLoad={handleImageLoad}
+    >{imageLoaded ? (
       <View style={styles.filter}>
         <Text style={styles.title}>S'inscrire</Text>
         <Text style={styles.desc}>
@@ -47,35 +53,35 @@ const RegisterScreen = ({navigation}) => {
         </Text>
         <TextInput
           style={styles.input}
-          placeholder="Prénom"
+          placeholder="FirstName"
           placeholderTextColor="#808080"
           value={prenom}
           onChangeText={(text) => setPrenom(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Nom"
+          placeholder="LastName"
           placeholderTextColor="#808080"
           value={nom}
           onChangeText={(text) => setNom(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="Nom d'utilisateur"
+          placeholder="Username"
           placeholderTextColor="#808080"
           value={username}
           onChangeText={(text) => setUsername(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="mail"
+          placeholder="E-mail"
           placeholderTextColor="#808080"
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
         <TextInput
           style={styles.input}
-          placeholder="password"
+          placeholder="Password"
           placeholderTextColor="#808080"
           value={password}
           onChangeText={(text) => setPassword(text)}
@@ -90,7 +96,7 @@ const RegisterScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      
+       ) : null}
     </ImageBackground>
     
   );

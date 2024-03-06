@@ -1,14 +1,21 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
-
+import { useState } from "react";
 const LoginScreen = ({ navigation }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
   return (
     
     <ImageBackground
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
+      onLoad={handleImageLoad}
     >
+            {imageLoaded ? (
       <View style={styles.filter}>
         <Text style={styles.title}>Se connecter</Text>
         <TextInput
@@ -18,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
         />
         <TextInput
           style={styles.input}
-          placeholder="Mot de passe"
+          placeholder="Password"
           placeholderTextColor="#808080"
           secureTextEntry
         />
@@ -31,7 +38,7 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-      
+      ) : null}
     </ImageBackground>
     
   );
