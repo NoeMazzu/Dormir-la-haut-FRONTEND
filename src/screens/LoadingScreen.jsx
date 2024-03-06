@@ -20,7 +20,7 @@ const LoadingScreen = ({ navigation }) => {
     
     <ImageBackground
     
-      source={require("../assets/Image-background.jpg")}
+      source={require("../../src/assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}
