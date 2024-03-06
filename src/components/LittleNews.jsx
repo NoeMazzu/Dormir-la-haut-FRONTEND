@@ -1,15 +1,23 @@
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const LittleNews = ({ title, description, onPress }) => {
+const LittleNews = ({ title, description, onPress, image }) => {
   return (
     <View style={styles.newsContainer}>
       <View style={styles.newsContent}>
         <Text style={styles.newsTitle}>{title}</Text>
         <Text style={styles.newsDescription}>{description}</Text>
       </View>
-      <TouchableOpacity style={styles.newsButton} onPress={onPress}>
-        <Text style={styles.buttonText}>Bouton</Text>
+      <TouchableOpacity onPress={onPress}>
+        <View style={styles.iconContainer}>
+          <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            color="#161D46"
+            size={28}
+          />
+        </View>
       </TouchableOpacity>
     </View>
   );
@@ -32,20 +40,17 @@ const styles = StyleSheet.create({
     color: "#161D46",
     fontSize: 20,
     fontWeight: "bold",
+    marginBottom: 10,
   },
   newsDescription: {
     color: "#161D46",
     fontSize: 16,
   },
-  newsButton: {
-    backgroundColor: "#161D46",
-    borderRadius: 10,
-    padding: 10,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#ffffff",
-    fontSize: 16,
+
+  iconContainer: {
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 4,
   },
 });
 

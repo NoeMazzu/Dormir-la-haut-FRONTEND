@@ -1,78 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LittleNews from "../components/LittleNews";
+import ModalNews from "../components/ModalNews";
 
 const NewsScreen = ({ navigation }) => {
-  // Exemple de données pour les actualités
-  const newsData = [
-    {
-      title: "Nouvelle 1",
-      description: "Description de la nouvelle 1.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-    {
-      title: "Nouvelle 2",
-      description: "Description de la nouvelle 2.",
-    },
-  ];
+  const [actuData, setActuData] = useState([]);
+  const [selectedNews, setSelectedNews] = useState(null);
+
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/newsApi")
+      .then((response) => response.json())
+      .then((data) => {
+        const uniqueActuData = data.articles.filter(
+          (article, index, arr) =>
+            index === arr.findIndex((a) => a.title === article.title)
+        );
+
+        setActuData(uniqueActuData);
+      });
+  }, []);
+
+  const handleNewsClick = (index) => {
+    setSelectedNews(actuData[index]);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedNews(null);
+  };
+
+  const actu = actuData.map((data, i) => {
+    const limitedDescription =
+      data.description.length > 75
+        ? data.description.substring(0, 75) + "..."
+        : data.description;
+    const limitedTitle =
+      data.title.length > 40 ? data.title.substring(0, 40) + "..." : data.title;
+
+    return (
+      <LittleNews
+        key={i}
+        title={limitedTitle}
+        description={limitedDescription}
+        onPress={() => handleNewsClick(i)}
+      />
+    );
+  });
 
   return (
     <View style={styles.filter}>
       <Text style={styles.title}>Actualités</Text>
 
-      {/* Utilisez ScrollView pour permettre le défilement */}
-      <ScrollView style={styles.scrollView}>
-        {/* Utilisez la méthode map pour créer un composant LittleNews pour chaque actualité */}
-        {newsData.map((news, index) => (
-          <LittleNews
-            key={index}
-            title={news.title}
-            description={news.description}
-            onPress={() => {
-              // Gérer l'événement du bouton ici
-            }}
-          />
-        ))}
-      </ScrollView>
+      <ScrollView style={styles.scrollView}>{actu}</ScrollView>
+
+      {selectedNews && (
+        <ModalNews
+          title={selectedNews.title}
+          description={selectedNews.description}
+          visible={!!selectedNews}
+          onClose={handleCloseModal}
+          image={selectedNews.urlToImage}
+          date={selectedNews.publishedAt}
+        />
+      )}
     </View>
   );
 };
