@@ -1,3 +1,5 @@
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -19,6 +21,8 @@ import {
   ProfileScreen,
   RegisterScreen,
 } from "./src/screens";
+
+library.add(fas);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
