@@ -50,6 +50,7 @@ const TabNavigator = () => {
 };
      //! CHANGER LE MAPSCREEN VERS LOADING SCREEN
 export default function App() {
+  // AsyncStorage.clear()
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

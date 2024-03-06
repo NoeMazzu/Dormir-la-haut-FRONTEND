@@ -1,14 +1,50 @@
 import React from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform,  } from "react-native";
 import { useState } from "react";
 const LoginScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
-
+  const [error, setError] = useState("");
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const handleConnection = () => {
+  if (!emailRegex.test(email)) {
+    setError("Adresse e-mail ou mot de passe invalide.");
+    return;
+  }else if (!passwordRegex.test(password)) {
+      setError("Adresse e-mail ou mot de passe invalide.");
+      return;
+    }
+
+  
+      fetch("https://dormir-la-haut-backend.vercel.app/users/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          mail: email,
+          password: password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            setEmail("");
+            setPassword('');
+            setError("");
+          }else {       
+            setError(data.error);
+          }
+        });
+    };
   return (
-    
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, height: Dimensions.get("window").height }}
+    >
     <ImageBackground
       source={require("../assets/Image-background.jpg")}
       resizeMode="cover"
@@ -17,6 +53,7 @@ const LoginScreen = ({ navigation }) => {
     >
             {imageLoaded ? (
       <View style={styles.filter}>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <Text style={styles.title}>Se connecter</Text>
         <TextInput
           style={styles.input}
@@ -33,18 +70,24 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('LoadingScreen')}>
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.signupButton}>
+          <TouchableOpacity style={styles.signupButton} onPress={handleConnection}>
             <Text style={styles.buttonText2}>Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>
       ) : null}
     </ImageBackground>
-    
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  errorText: {
+    color: "#FF0000",
+    textAlign: "center",
+    fontSize: 16,
+    marginVertical: 10,
+  },
   background: {
     flex: 1,
     width: "100%",
