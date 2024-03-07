@@ -35,7 +35,7 @@ const RegisterScreen = ({ navigation }) => {
   };
   
 
-  const user = useSelector(state => state.user.value);
+  
 
   // Fonction pour demander la permission de géolocalisation
   const requestLocationPermission = async () => {
