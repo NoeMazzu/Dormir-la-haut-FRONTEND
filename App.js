@@ -9,6 +9,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import user from "./src/redux/slices/user";
 import {
+  LoadingScreen,
   ChecklistsScreen,
   HomeScreen,
   LoadingScreen,

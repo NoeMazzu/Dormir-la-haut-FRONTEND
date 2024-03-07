@@ -4,6 +4,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as React from "react";
@@ -28,36 +29,40 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <View style={styles.meteoContainer}>
-          <TouchableOpacity
-            style={styles.meteoButton}
-            onPress={() => {
-              navigation.navigate("MeteoScreen");
-            }}
-          >
-            <Text style={styles.textTitle}>METEOContainer</Text>
+        <View style={styles.meteoContainer} >
+          <TouchableOpacity style={styles.meteoButton} onPress={()=> {navigation.navigate('MeteoScreen')}}>
+            <Text style={styles.textTitle}>METEO</Text>
+            <View style={styles.meteosInfos}>
+            {meteoHome}
+            </View>
+            <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            color="#fff"
+            size={20}
+          />
           </TouchableOpacity>
         </View>
         <View style={styles.highRigtContainers}>
           <View style={styles.actusContainers}>
-            <TouchableOpacity
-              style={styles.buttonNews}
-              onPress={() => {
-                navigation.navigate("NewsScreen");
-              }}
-            >
-              <Text>Voir les news</Text>
+            <TouchableOpacity style={styles.buttonNews} onPress={()=> {navigation.navigate('NewsScreen')}}>
+              <Text style={styles.textTitle}>ACTUS</Text>
+              <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            color="#fff"
+            size={20}
+          />
             </TouchableOpacity>
           </View>
           <View style={styles.cheklistContainers}>
-            <TouchableOpacity
-              style={styles.checklistButton}
-              onPress={() => {
-                navigation.navigate("ChecklistsScreen");
-              }}
-            >
-              <Text>CHECKLISTS / Small Containers</Text>
-            </TouchableOpacity>
+            <TouchableOpacity  style={styles.checklistButton} onPress={()=> {navigation.navigate('ChecklistsScreen')}}>
+            <Text style={styles.textTitle}>CHECKLISTS</Text>
+
+            <FontAwesomeIcon
+            icon={faCircleChevronRight}
+            color="#fff"
+            size={20}
+          />
+          </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -79,18 +84,8 @@ export default function HomeScreen({ navigation }) {
           sharedTransitionTag="tag"
         ></MapView>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.photoContainer}
-        onPress={() => {
-          navigation.navigate("PhotosScreen");
-        }}
-      >
-        <ImageSlider
-          data={gallery}
-          autoPlay
-          preview={false}
-          caroselImageStyle={{ height: "100%" }}
-        />
+      <TouchableOpacity style={styles.photoContainer} onPress={()=> {navigation.navigate('PhotosScreen')}}>
+        <ImageSlider data={gallery} caroselImageContainerStyle={{ resizeMode: 'cover' }} caroselImageStyle={{ resizeMode: 'cover' }} showIndicator={true} activeIndicatorStyle={{backgroundColor:'#35357F', alignItems:'center'}}/>
       </TouchableOpacity>
     </View>
   );
@@ -105,40 +100,58 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   meteoContainer: {
-    backgroundColor: "yellow",
     width: "50%",
     padding: 4,
   },
   meteoButton: {
     flex: 1,
     borderRadius: 10,
-    backgroundColor: "#35357F",
+    backgroundColor: '#35357F',
+    gap:10,
+    padding: 10,
   },
-  textTitle: {
-    color: "white",
+  meteoDetails:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  textMeteo :{
+    fontSize: 16, 
+    color: 'white'
+  },
+  textTitle:{
+    color: 'white',
+    fontSize: 20,
+    fontWeight: "bold",
+    marginRight: 10,
   },
   highRigtContainers: {
     width: "50%",
   },
   actusContainers: {
-    backgroundColor: "green",
     height: "50%",
     padding: 4,
   },
   buttonNews: {
     flex: 1,
     borderRadius: 10,
-    backgroundColor: "#35357F",
+    backgroundColor: '#35357F',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:'center',
   },
   cheklistContainers: {
-    backgroundColor: "lightgreen",
     height: "50%",
     padding: 4,
   },
   checklistButton: {
     flex: 1,
     borderRadius: 10,
-    backgroundColor: "#35357F",
+    backgroundColor: '#35357F',
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent:'center',
+
   },
   topContainer: {
     flexDirection: "row",
@@ -146,14 +159,17 @@ const styles = StyleSheet.create({
     height: "30%",
   },
   mapContainer: {
-    backgroundColor: "purple",
     width: "100%",
-    height: "30%",
-    padding: 4,
+    height: "35%",
+    padding:4,
   },
   photoContainer: {
-    backgroundColor: "pink",
     width: "100%",
-    height: "30%",
+    height: "35%",
+    padding: 4,
   },
+  meteosInfos:{
+    height: '70%',
+gap: 10,
+  }
 });

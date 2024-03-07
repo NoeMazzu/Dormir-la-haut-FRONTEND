@@ -18,6 +18,7 @@ export default function MeteoScreen() {
       .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
   }, []);
 
+
   console.log("MeteoData:",meteoData)
   const meteoCards = meteoData.map((data, i) => {
     return (
