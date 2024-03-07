@@ -19,7 +19,6 @@ export default function MapScreen() {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.poi);
         setMarkersToShow(data.poi);
       });
   }, []);
