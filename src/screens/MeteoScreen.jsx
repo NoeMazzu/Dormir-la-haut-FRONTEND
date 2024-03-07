@@ -10,31 +10,30 @@ export default function MeteoScreen() {
 
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
-    console.log("URL:",url)
+    console.log("URL:", url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => 
       {
-        setMeteoData(data.meteoInfo)
-        setMeteoDataTmp(prevMeteoDataTmp => [...prevMeteoDataTmp, ...data.meteoInfo])
-        console.log('[METEODATATMP]:',meteoDataTmp)
-        setMeteoDataTest(prevMeteoData => 
-        {
-          const meteoDay = meteoDataTmp.map(item => ({massif: item.massif}));
-          console.log('[METEODAY]:',meteoDay)
-          return [...prevMeteoData, meteoDay];
+        setMeteoData(data.meteoInfo);
+        setMeteoDataTmp(prevMeteoDataTmp => {
+          const newData = [...prevMeteoDataTmp, ...data.meteoInfo];
+          return newData
         })
-        console.log('[METEODATATEST]:', meteoDataTest)
-      })
-      // {
-      //   setMeteoDataTmp(prevMeteoDataTmp => [...prevMeteoDataTmp, ...data.meteoInfo]);
-      //   setMeteoData(prevMeteoData => 
-      //     {
-      //       const meteoDay = meteoData.map(item => ({massif: massif, data: item}));
-      //       return [...prevMeteoData, meteoDay];
-      //     });
-      // })
+        return data.meteoInfo;
+      })        
+      .then((patate) =>
+      {
+        console.log('[PATATE:',patate)
+        setMeteoDataTest(prevMeteoData => {
+          const meteoDay = patate.map(item => ({massif: item.massif, meteo: item.meteoData[0]}));
+          const newData = [...prevMeteoData, ...meteoDay];
+          return newData;
+      })});;
   }, []);
+  
+  console.log('[METEODATATMP]:', meteoDataTmp);
+  console.log('[METEODATATEST]:', meteoDataTest);
 
   
   
