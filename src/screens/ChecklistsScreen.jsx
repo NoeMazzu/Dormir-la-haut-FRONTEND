@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
-export default function ChecklistsScreen ({ navigation }) {
 export default function ChecklistsScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
 

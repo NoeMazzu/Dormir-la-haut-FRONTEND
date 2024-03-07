@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-export default function PhotosScreen ({ navigation }) {
+
 
 export default function PhotosScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
