@@ -44,6 +44,7 @@ const RegisterScreen = ({ navigation }) => {
       setError("La permission de géolocalisation est requise.");
     } else if (status === "granted") {
       Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
+        console.log("LOC", location.coords);
         dispatch(setLocation(location.coords));
         console.log(location.coords)
       });
@@ -95,7 +96,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../../src/assets/img/Image-background.jpg")}
+      source={require("../assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}

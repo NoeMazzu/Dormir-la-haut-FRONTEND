@@ -7,6 +7,9 @@ import {
   Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPOIs } from "../components/slices/user";
 import {useState, useEffect} from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { useSelector } from "react-redux";
@@ -56,6 +59,21 @@ export default function HomeScreen({ navigation }) {
 
 
   
+  const dispatch = useDispatch();
+  const gallery = [
+    { img: "https://source.unsplash.com/1024x768/?nature" },
+    { img: "https://source.unsplash.com/1024x768/?water" },
+    { img: "https://source.unsplash.com/1024x768/?girl" },
+    { img: "https://source.unsplash.com/1024x768/?tree" },
+  ];
+
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -71,11 +89,24 @@ export default function HomeScreen({ navigation }) {
             color="#fff"
             size={20}
           />
+        <View style={styles.meteoContainer}>
+          <TouchableOpacity
+            style={styles.meteoButton}
+            onPress={() => {
+              navigation.navigate("MeteoScreen");
+            }}
+          >
+            <Text style={styles.textTitle}>METEOContainer</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.highRigtContainers}>
           <View style={styles.actusContainers}>
-            <TouchableOpacity style={styles.buttonNews} onPress={()=> {navigation.navigate('NewsScreen')}}>
+            <TouchableOpacity
+              style={styles.buttonNews}
+              onPress={() => {
+                navigation.navigate("NewsScreen");
+              }}
+            >
               <Text style={styles.textTitle}>ACTUS</Text>
               <FontAwesomeIcon
             icon={faCircleChevronRight}
@@ -85,9 +116,14 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.cheklistContainers}>
-            <TouchableOpacity  style={styles.checklistButton} onPress={()=> {navigation.navigate('ChecklistsScreen')}}>
-            <Text style={styles.textTitle}>CHECKLISTS</Text>
-
+            <TouchableOpacity
+              style={styles.checklistButton}
+              onPress={() => {
+                navigation.navigate("ChecklistsScreen");
+              }}
+            >
+              <Text style={styles.textTitle}>CHECKLISTS</Text>
+  
             <FontAwesomeIcon
             icon={faCircleChevronRight}
             color="#fff"
@@ -104,7 +140,19 @@ export default function HomeScreen({ navigation }) {
         }}
       >
       
+      <TouchableOpacity
+        style={styles.mapContainer}
+        onPress={() => {
+          navigation.navigate("MapScreen");
+        }}
+      >
         <MapView
+          mapType="terrain"
+          initialRegion={{
+            latitude: 45.7,
+            longitude: 6.4,
+            latitudeDelta: 2,
+            longitudeDelta: 2,
           mapType="terrain"
           initialRegion={{
             latitude: 45.7,
@@ -115,9 +163,24 @@ export default function HomeScreen({ navigation }) {
           style={{ flex: 1}}
           sharedTransitionTag="tag"
         ><View style={{flex:1, borderRadius: 10,}}></View></MapView>
+          style={{ flex: 1, height: "100%", width: "100%", borderRadius: 10 }}
+          sharedTransitionTag="tag"
+        ></MapView>
       </TouchableOpacity>
       <TouchableOpacity style={styles.photoContainer} onPress={()=> {navigation.navigate('PhotosScreen')}}>
         <ImageSlider data={gallery} caroselImageContainerStyle={{ resizeMode: 'cover' }} caroselImageStyle={{ resizeMode: 'cover' }} showIndicator={true} activeIndicatorStyle={{backgroundColor:'#35357F', alignItems:'center'}}/>
+      <TouchableOpacity
+        style={styles.photoContainer}
+        onPress={() => {
+          navigation.navigate("PhotosScreen");
+        }}
+      >
+        <ImageSlider
+          data={gallery}
+          autoPlay
+          preview={false}
+          caroselImageStyle={{ height: "100%" }}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -138,8 +201,10 @@ const styles = StyleSheet.create({
   },
   meteoButton: {
     flex: 1,
+  meteoButton: {
+    flex: 1,
     borderRadius: 10,
-    backgroundColor: '#35357F',
+    backgroundColor: "#35357F",,
     gap:10,
     padding: 10,
   },
@@ -152,8 +217,8 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     color: 'white'
   },
-  textTitle:{
-    color: 'white',
+  textTitle: {
+    color: "white",
     fontSize: 20,
     fontWeight: "bold",
     marginRight: 10,
@@ -167,8 +232,10 @@ const styles = StyleSheet.create({
   },
   buttonNews: {
     flex: 1,
+  buttonNews: {
+    flex: 1,
     borderRadius: 10,
-    backgroundColor: '#35357F',
+    backgroundColor: "#35357F",,
     flexDirection: 'row',
     alignItems:'center',
     justifyContent:'center',
@@ -179,8 +246,10 @@ const styles = StyleSheet.create({
   },
   checklistButton: {
     flex: 1,
+  checklistButton: {
+    flex: 1,
     borderRadius: 10,
-    backgroundColor: '#35357F',
+    backgroundColor: "#35357F",,
     flexDirection: 'row',
     alignItems:'center',
     justifyContent:'center',
@@ -194,7 +263,7 @@ const styles = StyleSheet.create({
   mapContainer: {
     width: "100%",
     height: "35%",
-    padding:4,
+    padding: 4,
   },
   photoContainer: {
     width: "100%",
