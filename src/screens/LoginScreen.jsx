@@ -3,7 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, K
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slices/user";
+
 const LoginScreen = ({ navigation }) => {
+  
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();

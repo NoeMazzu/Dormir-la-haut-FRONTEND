@@ -12,7 +12,9 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { useDispatch } from "react-redux";
-import { setLocation } from "../redux/slices/user";
+import { setLocation, setToken } from "../redux/slices/user";
+import { useSelector } from "react-redux";
+
 
 const RegisterScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -26,7 +28,8 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleImageLoad = () => {
     setImageLoaded(true);
-  };
+  };  
+  const user = useSelector(state => state.user.value);
 
   // Fonction pour demander la permission de géolocalisation
   const requestLocationPermission = async () => {
@@ -35,7 +38,6 @@ const RegisterScreen = ({ navigation }) => {
       setError("La permission de géolocalisation est requise.");
     } else if (status === "granted") {
       Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-        console.log("LOC", location.coords);
         dispatch(setLocation(location.coords));
       });
     }
@@ -43,26 +45,20 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleInscription = () => {
     if (userNameInputRef && userNameInputRef.textValue.length < 4) {
-      return setError("Le nom d'utilisateur doit avoir au moins 4 caractères.");
-    }
+      return setError("Le nom d'utilisateur doit avoir au moins 4 caractères.");}
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (MailInputRef && !emailRegex.test(MailInputRef.textValue)) {
       setError("Veuillez entrer une adresse e-mail valide.");
-      return;
-    }
+      return;}
+
     const passwordRegex =
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
-
     if (passwordInputRef && !passwordRegex.test(passwordInputRef.textValue)) {
-      setError(
-        "Le mot de passe doit avoir 9 caractères, au moins une lettre, un chiffre et un caractère spécial."
-      );
-      return;
-    }
+      setError("Le mot de passe doit avoir 9 caractères, au moins une lettre, un chiffre et un caractère spécial.");
+      return;}
 
-    requestLocationPermission();
+   
 
     fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
       method: "POST",
@@ -83,11 +79,15 @@ const RegisterScreen = ({ navigation }) => {
           userNameInputRef.textValue = "";
           MailInputRef.textValue = "";
           passwordInputRef.textValue = "";
-
+          dispatch(setToken(data.token));
+          navigation.navigate('TabNavigator') 
+          
         } else {
           setError(data.error);
+
         }
       }).catch(err => console.log(err));
+   requestLocationPermission();
   };
 
   return (
@@ -157,7 +157,7 @@ const RegisterScreen = ({ navigation }) => {
                   handleInscription();
                 }}
               >
-                <Text style={styles.buttonText2} onPress={() => navigation.navigate('TabNavigator')}>S'inscrire</Text>
+                <Text style={styles.buttonText2} >S'inscrire</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -166,7 +166,6 @@ const RegisterScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   errorText: {
     color: "#FF0000",

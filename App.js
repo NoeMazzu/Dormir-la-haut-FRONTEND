@@ -11,6 +11,7 @@ import user from "./src/redux/slices/user";
 import {
   ChecklistsScreen,
   HomeScreen,
+  LoadingScreen,
   LoginScreen,
   MapScreen,
   MeteoScreen,
@@ -36,6 +37,7 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 const HomeStack = () => {
+      
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -58,13 +60,13 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  // AsyncStorage.clear()
+  //  AsyncStorage.clear()
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MeteoScreen" component={MeteoScreen} />
+            <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />

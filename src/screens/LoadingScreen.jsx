@@ -6,18 +6,28 @@ import {
   StyleSheet,
   ImageBackground,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoadingScreen = ({ navigation }) => {
+  
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const user = useSelector(state => state.user.value);
+  console.log(user)
+  if(user.token){
+    navigation.navigate('TabNavigator');
+  }
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
   return (
     
     <ImageBackground
-    
       source={require("../../src/assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
