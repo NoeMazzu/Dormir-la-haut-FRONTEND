@@ -37,7 +37,6 @@ const store = configureStore({
 const persistor = persistStore(store);
 
 const HomeStack = () => {
-      
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
@@ -60,7 +59,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  //  AsyncStorage.clear()
+  // AsyncStorage.clear();
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
