@@ -15,8 +15,12 @@ import { useDispatch } from "react-redux";
 import { setLocation, setToken } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
-
 const RegisterScreen = ({ navigation }) => {
+  const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
@@ -28,8 +32,10 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleImageLoad = () => {
     setImageLoaded(true);
-  };  
-  const user = useSelector(state => state.user.value);
+  };
+  
+
+  
 
   // Fonction pour demander la permission de géolocalisation
   const requestLocationPermission = async () => {
@@ -58,8 +64,6 @@ const RegisterScreen = ({ navigation }) => {
       setError("Le mot de passe doit avoir 9 caractères, au moins une lettre, un chiffre et un caractère spécial.");
       return;}
 
-   
-
     fetch("https://dormir-la-haut-backend.vercel.app/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -81,10 +85,8 @@ const RegisterScreen = ({ navigation }) => {
           passwordInputRef.textValue = "";
           dispatch(setToken(data.token));
           navigation.navigate('TabNavigator') 
-          
         } else {
           setError(data.error);
-
         }
       }).catch(err => console.log(err));
    requestLocationPermission();

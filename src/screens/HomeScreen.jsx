@@ -8,14 +8,26 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import * as React from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
-
+import { useSelector } from "react-redux";
 export default function HomeScreen({ navigation }) {
+<<<<<<< HEAD
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
     { img: "https://source.unsplash.com/1024x768/?water" },
     {
       img: "https://media.licdn.com/dms/image/D4D03AQFJjZ-tYqWp9A/profile-displayphoto-shrink_200_200/0/1676368422779?e=2147483647&v=beta&t=5vOpwfuZMga8eaL7P_riZ9_hsuIBvN6A4P70IhsWx-k",
     },
+=======
+  const user = useSelector((state) => state.user.value);
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
+
+  const gallery = [
+    { img: "https://source.unsplash.com/1024x768/?nature" },
+    { img: "https://source.unsplash.com/1024x768/?water" },
+    { img: "https://source.unsplash.com/1024x768/?girl" },
+>>>>>>> 92420c3ea5c904c8b8683aa5ee0f4f7fc97027c1
     { img: "https://source.unsplash.com/1024x768/?tree" },
   ];
 
