@@ -26,6 +26,9 @@ export default function HomeScreen({ navigation }) {
     { img: "https://source.unsplash.com/1024x768/?tree" },
   ];
 
+
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
