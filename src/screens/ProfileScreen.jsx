@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-export default function ProfileScreen () {
+
+export default function ProfileScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
 
   if (user?.token) {

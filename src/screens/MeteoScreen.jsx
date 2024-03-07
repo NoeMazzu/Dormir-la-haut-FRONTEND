@@ -2,7 +2,9 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import MeteoCard from "../components/MeteoCard";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-export default function MeteoScreen() {
+
+
+export default function MeteoScreen({navigation}) {
   const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
   const [meteoData, setMeteoData] = useState([]);
   const user = useSelector((state) => state.user.value);
