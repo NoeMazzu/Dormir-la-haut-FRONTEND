@@ -1,3 +1,5 @@
+import {LogBox} from 'react-native';
+
 import { StyleSheet, Text, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,6 +22,7 @@ import {
   RegisterScreen,
 } from "./src/screens";
 
+LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 

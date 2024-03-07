@@ -14,7 +14,7 @@ export default function MeteoCard(props) {
           <TouchableOpacity style={[styles.badgeMeteoFocus, styles.badgeFrameFlexBox]}>
             <Text style={[styles.focus, styles.dayTextBox]}>Today</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]}>
+          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]} onPress={props.onPress}>
             <Text style={[styles.default, styles.dayTextBox]}>3J</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]}>
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
     massifText: {
       height: 13,
       width: 90,
-      textAlign: "start",
+      textAlign: "left",
       fontSize: 12,
       justifyContent: "center",
       alignItems: "center",
       display: "flex",
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       fontWeight: "700",
       color:  "#000",
     },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     dayTextBox: {
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       textAlign: "center",
       fontSize: 12,
       alignSelf: "stretch",
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
       height: 15,
       width: 101,
       fontSize: 10,
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       alignItems: "center",
       display: "flex",
       textAlign: "left",
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
       height: 15,
       width: 101,
       fontSize: 10,
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       alignItems: "center",
       display: "flex",
       textAlign: "left",
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
       width: 50,
       height: 24,
       fontSize: 10,
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       textAlign: "center",
       justifyContent: "center",
       alignItems: "center",
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       display: "flex",
       textAlign: "left",
-      fontFamily: "JosefinSans-Bold",
+      fontFamily: "Arial",
       fontWeight: "700",
       color:  "#fff",
       top: 8,

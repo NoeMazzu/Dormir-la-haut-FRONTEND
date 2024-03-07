@@ -24,9 +24,8 @@ export default function MeteoScreen() {
       })        
       .then((patate) =>
       {
-        console.log('[PATATE:',patate)
         setMeteoDataTest(prevMeteoData => {
-          const meteoDay = patate.map(item => ({massif: item.massif, meteo: item.meteoData[0]}));
+          const meteoDay = patate.map(item => ({massif: item.massif, meteoData: item.meteoData[0]}));
           const newData = [...prevMeteoData, ...meteoDay];
           return newData;
       })});;
@@ -35,32 +34,34 @@ export default function MeteoScreen() {
   console.log('[METEODATATMP]:', meteoDataTmp);
   console.log('[METEODATATEST]:', meteoDataTest);
 
-  
-  
+  const updateMeteoByDate = (index) => {
+    return setMeteoDataTest(prevMeteoData => 
+      {
+        const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[1] };
+        // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
+        const updatedPrevMeteoData = [...prevMeteoData];
+    updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
+    console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
+    return updatedPrevMeteoData;            
+      });
+  };
+  console.log('[METEODATATEST_POSTFUNCTION]:', meteoDataTest[3]);
 
-  const meteoCards = meteoData.map((data, i) => {
+  const meteoCards = meteoDataTest.map((data, i) => {
     return (
       <MeteoCard
         key={i}
         massif={data.massif}
-        weatherIcon={`https://openweathermap.org/img/wn/${data.meteoData[0].data.weatherIcon}@2x.png`}
-        temp = {data.meteoData[0].data.temp}
-        windSpe = {data.meteoData[0].data.windSpe*3.6}
-        windOri = {data.meteoData[0].data.windOri}
+        weatherIcon={`https://openweathermap.org/img/wn/${data.meteoData.data.weatherIcon}@2x.png`}
+        temp = {data.meteoData.data.temp}
+        windSpe = {data.meteoData.data.windSpe*3.6}
+        windOri = {data.meteoData.data.windOri}
+        onPress={() => updateMeteoByDate(i)}
       />
     );
   });
 
-  const updateMeteoByDate = (index) => {
-    setMeteoData(prevMeteoData => 
-      {
-        const updatedMeteoData = [...prevMeteoData];
-        const updatedMeteoCard = { ...updatedMeteoData[index] };
-        // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
-        updatedMeteoData[index] = updatedMeteoCard;
-        return updatedMeteoData;
-      });
-  };
+
   
 
   return (
