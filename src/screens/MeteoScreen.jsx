@@ -3,8 +3,7 @@ import MeteoCard from "../components/MeteoCard";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-
-export default function MeteoScreen({navigation}) {
+export default function MeteoScreen({ navigation }) {
   const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
   const [meteoData, setMeteoData] = useState([]);
   const user = useSelector((state) => state.user.value);
@@ -14,14 +13,13 @@ export default function MeteoScreen({navigation}) {
   }
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;;
-    console.log("URL:",url)
+
     fetch(url)
       .then((response) => response.json())
-      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+      .then((data) =>  setMeteoData(data.meteoInfo));
   }, []);
 
 
-  console.log("MeteoData:",meteoData)
   const meteoCards = meteoData.map((data, i) => {
     return (
       <MeteoCard

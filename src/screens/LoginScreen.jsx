@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
+
 const LoginScreen = ({ navigation }) => {
   
 const user = useSelector((state) => state.user.value);
@@ -59,7 +60,7 @@ const user = useSelector((state) => state.user.value);
       style={{ flex: 1, height: Dimensions.get("window").height }}
     >
     <ImageBackground
-      source={require("../../src/assets/img/Image-background.jpg")}
+      source={require("../assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}

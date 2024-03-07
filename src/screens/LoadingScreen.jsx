@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
-
+;
 const LoadingScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 

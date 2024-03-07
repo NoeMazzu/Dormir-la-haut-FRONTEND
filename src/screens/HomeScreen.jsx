@@ -7,9 +7,10 @@ import {
   Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { useDispatch, useSelector } from "react-redux";
+import { setPOIs } from "../components/slices/user";
 import { useState, useEffect } from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
-import { useSelector } from "react-redux";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -47,28 +48,32 @@ export default function HomeScreen({ navigation }) {
       </View>
     );
   });
-
+  
+  const dispatch = useDispatch();
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
     { img: "https://source.unsplash.com/1024x768/?water" },
-    {
-      img: "https://media.licdn.com/dms/image/D4D03AQFJjZ-tYqWp9A/profile-displayphoto-shrink_200_200/0/1676368422779?e=2147483647&v=beta&t=5vOpwfuZMga8eaL7P_riZ9_hsuIBvN6A4P70IhsWx-k",
-    },
+    { img: "https://source.unsplash.com/1024x768/?girl" },
     { img: "https://source.unsplash.com/1024x768/?tree" },
   ];
+
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
-        <View style={styles.meteoContainer}>
-          <TouchableOpacity
-            style={styles.meteoButton}
-            onPress={() => {
-              navigation.navigate("MeteoScreen");
-            }}
-          >
+        <View style={styles.meteoContainer} >
+          <TouchableOpacity style={styles.meteoButton} onPress={()=> {navigation.navigate('MeteoScreen')}}>
             <Text style={styles.textTitle}>METEO</Text>
-            <View style={styles.meteosInfos}>{meteoHome}</View>
+            <View style={styles.meteosInfos}>
+            {meteoHome}
+            </View>
             <FontAwesomeIcon
               icon={faCircleChevronRight}
               color="#fff"
@@ -86,10 +91,10 @@ export default function HomeScreen({ navigation }) {
             >
               <Text style={styles.textTitle}>ACTUS</Text>
               <FontAwesomeIcon
-                icon={faCircleChevronRight}
-                color="#fff"
-                size={20}
-              />
+            icon={faCircleChevronRight}
+            color="#fff"
+            size={20}
+          />
             </TouchableOpacity>
           </View>
           <View style={styles.cheklistContainers}>
@@ -116,6 +121,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("MapScreen");
         }}
       >
+      
         <MapView
           mapType="terrain"
           initialRegion={{
@@ -124,7 +130,7 @@ export default function HomeScreen({ navigation }) {
             latitudeDelta: 2,
             longitudeDelta: 2,
           }}
-          style={{ flex: 1 }}
+          style={{ flex: 1}}
           sharedTransitionTag="tag"
 
         ></MapView>
@@ -178,6 +184,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
   },
+  textTitle: {
+    color: "white",
   textTitle: {
     color: "white",
     fontSize: 20,
