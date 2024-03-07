@@ -9,7 +9,6 @@ import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import user from "./src/redux/slices/user";
 import {
-  LoadingScreen,
   ChecklistsScreen,
   HomeScreen,
   LoginScreen,
@@ -65,7 +64,7 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
+            <Stack.Screen name="MeteoScreen" component={MeteoScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
