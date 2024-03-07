@@ -3,7 +3,7 @@ import { StyleSheet, Text, View,Image, TouchableOpacity } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function MeteoCard(props) {
-  console.log(props)
+
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>

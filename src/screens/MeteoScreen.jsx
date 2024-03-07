@@ -6,17 +6,39 @@ export default function MeteoScreen() {
   const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
+  const [meteoDataTest, setMeteoDataTest] = useState([]);
 
   useEffect(() => {
-    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;;
+    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
     console.log("URL:",url)
     fetch(url)
-      .then((response) => (console.log('[RESPONSE_FETCH]',response),response.json()))
-      // .then((data) => (setMeteoDataTmp(prevMeteoDataTmp => [...prevMeteoDataTmp, ...data.meteoInfo])))
-      .then((data) => setMeteoData(data.meteoInfo));
+      .then((response) => response.json())
+      .then((data) => 
+      {
+        setMeteoData(data.meteoInfo)
+        setMeteoDataTmp(prevMeteoDataTmp => [...prevMeteoDataTmp, ...data.meteoInfo])
+        console.log('[METEODATATMP]:',meteoDataTmp)
+        setMeteoDataTest(prevMeteoData => 
+        {
+          const meteoDay = meteoDataTmp.map(item => ({massif: item.massif}));
+          console.log('[METEODAY]:',meteoDay)
+          return [...prevMeteoData, meteoDay];
+        })
+        console.log('[METEODATATEST]:', meteoDataTest)
+      })
+      // {
+      //   setMeteoDataTmp(prevMeteoDataTmp => [...prevMeteoDataTmp, ...data.meteoInfo]);
+      //   setMeteoData(prevMeteoData => 
+      //     {
+      //       const meteoDay = meteoData.map(item => ({massif: massif, data: item}));
+      //       return [...prevMeteoData, meteoDay];
+      //     });
+      // })
   }, []);
 
-  console.log("MeteoData:",meteoData)
+  
+  
+
   const meteoCards = meteoData.map((data, i) => {
     return (
       <MeteoCard
@@ -29,8 +51,6 @@ export default function MeteoScreen() {
       />
     );
   });
-
-  console.log('[METEO_DATA state:',meteoData)
 
   const updateMeteoByDate = (index) => {
     setMeteoData(prevMeteoData => 
