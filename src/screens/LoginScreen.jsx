@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform, Dimensions} from "react-native";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/slices/user";
+import { setToken } from "../components/slices/user";
 const LoginScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
@@ -51,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
       style={{ flex: 1, height: Dimensions.get("window").height }}
     >
     <ImageBackground
-      source={require("../../src/assets/img/Image-background.jpg")}
+      source={require("../assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}

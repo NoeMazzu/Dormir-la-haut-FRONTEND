@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: { username: null, token: null, location: null },
+  value: { username: null, token: null, location: null, POIs: null },
 };
 
 export const userSlice = createSlice({
@@ -15,11 +15,14 @@ export const userSlice = createSlice({
       state.value.token = action.payload;
     },
     setLocation: (state, action) => {
-      console.log(action.payload);
       state.value.location = action.payload;
+    },
+    setPOIs: (state, action) => {
+      state.value.POIs = action.payload;
     },
   },
 });
 
-export const { setUsername, setToken, setLocation } = userSlice.actions;
+export const { setUsername, setToken, setLocation, setPOIs } =
+  userSlice.actions;
 export default userSlice.reducer;

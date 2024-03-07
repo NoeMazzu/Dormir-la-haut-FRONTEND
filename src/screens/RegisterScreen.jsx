@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { useDispatch } from "react-redux";
-import { setLocation } from "../redux/slices/user";
+import { setLocation } from "../components/slices/user";
 
 const RegisterScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -35,7 +35,7 @@ const RegisterScreen = ({ navigation }) => {
       setError("La permission de géolocalisation est requise.");
     } else if (status === "granted") {
       Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
-        console.log("LOC", location.coords);
+    
         dispatch(setLocation(location.coords));
       });
     }
@@ -92,7 +92,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../../src/assets/img/Image-background.jpg")}
+      source={require("../assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}

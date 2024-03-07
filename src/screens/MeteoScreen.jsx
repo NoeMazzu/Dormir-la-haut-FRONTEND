@@ -8,13 +8,12 @@ export default function MeteoScreen() {
 
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;;
-    console.log("URL:",url)
+
     fetch(url)
       .then((response) => response.json())
-      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+      .then((data) =>  setMeteoData(data.meteoInfo));
   }, []);
 
-  console.log("MeteoData:",meteoData)
   const meteoCards = meteoData.map((data, i) => {
     return (
       <MeteoCard

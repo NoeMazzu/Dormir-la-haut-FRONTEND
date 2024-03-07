@@ -7,7 +7,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import user from "./src/redux/slices/user";
+import user from "./src/components/slices/user";
 import {
   ChecklistsScreen,
   HomeScreen,
@@ -30,8 +30,8 @@ const reducers = combineReducers({
 const persistConfig = { key: "dormirlahaut", storage: AsyncStorage };
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({ serializableCheck: false }),
 });
 const persistor = persistStore(store);
 
@@ -64,10 +64,9 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="MeteoScreen" component={MeteoScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             <Stack.Screen name="LoginScreen" component={LoginScreen} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
