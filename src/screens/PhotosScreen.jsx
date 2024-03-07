@@ -1,6 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
+export default function PhotosScreen ({ navigation }) {
+  const user = useSelector((state) => state.user.value);
 
-export default function PhotosScreen () {
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
     return <View style={styles.container}>
         <Text>PhotosScreen</Text>
     </View>

@@ -3,14 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const LittleNews = ({ title, description, onPress, image }) => {
+const LittleNews = ({ title, description, onPress }) => {
   return (
-    <View style={styles.newsContainer}>
-      <View style={styles.newsContent}>
-        <Text style={styles.newsTitle}>{title}</Text>
-        <Text style={styles.newsDescription}>{description}</Text>
-      </View>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.newsContainer}>
+        <View style={styles.newsContent}>
+          <Text style={styles.newsTitle}>{title}</Text>
+          <Text style={styles.newsDescription}>{description}</Text>
+        </View>
+
         <View style={styles.iconContainer}>
           <FontAwesomeIcon
             icon={faCircleChevronRight}
@@ -18,8 +19,8 @@ const LittleNews = ({ title, description, onPress, image }) => {
             size={28}
           />
         </View>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -50,7 +51,11 @@ const styles = StyleSheet.create({
   iconContainer: {
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 4,
+    width: 36,
+    height: 36,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
   },
 });
 

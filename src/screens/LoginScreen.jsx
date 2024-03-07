@@ -3,7 +3,16 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, K
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slices/user";
+import { useSelector } from "react-redux";
+
+
 const LoginScreen = ({ navigation }) => {
+  
+const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();

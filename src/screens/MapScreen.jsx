@@ -5,7 +5,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function MapScreen() {
+export default function MapScreen({ navigation }) {
+  const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
   const [markersToShow, setMarkersToShow] = useState([]);
 
   const handlePoi = function () {
@@ -19,7 +24,6 @@ export default function MapScreen() {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.poi);
         setMarkersToShow(data.poi);
       });
   }, []);

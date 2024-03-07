@@ -1,40 +1,51 @@
-import React from "react";
+import { useState } from "react";
 import {
-  View,
+  ImageBackground,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
+  View,
 } from "react-native";
-import { useState } from "react";
-
+import { useSelector } from "react-redux";
+;
 const LoadingScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
   return (
-    
     <ImageBackground
-    
       source={require("../../src/assets/img/Image-background.jpg")}
       resizeMode="cover"
       style={styles.background}
       onLoad={handleImageLoad}
     >
       {imageLoaded ? (
-      <View style={styles.filtre}>
-        <TouchableOpacity style={styles.signup} onPress={() => navigation.navigate('RegisterScreen')} >
-          <Text style={styles.buttonTextI}>S'inscrire</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.signin} onPress={() => navigation.navigate('LoginScreen')}>
-          <Text style={styles.buttonTextU}>Se connecter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.forgotPassword}>
-          <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.filtre}>
+          <TouchableOpacity
+            style={styles.signup}
+            onPress={() => navigation.navigate("RegisterScreen")}
+          >
+            <Text style={styles.buttonTextI}>S'inscrire</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.signin}
+            onPress={() => navigation.navigate("LoginScreen")}
+          >
+            <Text style={styles.buttonTextU}>Se connecter</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
+          </TouchableOpacity>
+        </View>
       ) : null}
     </ImageBackground>
   );
