@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import LittleNews from "../components/LittleNews";
 import ModalNews from "../components/ModalNews";
-
+import { useSelector } from "react-redux";
 const NewsScreen = ({ navigation }) => {
+  const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
   const [actuData, setActuData] = useState([]);
   const [selectedNews, setSelectedNews] = useState(null);
 

@@ -4,8 +4,13 @@ import { Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
+import { useSelector } from "react-redux";
 export default function MapScreen() {
+  const user = useSelector((state) => state.user.value);
+
+  if (user?.token) {
+    navigation.navigate("TabNavigator");
+  }
   const [markersToShow, setMarkersToShow] = useState([]);
 
   const handlePoi = function () {
