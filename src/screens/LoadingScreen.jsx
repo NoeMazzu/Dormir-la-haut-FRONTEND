@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  View,
+  ImageBackground,
+  StyleSheet,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
+  View,
 } from "react-native";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
 const LoadingScreen = ({ navigation }) => {
@@ -14,7 +13,7 @@ const LoadingScreen = ({ navigation }) => {
 
   const user = useSelector((state) => state.user.value);
 
-  if (user.token) {
+  if (user?.token) {
     navigation.navigate("TabNavigator");
   }
 
