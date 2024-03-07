@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View,Image } from "react-native";
+import { StyleSheet, Text, View,Image, TouchableOpacity } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function MeteoCard(props) {
@@ -7,19 +7,19 @@ export default function MeteoCard(props) {
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>
-        <View style={[styles.lesBaugesWrapper, styles.parentWrapperFlexBox]}>
-          <Text style={[styles.lesBauges, styles.lesTypo]}>{props.massif}</Text>
+        <View style={[styles.massifWrap, styles.parentWrapperFlexBox]}>
+          <Text style={styles.massifText}>{props.massif}</Text>
         </View>
         <View style={[styles.badgeMeteoParent, styles.parentWrapperFlexBox]}>
-          <View style={[styles.badgeMeteo, styles.badgeFrameFlexBox]}>
-            <Text style={[styles.today, styles.todayFlexBox]}>Today</Text>
-          </View>
-          <View style={[styles.badgeMeteo1, styles.badgeFrameFlexBox]}>
-            <Text style={[styles.today1, styles.todayFlexBox]}>3J</Text>
-          </View>
-          <View style={[styles.badgeMeteo2, styles.badgeFrameFlexBox]}>
-            <Text style={[styles.today, styles.todayFlexBox]}>5J</Text>
-          </View>
+          <TouchableOpacity style={[styles.badgeMeteoFocus, styles.badgeFrameFlexBox]}>
+            <Text style={[styles.focus, styles.dayTextBox]}>Today</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]}>
+            <Text style={[styles.default, styles.dayTextBox]}>3J</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]}>
+            <Text style={[styles.default, styles.dayTextBox]}>5J</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={[styles.frameGroup, styles.frameSpaceBlock]}>
@@ -33,7 +33,7 @@ export default function MeteoCard(props) {
             <FontAwesome name='wind' size={16} color='#161D46' />
           </View>
           <View style={[styles.tempParent, styles.frameSpaceBlock]}>
-            <Text style={[styles.temp, styles.tempTypo]}>{props.temp} </Text>
+            <Text style={[styles.temp, styles.tempTypo]}>{props.temp} °C </Text>
             <Text style={[styles.wind, styles.windTypo]}>{props.windSpe}  km/h - {props.windOri} </Text>
           </View>
         </View>
@@ -69,23 +69,24 @@ const styles = StyleSheet.create({
       alignSelf: "stretch",
       overflow: "hidden",
     },
-    lesTypo: {
+    massifText: {
       height: 13,
       width: 90,
-      textAlign: "center",
+      textAlign: "start",
       fontSize: 12,
       justifyContent: "center",
       alignItems: "center",
       display: "flex",
       fontFamily: "JosefinSans-Bold",
       fontWeight: "700",
+      color:  "#000",
     },
     badgeFrameFlexBox: {
       paddingVertical: 0,
       flexDirection: "row",
       alignItems: "center",
     },
-    todayFlexBox: {
+    dayTextBox: {
       fontFamily: "JosefinSans-Bold",
       textAlign: "center",
       fontSize: 12,
@@ -187,62 +188,59 @@ const styles = StyleSheet.create({
       backgroundColor: " #35357f",
       alignItems: "center",
     },
-    lesBauges: {
-      color:  "#000",
-    },
-    lesBaugesWrapper: {
+    massifWrap: {
       width: 104,
       padding: 8,
       alignItems: "center",
       flexDirection: "row",
     },
-    today: {
+    default: {
       color:  "#fff",
     },
-    badgeMeteo: {
+    badgeMeteoFocus: {
       paddingHorizontal: 4,
       width: 54,
       borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor:  "#000",
-      borderStyle: "solid",
-      justifyContent: "center",
-      overflow: "hidden",
-      backgroundColor:  "#000",
-    },
-    today1: {
-      color:  "#000",
-    },
-    badgeMeteo1: {
-      paddingHorizontal: 4,
-      width: 54,
-      borderRadius: 8,
-      paddingVertical: 0,
-      height: 16,
-      borderWidth: 1,
-      borderColor:  "#000",
+      borderColor:  "#161D46",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
       backgroundColor:  "#fff",
-      marginLeft: 8,
     },
-    badgeMeteo2: {
+    focus: {
+      color:  "#161D46",
+    },
+    badgeMeteoDef: {
       paddingHorizontal: 4,
       width: 54,
       borderRadius: 8,
       paddingVertical: 0,
       height: 16,
       borderWidth: 1,
-      borderColor:  "#000",
+      borderColor:  "#161D46",
       borderStyle: "solid",
       justifyContent: "center",
       overflow: "hidden",
-      backgroundColor:  "#000",
+      backgroundColor:  "#161D46",
       marginLeft: 8,
     },
+    // badgeMeteo2: {
+    //   paddingHorizontal: 4,
+    //   width: 54,
+    //   borderRadius: 8,
+    //   paddingVertical: 0,
+    //   height: 16,
+    //   borderWidth: 1,
+    //   borderColor:  "#000",
+    //   borderStyle: "solid",
+    //   justifyContent: "center",
+    //   overflow: "hidden",
+    //   backgroundColor:  "#000",
+    //   marginLeft: 8,
+    // },
     badgeMeteoParent: {
       marginLeft: 8,
       padding: 8,
@@ -323,9 +321,6 @@ const styles = StyleSheet.create({
       padding: 8,
       overflow: "hidden",
     },
-    lesBauges1: {
-      color:  "#fff",
-    },
     badgeMeteo3: {
       paddingHorizontal: 4,
       width: 54,
@@ -379,5 +374,11 @@ const styles = StyleSheet.create({
     weatherIcon: {
       width: 24,
       height: 24,
+      alignSelf:'flex-start',
+      shadowColor: '#161D46', // Couleur de l'ombre
+      shadowOffset: { width: 0, height: 2 }, // Décalage de l'ombre (horizontale, verticale)
+      shadowOpacity: 0.3, // Opacité de l'ombre (0 à 1)
+      shadowRadius: 4, // Rayon de l'ombre
+  // elevation: 5, // Pour Android voir pour utilsier elevation
     },
   });
