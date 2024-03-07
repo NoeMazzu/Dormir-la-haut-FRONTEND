@@ -10,6 +10,31 @@ import {
 } from "react-native";
 
 const ModalNews = ({ title, description, visible, onClose, image, date }) => {
+  /* Convertir une date au format ISO (2024-03-03T08:00:29Z) au format 
+   suivant : 3 Mars 2024     */
+  const shortDate = date.slice(0, 10);
+  const originalDate = new Date(shortDate);
+  function getMonthName(monthIndex) {
+    const monthNames = [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre",
+    ];
+    return monthNames[monthIndex];
+  }
+  const formattedDate = `${originalDate.getDate()} ${getMonthName(
+    originalDate.getMonth()
+  )} ${originalDate.getFullYear()}`;
+
   return (
     <Modal
       animationType="fade"
@@ -24,9 +49,12 @@ const ModalNews = ({ title, description, visible, onClose, image, date }) => {
             <Text style={styles.modalTitle}>{title}</Text>
             <Text style={styles.modalDescription}>{description}</Text>
           </ScrollView>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>Fermer</Text>
-          </TouchableOpacity>
+          <View style={styles.bottomContent}>
+            <Text style={styles.dateStyle}>{formattedDate}</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <Text style={styles.closeButtonText}>Fermer</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -75,8 +103,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  dateStyle: {
+  bottomContent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginTop: 30,
+  },
+  dateStyle: {
+    fontWeight: "bold",
   },
 });
 
