@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-export default function MapScreen() {
+export default function MapScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   if (user?.token) {
