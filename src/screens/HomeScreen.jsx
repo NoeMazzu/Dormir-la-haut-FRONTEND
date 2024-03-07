@@ -42,6 +42,9 @@ export default function HomeScreen({ navigation }) {
     );
   });
 
+
+ 
+
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
     { img: "https://source.unsplash.com/1024x768/?water" },
@@ -97,6 +100,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("MapScreen");
         }}
       >
+      
         <MapView
           mapType="terrain"
           initialRegion={{
@@ -105,9 +109,9 @@ export default function HomeScreen({ navigation }) {
             latitudeDelta: 2,
             longitudeDelta: 2,
           }}
-          style={{ flex: 1, height: "100%", width: "100%", borderRadius: 10 }}
+          style={{ flex: 1}}
           sharedTransitionTag="tag"
-        ></MapView>
+        ><View style={{flex:1, borderRadius: 10,}}></View></MapView>
       </TouchableOpacity>
       <TouchableOpacity style={styles.photoContainer} onPress={()=> {navigation.navigate('PhotosScreen')}}>
         <ImageSlider data={gallery} caroselImageContainerStyle={{ resizeMode: 'cover' }} caroselImageStyle={{ resizeMode: 'cover' }} showIndicator={true} activeIndicatorStyle={{backgroundColor:'#35357F', alignItems:'center'}}/>
@@ -115,6 +119,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
