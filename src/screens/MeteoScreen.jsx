@@ -3,7 +3,7 @@ import MeteoCard from "../components/MeteoCard";
 import React, { useEffect, useState } from "react";
 
 export default function MeteoScreen() {
-  const massifFavs = ["Chartreuse", "Vanoise"];
+  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
   const [meteoData, setMeteoData] = useState([]);
 
   useEffect(() => {
