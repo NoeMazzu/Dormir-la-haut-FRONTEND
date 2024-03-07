@@ -7,15 +7,43 @@ import {
   Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as React from "react";
+import {useState, useEffect} from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { useSelector } from "react-redux";
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 export default function HomeScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   if (user?.token) {
     navigation.navigate("TabNavigator");
   }
+
+  const massifFavs = [{massif: "Chartreuse", temp: 1}, {massif:"Vanoise", temp: 2},{massif:"Belledonne", temp: 3}];
+  const [meteoData, setMeteoData] = useState([]);
+
+  useEffect(() => {
+    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+  }, []);
+
+  const meteoHome = massifFavs.map((data, i) => {
+    return (
+      <View key={i} style={styles.meteoDetails}>
+        <Text style={styles.textMeteo}>{data.massif}</Text>
+        <View style={styles.meteoDetails}>
+          <Text style={styles.textMeteo}>{data.temp}°C</Text>
+          <View style={{height: 20, width:20, backgroundColor: 'red'}}/>
+        </View>
+      </View>
+    );
+  });
+
+
+ 
 
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
@@ -75,6 +103,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("MapScreen");
         }}
       >
+      
         <MapView
           mapType="terrain"
           initialRegion={{
@@ -83,9 +112,9 @@ export default function HomeScreen({ navigation }) {
             latitudeDelta: 2,
             longitudeDelta: 2,
           }}
-          style={{ flex: 1, height: "100%", width: "100%", borderRadius: 10 }}
+          style={{ flex: 1}}
           sharedTransitionTag="tag"
-        ></MapView>
+        ><View style={{flex:1, borderRadius: 10,}}></View></MapView>
       </TouchableOpacity>
       <TouchableOpacity style={styles.photoContainer} onPress={()=> {navigation.navigate('PhotosScreen')}}>
         <ImageSlider data={gallery} caroselImageContainerStyle={{ resizeMode: 'cover' }} caroselImageStyle={{ resizeMode: 'cover' }} showIndicator={true} activeIndicatorStyle={{backgroundColor:'#35357F', alignItems:'center'}}/>
@@ -93,6 +122,7 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
