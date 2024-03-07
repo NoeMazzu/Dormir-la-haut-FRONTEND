@@ -15,7 +15,6 @@ export const userSlice = createSlice({
       state.value.token = action.payload;
     },
     setLocation: (state, action) => {
-      console.log(action.payload);
       state.value.location = action.payload;
     },
   },

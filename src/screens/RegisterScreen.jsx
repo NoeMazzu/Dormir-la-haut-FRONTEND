@@ -45,6 +45,7 @@ const RegisterScreen = ({ navigation }) => {
     } else if (status === "granted") {
       Location.watchPositionAsync({ distanceInterval: 10 }, (location) => {
         dispatch(setLocation(location.coords));
+        console.log(location.coords)
       });
     }
   };

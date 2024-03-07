@@ -7,15 +7,40 @@ import {
   Image,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import * as React from "react";
+import {useState, useEffect} from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import { useSelector } from "react-redux";
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+
 export default function HomeScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   if (user?.token) {
     navigation.navigate("TabNavigator");
   }
+
+  const massifFavs = [{massif: "Chartreuse", temp: 1}, {massif:"Vanoise", temp: 2},{massif:"Belledonne", temp: 3}];
+  const [meteoData, setMeteoData] = useState([]);
+
+  useEffect(() => {
+    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;;
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+  }, []);
+
+  const meteoHome = massifFavs.map((data, i) => {
+    return (
+      <View key={i} style={styles.meteoDetails}>
+        <Text style={styles.textMeteo}>{data.massif}</Text>
+        <View style={styles.meteoDetails}>
+          <Text style={styles.textMeteo}>{data.temp}°C</Text>
+          <View style={{height: 20, width:20, backgroundColor: 'red'}}/>
+        </View>
+      </View>
+    );
+  });
 
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
