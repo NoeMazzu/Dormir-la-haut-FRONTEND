@@ -6,15 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-<<<<<<< HEAD
 import { useSelector } from "react-redux";
 
-=======
-import { useState } from "react";
-import { useSelector } from "react-redux";
-
-
->>>>>>> 92420c3ea5c904c8b8683aa5ee0f4f7fc97027c1
 const LoadingScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
