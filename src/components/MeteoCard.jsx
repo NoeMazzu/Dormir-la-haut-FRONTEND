@@ -4,6 +4,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function MeteoCard(props) {
 
+  const dynBadStyToday = props.time === 'today' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
+  const dynBadStyThreeJ = props.time === 'threeJ' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
+  const dynBadStyFiveJ = props.time === 'fiveJ' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
+
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>
@@ -11,14 +15,14 @@ export default function MeteoCard(props) {
           <Text style={styles.massifText}>{props.massif}</Text>
         </View>
         <View style={[styles.badgeMeteoParent, styles.parentWrapperFlexBox]}>
-          <TouchableOpacity style={[styles.badgeMeteoFocus, styles.badgeFrameFlexBox]}>
-            <Text style={[styles.focus, styles.dayTextBox]}>Today</Text>
+          <TouchableOpacity style={[dynBadStyToday[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+            <Text style={[dynBadStyToday[1], styles.dayTextBox]}>Today</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]} onPress={props.onPress}>
-            <Text style={[styles.default, styles.dayTextBox]}>3J</Text>
+          <TouchableOpacity style={[dynBadStyThreeJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+            <Text style={[dynBadStyThreeJ[1], styles.dayTextBox]}>3J</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.badgeMeteoDef, styles.badgeFrameFlexBox]}>
-            <Text style={[styles.default, styles.dayTextBox]}>5J</Text>
+          <TouchableOpacity style={[dynBadStyFiveJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+            <Text style={[dynBadStyFiveJ[1], styles.dayTextBox]}>5J</Text>
           </TouchableOpacity>
         </View>
       </View>

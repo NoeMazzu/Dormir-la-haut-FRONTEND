@@ -37,7 +37,7 @@ export default function MeteoScreen() {
   const updateMeteoByDate = (index) => {
     return setMeteoDataTest(prevMeteoData => 
       {
-        const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[1] };
+        const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[2] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
         updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
