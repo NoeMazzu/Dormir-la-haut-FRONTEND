@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  Modal
+  Modal,
 } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import { Dimensions } from "react-native";
@@ -15,7 +15,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 
 function Markers() {
-
   const [markersToShow, setMarkersToShow] = useState([]);
 
   const POIs = useSelector(({ user }) => user.value.POIs);
@@ -31,8 +30,10 @@ function Markers() {
       });
   }, []);
 
-  const markers = markersToShow.map((data, i) => {
-    return (
+  //! BOUCLE POUR TEMPORISER LE LODAING DES POI A REMPLACER PAR UNE DDB plus light / SOIT en fonction du niveau de zoom ou de la position
+  const markers = [];
+  for (let i = 0; i < 50; i++) {
+    markers.push(
       <Marker
         key={i}
         coordinate={{
@@ -43,18 +44,21 @@ function Markers() {
         calloutAnchor={{ x: 0.5, y: 8 }}
       >
         <Callout tooltip={true}>
-          <View style={{
+          <View
+            style={{
               height: (1 / 2) * screenHeight,
               width: (68 / 70) * screenWidth,
               backgroundColor: "black",
               borderRadius: 10,
             }}
           >
-           <View style={{backgroundColor: 'yellow', height: 200}}>
-            <Image source={{uri:'https://ibb.co/b2KXFBC'}}
-                style={{height: 100,width: 100}}/>
-           </View>
-            <View style={{backgroundColor: 'red'}}>
+            <View style={{ backgroundColor: "yellow", height: 200 }}>
+              <Image
+                source={{ uri: "https://ibb.co/b2KXFBC" }}
+                style={{ height: 100, width: 100 }}
+              />
+            </View>
+            <View style={{ backgroundColor: "red" }}>
               <Text style={styles.iconTitle}>{POIs[i].name}</Text>
               <Text style={styles.desc}>{POIs[i].desc}</Text>
             </View>
@@ -80,26 +84,26 @@ function Markers() {
         </Callout>
       </Marker>
     );
-  })
+  }
+
   return markers;
 }
 
-function newModal () {
+//! Nouvelle modal pour afficher les POI
+function newModal() {
   return (
     <Modal>
       <Text>New Modal</Text>
     </Modal>
-  )
+  );
 }
 
-export default function MapScreen({navigation}) {
-
+export default function MapScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
-// const useNavigate = useNavigation().navigate
+  // const useNavigate = useNavigation().navigate
   if (user?.token) {
     navigation.navigate("TabNavigator");
   }
-  
 
   return (
     <MapView
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between",
     padding: 10,
-    backgroundColor: 'pink',
+    backgroundColor: "pink",
     hieght: 100,
   },
   delete: {
