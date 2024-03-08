@@ -26,9 +26,9 @@ export default function MeteoScreen({ navigation }) {
         key={i}
         massif={data.massif}
         weatherIcon={`https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`}
-        temp = {data.temp}
-        windSpe = {data.windSpe}
-        windOri = {data.windOri}
+        temp={data.temp}
+        windSpe={data.windSpe}
+        windOri={data.windOri}
       />
     );
   });

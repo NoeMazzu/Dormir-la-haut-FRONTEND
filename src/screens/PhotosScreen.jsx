@@ -8,16 +8,18 @@ export default function PhotosScreen ({navigation}) {
   if (user?.token) {
     navigation.navigate("TabNavigator");
   }
-    return <View style={styles.container}>
-        <Text>PhotosScreen</Text>
+  return (
+    <View style={styles.container}>
+      <Text>PhotosScreen</Text>
     </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
