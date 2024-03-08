@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import {LogBox} from 'react-native';
->>>>>>> 4d5b649f9eb3ae1a0517f5501bcd222291238b69
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
