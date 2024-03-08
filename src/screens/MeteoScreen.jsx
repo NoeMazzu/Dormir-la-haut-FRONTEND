@@ -3,7 +3,7 @@ import MeteoCard from "../components/MeteoCard";
 import React, { useEffect, useState } from "react";
 
 export default function MeteoScreen() {
-  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
+  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain","Mont Blanc","Bauges","Ecrins"];
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
@@ -40,9 +40,9 @@ export default function MeteoScreen() {
         const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[1] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
-    updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
-    console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
-    return updatedPrevMeteoData;            
+        updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
+        console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
+        return updatedPrevMeteoData;            
       });
   };
   console.log('[METEODATATEST_POSTFUNCTION]:', meteoDataTest[3]);
@@ -56,13 +56,11 @@ export default function MeteoScreen() {
         temp = {data.meteoData.data.temp}
         windSpe = {data.meteoData.data.windSpe*3.6}
         windOri = {data.meteoData.data.windOri}
+        time = {data.meteoData.time}
         onPress={() => updateMeteoByDate(i)}
       />
     );
   });
-
-
-  
 
   return (
     <View style={styles.container}>
