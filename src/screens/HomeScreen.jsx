@@ -17,9 +17,9 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 export default function HomeScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  // if (user?.token) {
+  //   navigation.navigate("TabNavigator");
+  // }
 
   const massifFavs = [
     { massif: "Chartreuse", temp: 1 },
@@ -29,6 +29,9 @@ export default function HomeScreen({ navigation }) {
   const [meteoData, setMeteoData] = useState([]);
 
   useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
