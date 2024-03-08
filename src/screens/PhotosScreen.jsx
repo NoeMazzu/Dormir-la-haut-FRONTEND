@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import ImageGallery from "@paraboly/react-native-gallery";
+import Slider from "../components/Slider";
+
 
 export default function PhotosScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
@@ -10,19 +11,11 @@ export default function PhotosScreen ({navigation}) {
     navigation.navigate("TabNavigator");
   }
 
-  const gallery = [
-    {source:{ uri: "https://source.unsplash.com/1024x768/?nature" }},
-    {source:{ uri: "https://source.unsplash.com/1024x768/?nature" }},
-    {source:{ uri: "https://source.unsplash.com/1024x768/?nature" }},
-    {source:{ uri: "https://source.unsplash.com/1024x768/?nature" }},
-  ];
-
   return (
     <View style={styles.container}>
-      <ImageGallery 
-          data={gallery}
-          loadingSource={require("../assets/img/loading.gif")}/>
-      <Text>PhotosScreen</Text>
+      <Slider />
+      <Slider />
+      <Slider />
     </View>
   );
 }
@@ -30,7 +23,7 @@ export default function PhotosScreen ({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#161D46",
     alignItems: "center",
     justifyContent: "center",
   },

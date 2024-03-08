@@ -22,6 +22,7 @@ import {
   ProfileScreen,
   RegisterScreen,
 } from "./src/screens";
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
 LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
@@ -54,7 +55,21 @@ const HomeStack = () => {
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator screenOptions={({ route }) => ({tabBarIcon: ({ color, size }) => {
+      let iconName = '';
+
+      if (route.name === 'HomeStack') {
+        iconName = 'home';
+      } else if (route.name === 'ProfileScreen') {
+        iconName = 'user';
+      }
+
+      return <FontAwesomeIcon name={iconName} size={size} color={color} />;
+    },
+    tabBarActiveTintColor: '#fff',
+    tabBarInactiveTintColor: '#161D46',
+    headerShown: false, tabBarStyle: {backgroundColor:'#35357F'}})}>
+
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
     </Tab.Navigator>

@@ -2,7 +2,7 @@ import React from "react";
 import  {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
-const Slider = () => {
+const Slider = (props) => {
 
 //! IMPORTER LES PHOTOS DEPUIS LA BDD
 
