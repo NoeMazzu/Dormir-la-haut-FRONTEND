@@ -15,13 +15,13 @@ export default function MeteoCard(props) {
           <Text style={styles.massifText}>{props.massif}</Text>
         </View>
         <View style={[styles.badgeMeteoParent, styles.parentWrapperFlexBox]}>
-          <TouchableOpacity style={[dynBadStyToday[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+          <TouchableOpacity style={[dynBadStyToday[0], styles.badgeFrameFlexBox]} onPress={props.onPress0}>
             <Text style={[dynBadStyToday[1], styles.dayTextBox]}>Today</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[dynBadStyThreeJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+          <TouchableOpacity style={[dynBadStyThreeJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress3}>
             <Text style={[dynBadStyThreeJ[1], styles.dayTextBox]}>3J</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[dynBadStyFiveJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress}>
+          <TouchableOpacity style={[dynBadStyFiveJ[0], styles.badgeFrameFlexBox]} onPress={props.onPress5}>
             <Text style={[dynBadStyFiveJ[1], styles.dayTextBox]}>5J</Text>
           </TouchableOpacity>
         </View>

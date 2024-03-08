@@ -34,10 +34,10 @@ export default function MeteoScreen() {
   console.log('[METEODATATMP]:', meteoDataTmp);
   console.log('[METEODATATEST]:', meteoDataTest);
 
-  const updateMeteoByDate = (index) => {
+  const updateMeteoByDate = (index,day) => {
     return setMeteoDataTest(prevMeteoData => 
       {
-        const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[2] };
+        const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[day] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
         updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
@@ -57,7 +57,10 @@ export default function MeteoScreen() {
         windSpe = {data.meteoData.data.windSpe*3.6}
         windOri = {data.meteoData.data.windOri}
         time = {data.meteoData.time}
-        onPress={() => updateMeteoByDate(i)}
+        onPress0={() => updateMeteoByDate(i,0)}
+        onPress3={() => updateMeteoByDate(i,1)}
+        onPress5={() => updateMeteoByDate(i,2)}
+
       />
     );
   });
