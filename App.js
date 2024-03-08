@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-import {LogBox} from 'react-native';
-
-import { StyleSheet, Text, View } from "react-native";
->>>>>>> meteo5
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";

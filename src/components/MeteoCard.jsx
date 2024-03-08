@@ -3,14 +3,11 @@ import { StyleSheet, Text, View,Image, TouchableOpacity } from "react-native";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 export default function MeteoCard(props) {
-<<<<<<< HEAD
-=======
 
   const dynBadStyToday = props.time === 'today' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
   const dynBadStyThreeJ = props.time === 'threeJ' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
   const dynBadStyFiveJ = props.time === 'fiveJ' ? [styles.badgeMeteoFocus,styles.focus] : [styles.badgeMeteoDef,styles.default]
 
->>>>>>> meteo5
   return (
     <View style={styles.meteoCard}>
       <View style={[styles.frameParent, styles.parentWrapperFlexBox]}>
