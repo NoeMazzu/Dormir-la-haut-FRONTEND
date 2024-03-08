@@ -83,7 +83,7 @@ export default function MapScreen({ navigation }) {
         </Callout>
       </Marker>
     );
-  }
+  })
   return markers;
 }
 

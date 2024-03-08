@@ -44,20 +44,6 @@ export default function HomeScreen({ navigation }) {
       </View>
     );
   });
-
-
- 
-
-  const gallery = [
-    { img: "https://source.unsplash.com/1024x768/?nature" },
-    { img: "https://source.unsplash.com/1024x768/?water" },
-    {
-      img: "https://media.licdn.com/dms/image/D4D03AQFJjZ-tYqWp9A/profile-displayphoto-shrink_200_200/0/1676368422779?e=2147483647&v=beta&t=5vOpwfuZMga8eaL7P_riZ9_hsuIBvN6A4P70IhsWx-k",
-    },
-    { img: "https://source.unsplash.com/1024x768/?tree" },
-  ];
-
-
   
   const dispatch = useDispatch();
   const gallery = [
@@ -133,12 +119,6 @@ export default function HomeScreen({ navigation }) {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.mapContainer}
-        onPress={() => {
-          navigation.navigate("MapScreen");
-        }}
-      >
       
       <TouchableOpacity
         style={styles.mapContainer}
@@ -152,20 +132,12 @@ export default function HomeScreen({ navigation }) {
             latitude: 45.7,
             longitude: 6.4,
             latitudeDelta: 2,
-            longitudeDelta: 2,
-          mapType="terrain"
-          initialRegion={{
-            latitude: 45.7,
-            longitude: 6.4,
-            latitudeDelta: 2,
-            longitudeDelta: 2,
-          }}
+            longitudeDelta: 2,}}
           style={{ flex: 1}}
           sharedTransitionTag="tag"
         ><View style={{flex:1, borderRadius: 10,}}></View></MapView>
           style={{ flex: 1, height: "100%", width: "100%", borderRadius: 10 }}
           sharedTransitionTag="tag"
-        ></MapView>
       </TouchableOpacity>
       <TouchableOpacity style={styles.photoContainer} onPress={()=> {navigation.navigate('PhotosScreen')}}>
         <ImageSlider data={gallery} caroselImageContainerStyle={{ resizeMode: 'cover' }} caroselImageStyle={{ resizeMode: 'cover' }} showIndicator={true} activeIndicatorStyle={{backgroundColor:'#35357F', alignItems:'center'}}/>
@@ -183,8 +155,7 @@ export default function HomeScreen({ navigation }) {
         />
       </TouchableOpacity>
     </View>
-  );
-}
+    )}
 
 
 const styles = StyleSheet.create({
@@ -199,8 +170,6 @@ const styles = StyleSheet.create({
     width: "50%",
     padding: 4,
   },
-  meteoButton: {
-    flex: 1,
   meteoButton: {
     flex: 1,
     borderRadius: 10,
@@ -232,8 +201,6 @@ const styles = StyleSheet.create({
   },
   buttonNews: {
     flex: 1,
-  buttonNews: {
-    flex: 1,
     borderRadius: 10,
     backgroundColor: "#35357F",,
     flexDirection: 'row',
@@ -244,8 +211,6 @@ const styles = StyleSheet.create({
     height: "50%",
     padding: 4,
   },
-  checklistButton: {
-    flex: 1,
   checklistButton: {
     flex: 1,
     borderRadius: 10,
