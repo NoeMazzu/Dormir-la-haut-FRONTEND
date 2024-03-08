@@ -48,7 +48,7 @@ const user = useSelector((state) => state.user.value);
             setPassword('');
             setError("");
             dispatch(setToken(data.token));
-            
+            navigation.navigate('TabNavigator')
           }else {       
             setError(data.error);
           }
@@ -85,7 +85,7 @@ const user = useSelector((state) => state.user.value);
             <Text style={styles.buttonText}>Annuler</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signupButton} onPress={handleConnection}>
-            <Text style={styles.buttonText2}  onPress={() => navigation.navigate('TabNavigator')}>Se Connecter</Text>
+            <Text style={styles.buttonText2} >Se Connecter</Text>
           </TouchableOpacity>
         </View>
       </View>

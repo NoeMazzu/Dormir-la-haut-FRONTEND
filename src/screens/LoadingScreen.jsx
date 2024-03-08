@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -7,15 +7,16 @@ import {
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
-;
 const LoadingScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const user = useSelector((state) => state.user.value);
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
