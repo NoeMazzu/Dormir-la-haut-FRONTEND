@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import user from "./src/redux/user";
+import user from "./src/redux/slices/user";
 import {
   ChecklistsScreen,
   HomeScreen,
