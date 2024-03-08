@@ -21,14 +21,12 @@ function Markers() {
 
   const screenHeight = Dimensions.get("screen").height;
   const screenWidth = Dimensions.get("screen").width;
+  const user = useSelector((state) => state.user.value);
 
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
-      .then((data) => {
-        setMarkersToShow(data.poi);
-      });
-  }, []);
+  const handleMarkerClick = (index) => {
+    setMarkersToShow(user);
+  };
+
 
   //! BOUCLE POUR TEMPORISER LE LODAING DES POI A REMPLACER PAR UNE DDB plus light / SOIT en fonction du niveau de zoom ou de la position
   const markers = [];
@@ -99,7 +97,6 @@ function newModal() {
 }
 
 export default function MapScreen({ navigation }) {
-  const user = useSelector((state) => state.user.value);
   // const useNavigate = useNavigation().navigate
   if (user?.token) {
     navigation.navigate("TabNavigator");
