@@ -5,6 +5,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  FlatList,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +14,7 @@ import { useState, useEffect } from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Slider from "../components/Slider";
 
 export default function HomeScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -51,12 +53,7 @@ export default function HomeScreen({ navigation }) {
   
   
   const dispatch = useDispatch();
-  const gallery = [
-    { img: "https://source.unsplash.com/1024x768/?nature" },
-    { img: "https://source.unsplash.com/1024x768/?water" },
-    { img: "https://source.unsplash.com/1024x768/?girl" },
-    { img: "https://source.unsplash.com/1024x768/?tree" },
-  ];
+
 
   useEffect(() => {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
@@ -136,22 +133,9 @@ export default function HomeScreen({ navigation }) {
 
       ></MapView>
     </TouchableOpacity>
-    <TouchableOpacity
-      style={styles.photoContainer}
-    >
-      <ImageSlider
-        data={gallery}
-        caroselImageContainerStyle={{ resizeMode: "cover" }}
-        caroselImageStyle={{ resizeMode: "cover" }}
-        showIndicator={false}
-        autoPlay
-        timer={2000}
-        onClick={(item, index)=>{navigation.navigate("PhotosScreen")}}
-        activeIndicatorStyle={{
-          backgroundColor: "#35357F",
-          alignItems: "center",
-        }}
-      />
+    <TouchableOpacity style={styles.photoContainer}
+     onPress={() => { navigation.navigate('PhotosScreen') }}>
+    <Slider/>
     </TouchableOpacity>
   </View>
 );
