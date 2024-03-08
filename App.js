@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import user from "./src/redux/slices/user";
+import poi from "./src/redux/slices/poi";
 import {
   ChecklistsScreen,
   HomeScreen,
@@ -27,7 +28,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const reducers = combineReducers({
-  user,
+  user, poi
 });
 
 const persistConfig = { key: "dormirlahaut", storage: AsyncStorage };

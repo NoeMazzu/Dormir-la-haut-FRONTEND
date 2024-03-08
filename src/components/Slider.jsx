@@ -4,6 +4,8 @@ import Carousel from 'react-native-snap-carousel';
 
 const Slider = () => {
 
+//! IMPORTER LES PHOTOS DEPUIS LA BDD
+
   const gallery = [
     { img: "https://source.unsplash.com/1024x768/?nature" },
     { img: "https://source.unsplash.com/1024x768/?water" },

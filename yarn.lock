@@ -1566,6 +1566,18 @@
     humps "^2.0.1"
     prop-types "^15.7.2"
 
+"@freakycoder/react-native-bounceable@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@freakycoder/react-native-bounceable/-/react-native-bounceable-0.2.5.tgz#ad61bdafbf68465e9c2145e99c09b500ae091f0e"
+  integrity sha512-J8WBOYxbm/um7SqXYneduZ08T5Kin9z+ixsS3wOLtpeNvKscuqmDEgsgefTYydeSIoI5dOfWmklnRRgu5i/8nA==
+
+"@freakycoder/react-native-progressive-fast-image@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@freakycoder/react-native-progressive-fast-image/-/react-native-progressive-fast-image-0.2.5.tgz#8c7f0e3dafc33211cfbcff99bae188bb80ebc251"
+  integrity sha512-UEJfY1JS70og5XqFd7P24ZhOdrWqvW22iJ1UMfqNllJpb/of/CWbDS/8zVfZMEG9pNGffN8FsSYApLoYMIfZpA==
+  dependencies:
+    react-native-fast-image ">= 8.3.2"
+
 "@gar/promisify@^1.0.1":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
@@ -1728,6 +1740,16 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
+
+"@paraboly/react-native-gallery@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@paraboly/react-native-gallery/-/react-native-gallery-0.1.4.tgz#3e1a3b9f17ace3e484b6abacdf5151c81db0f957"
+  integrity sha512-YGq7VRvJLkLnufXgCp+5G8TQ3FLWPnXCl45CAe2D9qoo6yFD6bnrFfYK45K5oFDp0QsAv/GeatwlLCvKpuKS2Q==
+  dependencies:
+    "@freakycoder/react-native-bounceable" "^0.2.5"
+    "@freakycoder/react-native-progressive-fast-image" "^0.2.5"
+    react-native-easy-state-view "^1.0.1"
+    react-native-spinkit "^1.5.1"
 
 "@react-native-async-storage/async-storage@^1.22.3":
   version "1.22.3"
@@ -5530,7 +5552,7 @@ prompts@^2.3.2, prompts@^2.4.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.1, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5630,6 +5652,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-easy-state-view@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-easy-state-view/-/react-native-easy-state-view-1.0.1.tgz#ca1754829c23508b9361484c31d595d9bcbb0152"
+  integrity sha512-zUYCh5UCSU1Hmf/qKiFCSbwqQpRPF+RmWEhyIcaugndfcb6Fs4aeJXItsKWk7gN0G4s6GxMUzOWxmrj7DNma0w==
+  dependencies:
+    "@freakycoder/react-native-bounceable" "^0.2.5"
+
 react-native-elements@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-3.4.3.tgz#c33919002aef83a0c0f98d0ed56009714ad9b1b3"
@@ -5643,6 +5672,11 @@ react-native-elements@^3.4.3:
     opencollective-postinstall "^2.0.3"
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
+
+"react-native-fast-image@>= 8.3.2":
+  version "8.6.3"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.6.3.tgz#6edc3f9190092a909d636d93eecbcc54a8822255"
+  integrity sha512-Sdw4ESidXCXOmQ9EcYguNY2swyoWmx53kym2zRsvi+VeFCHEdkO+WG1DK+6W81juot40bbfLNhkc63QnWtesNg==
 
 react-native-gesture-handler@^2.15.0:
   version "2.15.0"
@@ -5730,6 +5764,13 @@ react-native-snap-carousel@^3.9.1, react-native-snap-carousel@latest:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-spinkit@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.5.1.tgz#5b770ce93e1f892b3d1983fd3ce2d7375335eb6b"
+  integrity sha512-XkTgP4e+/MZpbI1GdZTIEQ+6WeMWQT4duWnSiXaaVW7py0rtaBLswtAEA6uXQGUhnxMnPWZhbLz7QponpH3ciQ==
+  dependencies:
+    prop-types "^15.5.8"
 
 react-native-svg@^15.1.0:
   version "15.1.0"
