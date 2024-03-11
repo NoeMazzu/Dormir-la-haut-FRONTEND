@@ -3,13 +3,16 @@ import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HotSpot from "../components/HotSpot";
+import NewHotSpot from '../components/NewHotSpot';
 
 export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value);
   const user = useSelector((token) => token.user.value.token);
   const [isVisible, setIsVisible] = useState(false);
-  const [markers, setMarkers] = useState([]);
+   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
+
+  const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
 
   useEffect(() => {
     if (!user?.token) {
@@ -26,10 +29,6 @@ export default function MapScreen({ navigation }) {
     }
     // console.log(JSON.stringify((markers).length, null, 2))
   }, []);
-
-  const handleCloseModal = () => {
-    setIsVisible(false);
-  };
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -52,7 +51,9 @@ export default function MapScreen({ navigation }) {
     });
   };
 
+const handleAddSpot = () => {
 
+}
   
 
   return (
@@ -66,6 +67,9 @@ export default function MapScreen({ navigation }) {
           longitudeDelta: 2,
         }}
         style={{ flex: 1 }}
+        onLongPress ={()=> {
+          handleAddSpot()
+        }}
       >
         <Marker
           title="My position"
@@ -77,13 +81,22 @@ export default function MapScreen({ navigation }) {
       <Modal
         animationType="slide"
         visible={isVisible}
-        onRequestClose={() => handleCloseModal()}
+        onRequestClose={() => setIsVisible(false)}
       >
         <HotSpot
           name={selectedMarker.name}
           desc={selectedMarker.desc}
           handlePress={handleCloseModal}
         />
+      </Modal>
+      <Modal 
+        animationType='slide'
+        visible={isVisibleAddSpot}
+        onRequestClose={()=> setIsVisibleAddSpot(false)}
+        >
+        <NewHotSpot
+        />
+
       </Modal>
     </View>
   );
