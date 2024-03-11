@@ -3,7 +3,7 @@ import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HotSpot from "../components/HotSpot";
-import NewHotSpot from '../components/NewHotSpot';
+import NewHotSpot from "../components/NewHotSpot ";
 
 export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value);
@@ -13,6 +13,8 @@ export default function MapScreen({ navigation }) {
   const [selectedMarker, setSelectedMarker] = useState("");
 
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
+
+  const [newSpotCoord, setNewSpotCoord] = useState (null);
 
   useEffect(() => {
     if (!user?.token) {
@@ -52,10 +54,10 @@ export default function MapScreen({ navigation }) {
   };
 
 const handleAddSpot = () => {
-
+  setIsVisibleAddSpot(true)
 }
-  
 
+  
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -67,7 +69,8 @@ const handleAddSpot = () => {
           longitudeDelta: 2,
         }}
         style={{ flex: 1 }}
-        onLongPress ={()=> {
+        onLongPress ={(e)=> {
+          setNewSpotCoord(e.nativeEvent.coordinate);
           handleAddSpot()
         }}
       >
@@ -95,6 +98,7 @@ const handleAddSpot = () => {
         onRequestClose={()=> setIsVisibleAddSpot(false)}
         >
         <NewHotSpot
+          location={newSpotCoord}
         />
 
       </Modal>
