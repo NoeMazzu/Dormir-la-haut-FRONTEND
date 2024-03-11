@@ -41,13 +41,18 @@ export default function ProfileScreen({ navigation }) {
       .then((response) => response.json())
       .then((result) => {
         setPoisFav((prevPoisFav) => {
-          return [...prevPoisFav, ...result.fav_POI];
+          return [...result.fav_POI];
         });
       })
       .catch((error) => console.log("error", error));
   }, []);
 
   // console.log("[USER_PS]:",user)
+  console.log('[POISFAV:',poisFav)
+  const tabFav = poisFav.map((item,index) => {
+    return (<View key = {index}><Text>Fav ID :{item}</Text></View>)
+  })
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -81,7 +86,9 @@ export default function ProfileScreen({ navigation }) {
 
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{ backgroundColor: "red", width: "100%" }}>
-          <Text h1>Contenu Mes favoris</Text>
+          <View>
+            {tabFav}
+          </View>
         </TabView.Item>
         <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
           <Text h1>Contenu Mes checklists</Text>
