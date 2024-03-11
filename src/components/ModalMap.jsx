@@ -2,28 +2,24 @@ import React from "react";
 import { Dimensions } from 'react-native';
 import { Image, Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-const ModalMapScreen = ({ poi }) => {
+const ModalMap = (props) => {
 
   const screenHeight = Dimensions.get("screen").height;
   const screenWidth = Dimensions.get("screen").width;
 
   return (
-    <View>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={true}
+        visible={props.visible}
         onRequestClose={() => {
         }}
       >
-        <View
-          style={{
+        <View style={{
             height: (1 / 2) * screenHeight,
             width: (68 / 70) * screenWidth,
             backgroundColor: "black",
-            borderRadius: 10,
-          }}
-        >
+            borderRadius: 10, }} >
           <View style={{ backgroundColor: "brown", height: 200 }}>
             <Image
               source={{ uri: "https://ibb.co/b2KXFBC" }}
@@ -31,8 +27,8 @@ const ModalMapScreen = ({ poi }) => {
             />
           </View>
           <View style={{ backgroundColor: "lightpink" }}>
-            <Text style={styles.iconTitle}>{poi.name}</Text>
-            <Text style={styles.desc}>{poi.desc}</Text>
+            <Text style={styles.iconTitle}>{props.name}</Text>
+            <Text style={styles.desc}>{props.desc}</Text>
           </View>
           <View style={styles.bottom}>
             {/* <TouchableOpacity onPress={() => dispatch(addPois(POIs[i]))}>
@@ -54,14 +50,9 @@ const ModalMapScreen = ({ poi }) => {
           </View>
         </View>
       </Modal>
-    </View>
   );
 };
 const styles = StyleSheet.create({
-  map: {
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
-  },
   iconTitle: {
     fontSize: 20,
     paddingTop: 10,
@@ -100,4 +91,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ModalMapScreen;
+export default ModalMap;
