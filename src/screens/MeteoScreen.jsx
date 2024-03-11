@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function MeteoScreen({navigation}) {
   const user = useSelector((state) => state.user.value);
 
-  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain","Mont Blanc","Bauges","Ecrins"];
+  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain"];
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
