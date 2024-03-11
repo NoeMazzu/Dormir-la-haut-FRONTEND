@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
-import { setPOIs } from "../redux/slices/user";
+import { setPOIs } from "../redux/slices/poi";
 import { useState, useEffect } from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
