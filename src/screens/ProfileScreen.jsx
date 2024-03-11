@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Tab, TabView } from "@rneui/themed";
 import React from "react";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -20,8 +21,8 @@ export default function ProfileScreen({ navigation }) {
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append(
       "Authorization",
-      `Bearer 8Yy2ldbvcyKsOGd3qxhM02Vu7QOqfgfq`
-    ); //${user.token}
+      `Bearer ${user.token}`
+    );
 
     // const urlencoded = new URLSearchParams();
     // urlencoded.append("token");
@@ -46,9 +47,13 @@ export default function ProfileScreen({ navigation }) {
       .catch((error) => console.log("error", error));
   }, []);
 
+  // console.log("[USER_PS]:",user)
   return (
     <View style={styles.container}>
-      <Text>{user.username}</Text>
+      <View style={styles.header}>
+        <Text style={styles.username}>{user.username}</Text>
+        <FontAwesome name='user-circle' size={40} color='white' />
+      </View>
       <Tab
         value={index}
         onChange={(e) => setIndex(e)}
@@ -92,5 +97,15 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingTop: 60,
+  },
+  header: {
+    justifyContent:'center',
+    alignItems:'center',
+    gap:16,
+  },
+  username: {
+    color: "#ffffff",
+    fontSize: 32,
+    textAlign:'center',
   },
 });
