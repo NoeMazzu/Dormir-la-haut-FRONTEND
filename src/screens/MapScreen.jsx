@@ -3,7 +3,7 @@ import MapView, { Marker } from "react-native-maps";
 import { Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ModalMapScreen } from "../components/ModalMapScreen";
+import { ModalMapScreen } from "../components/ModalMap";
 
 export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value.POIs);
