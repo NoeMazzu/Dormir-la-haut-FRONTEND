@@ -11,9 +11,12 @@ export default function MeteoScreen({navigation}) {
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (!user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
+  
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
     console.log("URL:", url);

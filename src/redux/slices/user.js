@@ -17,9 +17,13 @@ export const userSlice = createSlice({
     setLocation: (state, action) => {
       state.value.location = action.payload;
     },
+    setLogout: (state) => {
+      state.value = { username: null, token: null, location: null };
+    },
   },
 });
 
-export const { setUsername, setToken, setLocation } = userSlice.actions;
+export const { setUsername, setToken, setLocation, setLogout } =
+  userSlice.actions;
 
 export default userSlice.reducer;
