@@ -15,6 +15,7 @@ useEffect(() => {
     navigation.navigate("TabNavigator");
   }
 }, []);
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();

@@ -78,6 +78,7 @@ const TabNavigator = () => {
 
 export default function App() {
   // AsyncStorage.clear().then(console.log('cleared local storage')).catch(err => console.error(err));
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
