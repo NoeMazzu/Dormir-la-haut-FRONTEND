@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { ModalMapScreen } from "../components/ModalMapScreen"
 
 export default function MapScreen({ navigation }) {
-  const POIs = useSelector(({ poi }) => poi.value.POIs);
+  const POIs = useSelector(({ poi }) => poi.value);
   const user = useSelector((token) => token.user.value.token);
 
   const [markers, setMarkers] = useState([]);

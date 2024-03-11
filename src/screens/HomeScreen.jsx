@@ -10,6 +10,7 @@ import {
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { setPOIs } from "../redux/slices/poi";
+import { setLogout } from "../redux/slices/user";
 import { useState, useEffect } from "react";
 import { ImageSlider } from "react-native-image-slider-banner";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
@@ -17,8 +18,10 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
 
 export default function HomeScreen({ navigation }) {
+  const dispatch = useDispatch();
+ dispatch(setLogout()); 
   const user = useSelector((state) => state.user.value);
-  
+  console.log("[USER_HS:", user);
   const massifFavs = [
     { massif: "Chartreuse", temp: 1 },
     { massif: "Vanoise", temp: 2 },
@@ -27,15 +30,24 @@ export default function HomeScreen({ navigation }) {
   const [meteoData, setMeteoData] = useState([]);
 
   useEffect(() => {
+    
     if (user?.token) {
-      navigation.navigate("TabNavigator");
+      return navigation.navigate("TabNavigator");
     }
+
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
+
     fetch(url)
       .then((response) => response.json())
-      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+      .then((data) => setMeteoData(data.meteoInfo));
+
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
   }, []);
 
   const meteoHome = massifFavs.map((data, i) => {
@@ -49,60 +61,19 @@ export default function HomeScreen({ navigation }) {
       </View>
     );
   });
-  
-  
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPOIs(data.poi));
-      });
-  }, []);
 
   return (
     <View style={styles.container}>
-    <View style={styles.topContainer}>
-      <View style={styles.meteoContainer} >
-        <TouchableOpacity style={styles.meteoButton} onPress={()=> {navigation.navigate('MeteoScreen')}}>
-          <Text style={styles.textTitle}>METEO</Text>
-          <View style={styles.meteosInfos}>
-          {meteoHome}
-          </View>
-          <FontAwesomeIcon
-            icon={faCircleChevronRight}
-            color="#fff"
-            size={20}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.highRigtContainers}>
-        <View style={styles.actusContainers}>
+      <View style={styles.topContainer}>
+        <View style={styles.meteoContainer}>
           <TouchableOpacity
-            style={styles.buttonNews}
+            style={styles.meteoButton}
             onPress={() => {
-              navigation.navigate("NewsScreen");
+              navigation.navigate("MeteoScreen");
             }}
           >
-            <Text style={styles.textTitle}>ACTUS</Text>
-            <FontAwesomeIcon
-          icon={faCircleChevronRight}
-          color="#fff"
-          size={20}
-        />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.cheklistContainers}>
-          <TouchableOpacity
-            style={styles.checklistButton}
-            onPress={() => {
-              navigation.navigate("ChecklistsScreen");
-            }}
-          >
-            <Text style={styles.textTitle}>CHECKLISTS</Text>
-
+            <Text style={styles.textTitle}>METEO</Text>
+            <View style={styles.meteosInfos}>{meteoHome}</View>
             <FontAwesomeIcon
               icon={faCircleChevronRight}
               color="#fff"
@@ -110,34 +81,68 @@ export default function HomeScreen({ navigation }) {
             />
           </TouchableOpacity>
         </View>
-      </View>
-    </View>
-    <TouchableOpacity
-      style={styles.mapContainer}
-      onPress={() => {
-        navigation.navigate("MapScreen");
-      }}
-    >
-    
-      <MapView
-        mapType="terrain"
-        initialRegion={{
-          latitude: 45.7,
-          longitude: 6.4,
-          latitudeDelta: 2,
-          longitudeDelta: 2,
-        }}
-        style={{ flex: 1}}
-        sharedTransitionTag="tag"
+        <View style={styles.highRigtContainers}>
+          <View style={styles.actusContainers}>
+            <TouchableOpacity
+              style={styles.buttonNews}
+              onPress={() => {
+                navigation.navigate("NewsScreen");
+              }}
+            >
+              <Text style={styles.textTitle}>ACTUS</Text>
+              <FontAwesomeIcon
+                icon={faCircleChevronRight}
+                color="#fff"
+                size={20}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.cheklistContainers}>
+            <TouchableOpacity
+              style={styles.checklistButton}
+              onPress={() => {
+                navigation.navigate("ChecklistsScreen");
+              }}
+            >
+              <Text style={styles.textTitle}>CHECKLISTS</Text>
 
-      ></MapView>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.photoContainer}
-     onPress={() => { navigation.navigate('PhotosScreen') }}>
-    <Slider/>
-    </TouchableOpacity>
-  </View>
-);
+              <FontAwesomeIcon
+                icon={faCircleChevronRight}
+                color="#fff"
+                size={20}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+      <TouchableOpacity
+        style={styles.mapContainer}
+        onPress={() => {
+          navigation.navigate("MapScreen");
+        }}
+      >
+        <MapView
+          mapType="terrain"
+          initialRegion={{
+            latitude: 45.7,
+            longitude: 6.4,
+            latitudeDelta: 2,
+            longitudeDelta: 2,
+          }}
+          style={{ flex: 1 }}
+          sharedTransitionTag="tag"
+        ></MapView>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.photoContainer}
+        onPress={() => {
+          navigation.navigate("PhotosScreen");
+        }}
+      >
+        <Slider />
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -214,14 +219,14 @@ const styles = StyleSheet.create({
     height: "35%",
     padding: 4,
     borderRadius: 20,
-    overflow: 'hidden' 
+    overflow: "hidden",
   },
   photoContainer: {
     width: "100%",
     height: "35%",
     padding: 4,
     borderRadius: 20,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   meteosInfos: {
     height: "70%",

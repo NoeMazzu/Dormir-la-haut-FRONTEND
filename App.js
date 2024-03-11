@@ -1,4 +1,4 @@
-import {LogBox} from 'react-native';
+import { LogBox } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -22,14 +22,15 @@ import {
   ProfileScreen,
   RegisterScreen,
 } from "./src/screens";
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 
 LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const reducers = combineReducers({
-  user, poi
+  user,
+  poi,
 });
 
 const persistConfig = { key: "dormirlahaut", storage: AsyncStorage };
@@ -55,21 +56,25 @@ const HomeStack = () => {
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={({ route }) => ({tabBarIcon: ({ color, size }) => {
-      let iconName = '';
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName = "";
 
-      if (route.name === 'HomeStack') {
-        iconName = 'home';
-      } else if (route.name === 'ProfileScreen') {
-        iconName = 'user';
-      }
+          if (route.name === "HomeStack") {
+            iconName = "home";
+          } else if (route.name === "ProfileScreen") {
+            iconName = "user";
+          }
 
-      return <FontAwesomeIcon name={iconName} size={size} color={color} />;
-    },
-    tabBarActiveTintColor: '#fff',
-    tabBarInactiveTintColor: '#161D46',
-    headerShown: false, tabBarStyle: {backgroundColor:'#35357F'}})}>
-
+          return <FontAwesomeIcon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "#161D46",
+        headerShown: false,
+        tabBarStyle: { backgroundColor: "#35357F" },
+      })}
+    >
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
     </Tab.Navigator>
@@ -77,7 +82,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  // AsyncStorage.clear().then(console.log('cleared local storage')).catch(err => console.error(err));
+  AsyncStorage.clear()
 
   return (
     <Provider store={store}>
@@ -86,7 +91,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
             <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-            <Stack.Screen name="LoginScreen" component={LoginScreen} /> 
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
