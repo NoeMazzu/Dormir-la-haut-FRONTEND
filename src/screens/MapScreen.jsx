@@ -9,7 +9,7 @@ export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value.POIs);
   const user = useSelector((token) => token.user.value.token);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const [markers, setMarkers] = useState([]);
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
@@ -21,8 +21,12 @@ export default function MapScreen({ navigation }) {
     }
   }, []);
 
-  const showModal = () => {
-    setIsModalVisible(!isModalVisible);
+  const handleNewsClick = (index) => {
+    setSelectedMarker(markers[index]);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedMarker(null);
   };
 
   const renderMarkers = () => {
