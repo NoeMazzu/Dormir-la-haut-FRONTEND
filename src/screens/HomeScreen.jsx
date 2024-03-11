@@ -5,14 +5,13 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
-  FlatList,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { setPOIs } from "../redux/slices/user";
 import { useState, useEffect } from "react";
-import { ImageSlider } from "react-native-image-slider-banner";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
 
@@ -71,7 +70,10 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.topContainer}>
       <View style={styles.meteoContainer} >
         <TouchableOpacity style={styles.meteoButton} onPress={()=> {navigation.navigate('MeteoScreen')}}>
-          <Text style={styles.textTitle}>METEO</Text>
+          <View style={{flexDirection:'row',justifyContent:'space-between', alignItems:'center'}}><Text style={styles.textTitle}>METEO</Text>
+          <FontAwesome name='arrow-circle-right' color="#fff"
+              size={20}/></View>
+          
           <View style={styles.meteosInfos}>
           {meteoHome}
           </View>
@@ -91,8 +93,8 @@ export default function HomeScreen({ navigation }) {
             }}
           >
             <Text style={styles.textTitle}>ACTUS</Text>
-            <FontAwesomeIcon
-          icon={faCircleChevronRight}
+            <FontAwesome
+          name='arrow-circle-right'
           color="#fff"
           size={20}
         />
@@ -107,8 +109,8 @@ export default function HomeScreen({ navigation }) {
           >
             <Text style={styles.textTitle}>CHECKLISTS</Text>
 
-            <FontAwesomeIcon
-              icon={faCircleChevronRight}
+            <FontAwesome
+              name='arrow-circle-right'
               color="#fff"
               size={20}
             />
@@ -122,7 +124,6 @@ export default function HomeScreen({ navigation }) {
         navigation.navigate("MapScreen");
       }}
     >
-    
       <MapView
         mapType="terrain"
         initialRegion={{
@@ -133,6 +134,7 @@ export default function HomeScreen({ navigation }) {
         }}
         style={{ flex: 1}}
         sharedTransitionTag="tag"
+        provider='google'
 
       ></MapView>
     </TouchableOpacity>
@@ -211,18 +213,18 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     width: "100%",
-    height: "30%",
+    height: "25%",
   },
   mapContainer: {
     width: "100%",
-    height: "35%",
+    height: "45%",
     padding: 4,
     borderRadius: 20,
     overflow: 'hidden' 
   },
   photoContainer: {
     width: "100%",
-    height: "35%",
+    height: "30%",
     padding: 4,
     borderRadius: 20,
     overflow: 'hidden',
