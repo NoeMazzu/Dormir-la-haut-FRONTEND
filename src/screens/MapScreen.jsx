@@ -1,10 +1,8 @@
-import { StyleSheet, View, Image, Text, Modal, Button } from "react-native";
+import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { Dimensions } from "react-native";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import HotSpot from "../components/HotSpot";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value.POIs);
@@ -87,4 +85,3 @@ export default function MapScreen({ navigation }) {
     </View>
   );
 }
-const styles = StyleSheet.create({});
