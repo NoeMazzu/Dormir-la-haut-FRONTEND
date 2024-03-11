@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 import HotSpot from "../components/HotSpot";
 
 export default function MapScreen({ navigation }) {
-  const POIs = useSelector(({ poi }) => poi.value.POIs);
+  const POIs = useSelector(({ poi }) => poi.value);
   const user = useSelector((token) => token.user.value.token);
   const [isVisible, setIsVisible] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
 
   useEffect(() => {
-    if (user) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
-  }, [user]);
+  }, []);
 
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
@@ -51,6 +51,9 @@ export default function MapScreen({ navigation }) {
       );
     });
   };
+
+
+  
 
   return (
     <View style={{ flex: 1 }}>

@@ -6,10 +6,10 @@ import Slider from "../components/Slider";
 
 export default function PhotosScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
-  console.log(user)
+  // console.log(user)
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);

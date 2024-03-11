@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import LittleNews from "../components/LittleNews";
 import ModalNews from "../components/ModalNews";
 import { useSelector } from "react-redux";
+
+
 const NewsScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);
@@ -56,7 +63,6 @@ const NewsScreen = ({ navigation }) => {
   return (
     <View style={styles.filter}>
       <Text style={styles.title}>Actualités</Text>
-
       <ScrollView style={styles.scrollView}>{actu}</ScrollView>
 
       {selectedNews && (
