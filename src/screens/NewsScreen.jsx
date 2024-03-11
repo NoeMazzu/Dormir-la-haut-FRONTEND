@@ -4,26 +4,14 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
 } from "react-native";
 import LittleNews from "../components/LittleNews";
 import ModalNews from "../components/ModalNews";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux"; // BOUTON LOGOUT
-import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
+
 
 const NewsScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.value);
-  const dispatch = useDispatch(); // BOUTON LOGOUT
-
-  // BOUTON LOGOUT
-  const handleLogout = () => {
-    // Dispatch l'action pour déconnecter l'utilisateur
-    dispatch(setLogout());
-
-    // Redirige vers l'écran de connexion (ou où vous le souhaitez)
-    navigation.navigate("LoadingScreen");
-  };
 
   useEffect(() => {
     if (!user?.token) {
@@ -75,11 +63,6 @@ const NewsScreen = ({ navigation }) => {
   return (
     <View style={styles.filter}>
       <Text style={styles.title}>Actualités</Text>
-      {/* // BOUTON LOGOUT */}
-      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-      {/* // BOUTON LOGOUT */}
       <ScrollView style={styles.scrollView}>{actu}</ScrollView>
 
       {selectedNews && (
@@ -96,7 +79,6 @@ const NewsScreen = ({ navigation }) => {
   );
 };
 
-
 const styles = StyleSheet.create({
   filter: {
     backgroundColor: "#161D46",
@@ -111,12 +93,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    marginTop: 10,
-  },
-  logoutButton: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 5,
     marginTop: 10,
   },
 });
