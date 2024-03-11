@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setToken } from "../redux/slices/user";
+import { setToken, setUsername } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
 const LoginScreen = ({ navigation }) => {
@@ -59,6 +59,7 @@ const LoginScreen = ({ navigation }) => {
           setPassword("");
           setError("");
           dispatch(setToken(data.token));
+          dispatch(setUsername(data.userName));
           navigation.navigate("TabNavigator");
         } else {
           setError(data.error);
