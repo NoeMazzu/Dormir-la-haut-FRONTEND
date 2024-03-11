@@ -23,23 +23,48 @@ export default function HomeScreen({ navigation }) {
   // }
 
   const massifFavs = [
-    { massif: "Chartreuse", temp: 1 },
-    { massif: "Vanoise", temp: 2 },
-    { massif: "Belledonne", temp: 3 },
+    { massif: "Chartreuse", temp: 1, weatherIcon : '01d' },
+    { massif: "Vanoise", temp: 2, weatherIcon : '01d' },
+    { massif: "Belledonne", temp: 3, weatherIcon : '01d' },
   ];
   const [meteoData, setMeteoData] = useState([]);
+  const [meteoDataTmp, setMeteoDataTmp] = useState([]);
+  const [meteoDataTest, setMeteoDataTest] = useState([]);
 
   useEffect(() => {
     if (user?.token) {
       navigation.navigate("TabNavigator");
     }
-    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
-      ","
-    )}`;
+    const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
     fetch(url)
       .then((response) => response.json())
-      .then((data) => (console.log(data), setMeteoData(data.meteoInfo)));
+      .then((data) =>{ 
+        setMeteoData(data.meteoInfo);
+        setMeteoDataTmp(prevMeteoDataTmp => {
+          const newData = [...prevMeteoDataTmp, ...data.meteoInfo];
+          return newData
+        })
+        return data.meteoInfo;} 
+     ) .then((patate) =>
+     {
+       setMeteoDataTest(prevMeteoData => {
+         const meteoDay = patate.map(item => ({massif: item.massif, meteoData: item.meteoData[0]}));
+         const newData = [...prevMeteoData, ...meteoDay];
+         return newData;
+     })});
   }, []);
+
+  const meteoCards = meteoDataTest.map((data, i) => {
+    return (
+      <View key={i} style={styles.meteoDetails}>
+      <Text style={styles.textMeteo}>{data.massif}</Text>
+      <View style={styles.meteoDetails}>
+        <Text style={styles.textMeteo}>{data.meteoData.data.temp}°C</Text>
+        <Image source={{uri: `https://openweathermap.org/img/wn/${data.meteoData.data.weatherIcon}@2x.png`}}style={{ height: 20, width: 20, backgroundColor: "red" }} />
+      </View>
+    </View>
+    )
+  })
 
   const meteoHome = massifFavs.map((data, i) => {
     return (
@@ -47,7 +72,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.textMeteo}>{data.massif}</Text>
         <View style={styles.meteoDetails}>
           <Text style={styles.textMeteo}>{data.temp}°C</Text>
-          <View style={{ height: 20, width: 20, backgroundColor: "red" }} />
+          <Image source={{uri: `https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`}}style={{ height: 20, width: 20, backgroundColor: "red" }} />
         </View>
       </View>
     );
@@ -57,13 +82,15 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
 
 
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPOIs(data.poi));
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setPOIs(data.poi));
+  //     });
+  // }, []);
+
+  console.log(meteoHome)
 
   return (
     <View style={styles.container}>
@@ -211,6 +238,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   topContainer: {
+    marginTop: 17,
     flexDirection: "row",
     width: "100%",
     height: "25%",
