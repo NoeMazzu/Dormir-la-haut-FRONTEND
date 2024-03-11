@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const [poisFav, setPoisFav] = useState([]);
-  console.log('[USER:',user.token)
+  console.log('[USER TOKEN:',user.token)
 
   if (user?.token) {
     navigation.navigate("TabNavigator");
@@ -14,7 +14,7 @@ export default function ProfileScreen({ navigation }) {
   useEffect(() => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${user.token}`);
+    myHeaders.append("Authorization", `Bearer 8Yy2ldbvcyKsOGd3qxhM02Vu7QOqfgfq`);
 
     // const urlencoded = new URLSearchParams();
     // urlencoded.append("token");
@@ -31,13 +31,17 @@ export default function ProfileScreen({ navigation }) {
       requestOptions
     )
       .then((response) => response.json())
-      .then((result) => setPoisFav(prevPoisFav => 
+      .then((result) => 
+      {
+        console.log('[RESULT]',result)
+        setPoisFav(prevPoisFav => 
         {
-        const newPoisList = ([...prevPoisFav],[...result.fav_POI])
-        return newPoisList
-      }))
+          return [...prevPoisFav,...result.fav_POI]
+        }
+      )})
       .catch((error) => console.log("error", error));
-  },[]);
+    },[]);
+
   console.log(["POIS"], poisFav);
   return (
     <View style={styles.container}>
