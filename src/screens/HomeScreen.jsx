@@ -19,9 +19,11 @@ import Slider from "../components/Slider";
 export default function HomeScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
-  // if (user?.token) {
-  //   navigation.navigate("TabNavigator");
-  // }
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
 
   const massifFavs = [
     { massif: "Chartreuse", temp: 1 },

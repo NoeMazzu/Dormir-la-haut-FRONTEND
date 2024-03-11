@@ -6,9 +6,11 @@ import { useSelector } from "react-redux";
 const NewsScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.value);
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
   const [actuData, setActuData] = useState([]);
   const [selectedNews, setSelectedNews] = useState(null);
 

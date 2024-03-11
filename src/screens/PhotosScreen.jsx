@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import Slider from "../components/Slider";
 
 
@@ -7,10 +8,11 @@ export default function PhotosScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
   console.log(user)
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
-
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
   return (
     <View style={styles.container}>
       <Slider />

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ImageBackground, KeyboardAvoidingView, Platform, Dimensions} from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slices/user";
 import { useSelector } from "react-redux";
@@ -10,9 +10,11 @@ const LoginScreen = ({ navigation }) => {
   
 const user = useSelector((state) => state.user.value);
 
+useEffect(() => {
   if (user?.token) {
     navigation.navigate("TabNavigator");
   }
+}, []);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();

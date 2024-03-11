@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,9 +18,11 @@ import { useSelector } from "react-redux";
 const RegisterScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user.value);
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
