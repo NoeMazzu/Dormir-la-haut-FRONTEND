@@ -10,7 +10,7 @@ export default function ProfileScreen({ navigation }) {
   const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);

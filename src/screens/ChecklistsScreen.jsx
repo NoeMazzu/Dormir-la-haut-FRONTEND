@@ -6,7 +6,7 @@ export default function ChecklistsScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);

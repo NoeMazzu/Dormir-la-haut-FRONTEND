@@ -9,7 +9,7 @@ export default function PhotosScreen ({navigation}) {
   // console.log(user)
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);

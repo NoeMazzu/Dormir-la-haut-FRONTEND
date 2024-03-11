@@ -12,7 +12,7 @@ export default function MeteoScreen({navigation}) {
   const [meteoDataTest, setMeteoDataTest] = useState([]);
 
   useEffect(() => {
-    if (user?.token) {
+    if (!user?.token) {
       navigation.navigate("TabNavigator");
     }
   }, []);

@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     
-    if (user?.token) {
+    if (!user?.token) {
       return navigation.navigate("TabNavigator");
     }
 

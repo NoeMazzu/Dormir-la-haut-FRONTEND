@@ -36,9 +36,12 @@ export default function MapScreen({ navigation }) {
     });
   };
 
-  if (user) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (!user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
+  
 
   return (
     <MapView
