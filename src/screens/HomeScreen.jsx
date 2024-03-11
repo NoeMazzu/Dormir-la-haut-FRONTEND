@@ -19,7 +19,7 @@ import Slider from "../components/Slider";
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
- dispatch(setLogout()); 
+//  dispatch(setLogout()); 
   const user = useSelector((state) => state.user.value);
   console.log("[USER_HS:", user);
   const massifFavs = [
