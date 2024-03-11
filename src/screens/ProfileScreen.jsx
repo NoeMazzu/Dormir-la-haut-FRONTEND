@@ -7,9 +7,11 @@ export default function ProfileScreen({ navigation }) {
   const [poisFav, setPoisFav] = useState([]);
   console.log('[USER:',user.token)
 
-  if (user?.token) {
-    navigation.navigate("TabNavigator");
-  }
+  useEffect(() => {
+    if (user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
 
   useEffect(() => {
     const myHeaders = new Headers();
