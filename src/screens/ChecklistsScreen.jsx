@@ -9,7 +9,7 @@ export default function ChecklistsScreen ({navigation}) {
 
   useEffect(() => {
     if (!user?.token) {
-      navigation.navigate("TabNavigator");
+      navigation.navigate("LoadingScreen");
     }
   }, []);
   return (
