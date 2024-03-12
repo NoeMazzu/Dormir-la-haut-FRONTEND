@@ -57,6 +57,9 @@ const handleAddSpot = () => {
   setIsVisibleAddSpot(true)
 }
 
+const handleCloseAddSpot = () => {
+  setIsVisibleAddSpot(false)
+}
   
   return (
     <View style={{ flex: 1 }}>
@@ -93,11 +96,14 @@ const handleAddSpot = () => {
         />
       </Modal>
       <Modal 
-        animationType='slide'
+        animationType='fade'
         visible={isVisibleAddSpot}
+        transparent={true}
         onRequestClose={()=> setIsVisibleAddSpot(false)}
+        
         >
         <NewHotSpot
+          onClose={handleCloseAddSpot}
           location={newSpotCoord}
         />
 
