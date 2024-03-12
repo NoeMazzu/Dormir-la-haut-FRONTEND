@@ -58,6 +58,10 @@ const handleAddSpot = () => {
 const handleCloseAddSpot = () => {
   setIsVisibleAddSpot(false)
 }
+
+const handleCloseModal =() => {
+  setIsVisible(false)
+}
   
   return (
     <View style={{ flex: 1 }}>
