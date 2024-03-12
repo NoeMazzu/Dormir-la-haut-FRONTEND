@@ -6,8 +6,6 @@ import React from "react";
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Icon } from 'react-native-elements';
 import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
-import Poi from "../../../Dormir-la-haut-BACKEND/src/models/pois";
-
 
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
