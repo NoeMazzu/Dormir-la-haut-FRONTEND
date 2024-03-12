@@ -3,49 +3,28 @@ import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import HotSpot from "../components/HotSpot";
-import { setPOIs } from "../redux/slices/poi";
 
 export default function MapScreen({ navigation }) {
-  const POIs = useSelector(({ poi }) => poi.value);
-  const user = useSelector((token) => token.user.value.token);
+  const POIs = useSelector((state) => state.poi.value);
+  const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
-  const [markers, setMarkers] = useState([]);
+  // const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (!user?.token) {
-  //     navigation.navigate("TabNavigator");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user?.token) {
+      navigation.navigate("LoadingScreen");
+    }
+  }, []);
 
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
   useEffect(() => {
     if (!user?.token) {
       navigation.navigate("TabNavigator");
-    };
-
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPOIs(data.poi));
-      });
-
-    if (POIs.length > 0) {
-      // j'ai ajouté un if => vérifier si il y a les pois dans le store avant de les push
-      setMarkers(POIs.slice(0, 50));
-    };
-    // console.log(JSON.stringify((markers).length, null, 2))
-  }, []);
-
-  //   useEffect(() => {
-  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(setPOIs(data.poi));
-  //     });
-  // }, []);
+    }
+  });
 
   const handleCloseModal = () => {
     setIsVisible(false);
@@ -57,7 +36,7 @@ export default function MapScreen({ navigation }) {
   };
 
   const Markers = () => {
-    return markers.map((poi, i) => {
+    return POIs.map((poi, i) => {
       return (
         <Marker
           key={i}
@@ -91,15 +70,25 @@ export default function MapScreen({ navigation }) {
         <Markers />
       </MapView>
       <Modal
+        transparent={true}
         animationType="slide"
         visible={isVisible}
         onRequestClose={() => handleCloseModal()}
       >
-        <HotSpot
-          name={selectedMarker.name}
-          desc={selectedMarker.desc}
-          handlePress={handleCloseModal}
-        />
+        <View
+          style={{
+            height: "100%",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <HotSpot
+            name={selectedMarker.name}
+            desc={selectedMarker.desc}
+            handlePress={handleCloseModal}
+          />
+        </View>
       </Modal>
     </View>
   );

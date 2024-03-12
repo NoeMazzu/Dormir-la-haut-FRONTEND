@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   //  dispatch(setLogout());
   const user = useSelector((state) => state.user.value);
-  console.log("[USER_HS:", user);
+  // console.log("[USER_HS:", user);
   const massifFavs = [
     { massif: "Chartreuse", temp: 1, weatherIcon: "01d" },
     { massif: "Vanoise", temp: 2, weatherIcon: "01d" },
@@ -93,15 +93,15 @@ export default function HomeScreen({ navigation }) {
     );
   });
 
-  // useEffect(() => {
-  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(setPOIs(data.poi));
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
+  }, []);
 
-  console.log(meteoHome);
+  // console.log(meteoHome);
 
   return (
     <View style={styles.container}>
@@ -183,7 +183,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-        <Slider />
+        {/* <Slider /> */}
       </TouchableOpacity>
     </View>
   );
