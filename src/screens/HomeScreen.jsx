@@ -5,50 +5,76 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
-  FlatList,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
 import { setPOIs } from "../redux/slices/poi";
 import { setLogout } from "../redux/slices/user";
 import { useState, useEffect } from "react";
-import { ImageSlider } from "react-native-image-slider-banner";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
-//  dispatch(setLogout()); 
+  //  dispatch(setLogout());
   const user = useSelector((state) => state.user.value);
   console.log("[USER_HS:", user);
   const massifFavs = [
-    { massif: "Chartreuse", temp: 1 },
-    { massif: "Vanoise", temp: 2 },
-    { massif: "Belledonne", temp: 3 },
+    { massif: "Chartreuse", temp: 1, weatherIcon: "01d" },
+    { massif: "Vanoise", temp: 2, weatherIcon: "01d" },
+    { massif: "Belledonne", temp: 3, weatherIcon: "01d" },
   ];
   const [meteoData, setMeteoData] = useState([]);
+  const [meteoDataTmp, setMeteoDataTmp] = useState([]);
+  const [meteoDataTest, setMeteoDataTest] = useState([]);
 
   useEffect(() => {
-    
     if (!user?.token) {
       return navigation.navigate("TabNavigator");
     }
-
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
-
     fetch(url)
       .then((response) => response.json())
-      .then((data) => setMeteoData(data.meteoInfo));
-
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
       .then((data) => {
-        dispatch(setPOIs(data.poi));
+        setMeteoData(data.meteoInfo);
+        setMeteoDataTmp((prevMeteoDataTmp) => {
+          const newData = [...prevMeteoDataTmp, ...data.meteoInfo];
+          return newData;
+        });
+        return data.meteoInfo;
+      })
+      .then((patate) => {
+        setMeteoDataTest((prevMeteoData) => {
+          const meteoDay = patate.map((item) => ({
+            massif: item.massif,
+            meteoData: item.meteoData[0],
+          }));
+          const newData = [...prevMeteoData, ...meteoDay];
+          return newData;
+        });
       });
   }, []);
+
+  const meteoCards = meteoDataTest.map((data, i) => {
+    return (
+      <View key={i} style={styles.meteoDetails}>
+        <Text style={styles.textMeteo}>{data.massif}</Text>
+        <View style={styles.meteoDetails}>
+          <Text style={styles.textMeteo}>{data.meteoData.data.temp}°C</Text>
+          <Image
+            source={{
+              uri: `https://openweathermap.org/img/wn/${data.meteoData.data.weatherIcon}@2x.png`,
+            }}
+            style={{ height: 20, width: 20, backgroundColor: "red" }}
+          />
+        </View>
+      </View>
+    );
+  });
 
   const meteoHome = massifFavs.map((data, i) => {
     return (
@@ -56,11 +82,26 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.textMeteo}>{data.massif}</Text>
         <View style={styles.meteoDetails}>
           <Text style={styles.textMeteo}>{data.temp}°C</Text>
-          <View style={{ height: 20, width: 20, backgroundColor: "red" }} />
+          <Image
+            source={{
+              uri: `https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`,
+            }}
+            style={{ height: 20, width: 20, backgroundColor: "red" }}
+          />
         </View>
       </View>
     );
   });
+
+  // useEffect(() => {
+  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setPOIs(data.poi));
+  //     });
+  // }, []);
+
+  console.log(meteoHome);
 
   return (
     <View style={styles.container}>
@@ -72,7 +113,17 @@ export default function HomeScreen({ navigation }) {
               navigation.navigate("MeteoScreen");
             }}
           >
-            <Text style={styles.textTitle}>METEO</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.textTitle}>METEO</Text>
+              <FontAwesome name="arrow-circle-right" color="#fff" size={20} />
+            </View>
+
             <View style={styles.meteosInfos}>{meteoHome}</View>
             <FontAwesomeIcon
               icon={faCircleChevronRight}
@@ -84,17 +135,13 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.highRigtContainers}>
           <View style={styles.actusContainers}>
             <TouchableOpacity
-              style={styles.buttonNews}
+              style={styles.meteoButton}
               onPress={() => {
-                navigation.navigate("NewsScreen");
+                navigation.navigate("MeteoScreen");
               }}
             >
               <Text style={styles.textTitle}>ACTUS</Text>
-              <FontAwesomeIcon
-                icon={faCircleChevronRight}
-                color="#fff"
-                size={20}
-              />
+              <FontAwesome name="arrow-circle-right" color="#fff" size={20} />
             </TouchableOpacity>
           </View>
           <View style={styles.cheklistContainers}>
@@ -106,11 +153,7 @@ export default function HomeScreen({ navigation }) {
             >
               <Text style={styles.textTitle}>CHECKLISTS</Text>
 
-              <FontAwesomeIcon
-                icon={faCircleChevronRight}
-                color="#fff"
-                size={20}
-              />
+              <FontAwesome name="arrow-circle-right" color="#fff" size={20} />
             </TouchableOpacity>
           </View>
         </View>
@@ -131,7 +174,8 @@ export default function HomeScreen({ navigation }) {
           }}
           style={{ flex: 1 }}
           sharedTransitionTag="tag"
-        ></MapView>
+          provider="google"
+        />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.photoContainer}
@@ -210,20 +254,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   topContainer: {
+    marginTop: 17,
     flexDirection: "row",
     width: "100%",
-    height: "30%",
+    height: "25%",
   },
   mapContainer: {
     width: "100%",
-    height: "35%",
+    height: "45%",
     padding: 4,
     borderRadius: 20,
     overflow: "hidden",
   },
   photoContainer: {
     width: "100%",
-    height: "35%",
+    height: "30%",
     padding: 4,
     borderRadius: 20,
     overflow: "hidden",

@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import ChecklistsEditingForm from "../components/Checklists/ChecklistsEditingForm";
+import ChecklistsForm from "../components/Checklists/ChecklistsForm";
+import { useState } from "react";
 
 export default function ChecklistsScreen ({navigation}) {
   const user = useSelector((state) => state.user.value);
@@ -11,9 +13,9 @@ export default function ChecklistsScreen ({navigation}) {
     }
   }, []);
   return (
-    <View style={styles.container}>
-      <Text>ChecklistsScreen</Text>
-    </View>
+      <ScrollView style={styles.container}>
+        <ChecklistsForm/>
+    </ScrollView>
   );
 }
 
@@ -21,7 +23,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 20,
   },
 });

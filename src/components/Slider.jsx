@@ -29,7 +29,7 @@ return (
               enableMomentum={false}
               ockScrollWhileSnapping={true} 
               autoplay={true}
-              autoplayInterval={3000}
+              autoplayInterval={4000}
             />
 )
 }
