@@ -118,20 +118,6 @@ const RegisterScreen = ({ navigation }) => {
             </Text>
             <TextInput
               style={styles.input}
-              placeholder="FirstName"
-              placeholderTextColor="#808080"
-              ref={firstNameInputRef}
-              onChangeText={(text) => (firstNameInputRef.textValue = text)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="LastName"
-              placeholderTextColor="#808080"
-              ref={lastNameInputRef}
-              onChangeText={(text) => (lastNameInputRef.textValue = text)}
-            />
-            <TextInput
-              style={styles.input}
               placeholder="Username"
               placeholderTextColor="#808080"
               ref={userNameInputRef}
