@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     if (!user?.token) {
-      return navigation.navigate("TabNavigator");
+      return navigation.navigate("LoadingScreen");
     }
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
@@ -135,9 +135,9 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.highRigtContainers}>
           <View style={styles.actusContainers}>
             <TouchableOpacity
-              style={styles.meteoButton}
+              style={styles.buttonNews}
               onPress={() => {
-                navigation.navigate("MeteoScreen");
+                navigation.navigate("NewsScreen");
               }}
             >
               <Text style={styles.textTitle}>ACTUS</Text>

@@ -11,7 +11,7 @@ export default function PhotosScreen ({navigation}) {
   useEffect(() => {
     if (!
       user?.token) {
-      navigation.navigate("TabNavigator");
+      navigation.navigate("LoadingScreen");
     }
   }, []);
   return (
