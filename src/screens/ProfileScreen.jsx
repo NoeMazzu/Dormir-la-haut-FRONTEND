@@ -22,50 +22,54 @@ export default function ProfileScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${user.token}`);
+    const fetchData = async () => {
+      try {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
 
-    // const urlencoded = new URLSearchParams();
-    // urlencoded.append("token");
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
 
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      // body: urlencoded,
-      redirect: "follow",
+        const firstResponse = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
+        const firstData = await firstResponse.json();
+        const firstDataStr = firstData.fav_POI.join(',');
+
+        const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
+        const secondData = await secondResponse.json();
+
+        setPoisFav((prevPoisFav) => [...secondData]);
+      } 
+      catch (error) 
+      {
+        console.error('Erreur lors de l\'exécution des appels API :', error);
+      }
     };
+    
+    fetchData();
 
-    fetch(
-      "https://dormir-la-haut-backend.vercel.app/users/myprofile",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        setPoisFav((prevPoisFav) => {
-          return [...result.fav_POI];
-        });
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
+  }, []); 
 
-  // Fonction appelée par le BOUTON LOGOUT
-  const handleLogout = () => {
-    // Dispatch l'action pour déconnecter l'utilisateur
-    dispatch(setLogout());
-    // Redirige vers l'écran de connexion
-    navigation.navigate("LoadingScreen");
-  };
 
-  // console.log("[USER_PS]:",user)
-  console.log("[POISFAV:", poisFav);
-  const tabFav = poisFav.map((item, index) => {
-    return (
-      <View key={index}>
-        <Text>Fav ID :{item}</Text>
-      </View>
-    );
-  });
+// Fonction appelée par le BOUTON LOGOUT
+const handleLogout = () => 
+{
+  // Dispatch l'action pour déconnecter l'utilisateur
+  dispatch(setLogout());
+  // Redirige vers l'écran de connexion
+  navigation.navigate("LoadingScreen");
+};
+
+//TODO - Passer en props au composant modal à utiliser les propriétés récupérés dans le State poisFav
+  const tabFav = poisFav.map((item,index) => {
+    return (<View key = {index}>
+              <Text>Nom du Refuge:{item.name}</Text>
+              <Text>Tye de spot:{item.type}</Text>
+            </View>)
+  })
 
   return (
     <View style={styles.container}>
