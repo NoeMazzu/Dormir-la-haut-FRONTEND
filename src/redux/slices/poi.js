@@ -9,7 +9,8 @@ export const poiSlice = createSlice({
   initialState,
   reducers: {
     setPOIs: (state, action) => {
-      state.value.POIs = action.payload;
+      console.log(JSON.stringify(action.payload, null, 2));
+      state.value = action.payload;
     },
   },
 });

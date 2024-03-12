@@ -1,16 +1,21 @@
 import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
 
 export default function MapScreen({ navigation }) {
-  const POIs = useSelector(({ poi }) => poi.value);
-  const user = useSelector((token) => token.user.value.token);
+  const POIs = useSelector((state) => state.poi.value);
+  const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
+<<<<<<< HEAD
+  // const [markers, setMarkers] = useState([]);
+=======
    const [markers, setMarkers] = useState([]);
+>>>>>>> d9fcec0d1063224081d2433c99580358b7a44d98
   const [selectedMarker, setSelectedMarker] = useState("");
+  const dispatch = useDispatch();
 
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
 
@@ -18,19 +23,17 @@ export default function MapScreen({ navigation }) {
 
   useEffect(() => {
     if (!user?.token) {
-      navigation.navigate("TabNavigator");
+      navigation.navigate("LoadingScreen");
     }
   }, []);
 
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
   useEffect(() => {
-    if (POIs.length > 0) {
-      // j'ai ajouté un if => vérifier si il y a les pois dans le store avant de les push
-      setMarkers(POIs.slice(0, 50));
+    if (!user?.token) {
+      navigation.navigate("TabNavigator");
     }
-    // console.log(JSON.stringify((markers).length, null, 2))
-  }, []);
+  });
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -38,8 +41,7 @@ export default function MapScreen({ navigation }) {
   };
 
   const Markers = () => {
-    return markers.map((poi, i) => {
-      console.log(poi);
+    return POIs.map((poi, i) => {
       return (
         <Marker
           key={i}
@@ -53,11 +55,14 @@ export default function MapScreen({ navigation }) {
     });
   };
 
+<<<<<<< HEAD
+=======
 const handleAddSpot = () => {
   setIsVisibleAddSpot(true)
 }
 
   
+>>>>>>> d9fcec0d1063224081d2433c99580358b7a44d98
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -82,15 +87,33 @@ const handleAddSpot = () => {
         <Markers />
       </MapView>
       <Modal
+        transparent={true}
         animationType="slide"
         visible={isVisible}
         onRequestClose={() => setIsVisible(false)}
       >
+<<<<<<< HEAD
+        <View
+          style={{
+            height: "100%",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <HotSpot
+            name={selectedMarker.name}
+            desc={selectedMarker.desc}
+            handlePress={handleCloseModal}
+          />
+        </View>
+=======
         <HotSpot
           name={selectedMarker.name}
           desc={selectedMarker.desc}
          
         />
+>>>>>>> d9fcec0d1063224081d2433c99580358b7a44d98
       </Modal>
       <Modal 
         animationType='slide'

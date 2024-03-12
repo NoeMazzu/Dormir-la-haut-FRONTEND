@@ -14,6 +14,7 @@ const userSlice = createSlice({
       state.value.username = action.payload;
     },
     setToken: (state, action) => {
+      console.log('reducer', action.payload)
       state.value.token = action.payload;
     },
     setLocation: (state, action) => {

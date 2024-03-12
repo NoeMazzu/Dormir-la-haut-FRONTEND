@@ -1,15 +1,24 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import { StyleSheet, Text, View, ScrollView,TouchableOpacity,Modal } from "react-native";
 import MeteoCard from "../components/MeteoCard";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import SelectMultiple from 'react-native-select-multiple';
 
 export default function MeteoScreen({navigation}) {
   const user = useSelector((state) => state.user.value);
 
-  const massifFavs = ["Chartreuse", "Vanoise","Belledonne","Beaufortain","Mont Blanc","Bauges","Ecrins"];
+  // const massifFavs = ["Chartreuse", "Vanoise", "Belledonne","Beaufortain"];
+  const[massifFavs,setMassifFavs] = useState([]);
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
+  //Etat utilisé lors de l'ajout de massif
+  const [selectedMassif, setSelectedMassif] = useState([]);
+
+  const massifs = [ "Chartreuse","Bornes-Aravis", "Vercors","Lauziere et Grand Arc",
+  "Belledonne", "Mont Blanc","Vanoise", "Beaufortain","Aiguilles Rouge", "Bauges",
+  "Grandes Rousses - Arves", "Cerces-Ambin", "Ecrins", "Taillefer-Matheysine","Chablais","Queyras","Bugey"]
 
   useEffect(() => {
     if (!user?.token) {
@@ -38,10 +47,7 @@ export default function MeteoScreen({navigation}) {
           const newData = [...prevMeteoData, ...meteoDay];
           return newData;
       })});;
-  }, []);
-  
-  console.log('[METEODATATMP]:', meteoDataTmp);
-  console.log('[METEODATATEST]:', meteoDataTest);
+  }, [massifFavs]);
 
   const updateMeteoByDate = (index,day) => {
     return setMeteoDataTest(prevMeteoData => 
@@ -54,8 +60,12 @@ export default function MeteoScreen({navigation}) {
         return updatedPrevMeteoData;            
       });
   };
-  console.log('[METEODATATEST_POSTFUNCTION]:', meteoDataTest[3]);
 
+  const onSelectionsChange = (selectedMassif) => {
+    setSelectedMassif(selectedMassif);
+  };
+
+  console.log('[METEODATATEST]:',meteoDataTest)
   const meteoCards = meteoDataTest.map((data, i) => {
     return (
       <MeteoCard
@@ -74,14 +84,58 @@ export default function MeteoScreen({navigation}) {
     );
   });
 
+//Gestion des fonctionnalités d'ajout de massif pour la météo
+const [modalVisible, setModalVisible] = useState(false);
+
+const openModal = () => {
+  setModalVisible(true);
+};
+
+const closeModal = () => {
+  setMassifFavs(() => selectedMassif.map(item => item.value));
+  setModalVisible(false);
+  setMeteoData([]);
+  setMeteoDataTmp([]);
+  setMeteoDataTest([]);
+
+};
+
+console.log('[MASSIF FAV]',massifFavs)
+console.log('[SELECTED MASSIF]',selectedMassif)
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Météo des massifs</Text>
+
+      <TouchableOpacity onPress={openModal}>
+        <FontAwesome style ={styles.addIcon} name='plus-circle' size={32} color='white' />
+      </TouchableOpacity>
       {/* Utiliser ScrollView pour permettre le défilement */}
       <ScrollView contentContainerStyle={styles.scrollView}>
         {/* Utiliser la méthode map pour créer un composant MeteoCard pour chaque massif */}
         {meteoCards}
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              <SelectMultiple
+                items={massifs}
+                selectedItems={selectedMassif}
+                onSelectionsChange={onSelectionsChange}
+              />
+            </ScrollView>
+            <TouchableOpacity style = {styles.okButton} onPress={closeModal}>
+              <Text style = {styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>       
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -93,6 +147,34 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 60,
     gap: 40,
+  },
+  addIcon: {
+    alignSelf:'center',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Arrière-plan semi-transparent
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    width: '80%',
+    height: '75%',
+    padding: 20,
+    borderRadius: 10,
+  },
+  okButton: {
+    backgroundColor: '#161D46',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  okButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
   },
   title: {
     color: "#ffffff",
