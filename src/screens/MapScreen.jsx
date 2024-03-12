@@ -1,8 +1,9 @@
 import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import HotSpot from "../components/HotSpot";
+import { setPOIs } from "../redux/slices/poi";
 
 export default function MapScreen({ navigation }) {
   const POIs = useSelector(({ poi }) => poi.value);
@@ -10,22 +11,41 @@ export default function MapScreen({ navigation }) {
   const [isVisible, setIsVisible] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!user?.token) {
-      navigation.navigate("TabNavigator");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!user?.token) {
+  //     navigation.navigate("TabNavigator");
+  //   }
+  // }, []);
 
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
   useEffect(() => {
+    if (!user?.token) {
+      navigation.navigate("TabNavigator");
+    };
+
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
+
     if (POIs.length > 0) {
       // j'ai ajouté un if => vérifier si il y a les pois dans le store avant de les push
       setMarkers(POIs.slice(0, 50));
-    }
+    };
     // console.log(JSON.stringify((markers).length, null, 2))
   }, []);
+
+  //   useEffect(() => {
+  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setPOIs(data.poi));
+  //     });
+  // }, []);
 
   const handleCloseModal = () => {
     setIsVisible(false);
@@ -38,7 +58,6 @@ export default function MapScreen({ navigation }) {
 
   const Markers = () => {
     return markers.map((poi, i) => {
-      console.log(poi);
       return (
         <Marker
           key={i}
@@ -51,9 +70,6 @@ export default function MapScreen({ navigation }) {
       );
     });
   };
-
-
-  
 
   return (
     <View style={{ flex: 1 }}>
