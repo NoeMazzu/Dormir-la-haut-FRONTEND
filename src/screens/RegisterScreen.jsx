@@ -26,8 +26,6 @@ const RegisterScreen = ({ navigation }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const firstNameInputRef = useRef(null);
-  const lastNameInputRef = useRef(null);
   const userNameInputRef = useRef(null);
   const MailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
@@ -72,8 +70,6 @@ const RegisterScreen = ({ navigation }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstName: firstNameInputRef.textValue,
-        lastName: lastNameInputRef.textValue,
         userName: userNameInputRef.textValue,
         mail: MailInputRef.textValue,
         password: passwordInputRef.textValue,
@@ -82,8 +78,6 @@ const RegisterScreen = ({ navigation }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.result) {
-          firstNameInputRef.textValue = "";
-          lastNameInputRef.textValue = "";
           userNameInputRef.textValue = "";
           MailInputRef.textValue = "";
           passwordInputRef.textValue = "";
