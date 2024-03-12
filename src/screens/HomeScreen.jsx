@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     if (!user?.token) {
-      return navigation.navigate("TabNavigator");
+      return navigation.navigate("LoadingScreen");
     }
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
@@ -93,13 +93,13 @@ export default function HomeScreen({ navigation }) {
     );
   });
 
-  // useEffect(() => {
-  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(setPOIs(data.poi));
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setPOIs(data.poi));
+      });
+  }, []);
 
   // console.log(meteoHome);
 

@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View,Modal,TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Tab, TabView } from "@rneui/themed";
 import React from "react";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Icon } from 'react-native-elements';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { Icon } from "react-native-elements";
 import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
-
 
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -23,35 +22,37 @@ export default function ProfileScreen({ navigation }) {
   }, []);
 
   useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append(
-      "Authorization",
-      `Bearer ${user.token}`
-    );
+    const fetchData = async () => {
+      try {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
 
-    // const urlencoded = new URLSearchParams();
-    // urlencoded.append("token");
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
 
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      // body: urlencoded,
-      redirect: "follow",
+        const firstResponse = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
+        const firstData = await firstResponse.json();
+        const firstDataStr = firstData.fav_POI.join(',');
+
+        const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
+        const secondData = await secondResponse.json();
+
+        setPoisFav((prevPoisFav) => [...secondData]);
+      } 
+      catch (error) 
+      {
+        console.error('Erreur lors de l\'exécution des appels API :', error);
+      }
     };
+    
+    fetchData();
 
-    fetch(
-      "https://dormir-la-haut-backend.vercel.app/users/myprofile",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        setPoisFav((prevPoisFav) => {
-          return [...result.fav_POI];
-        });
-      })
-      .catch((error) => console.log("error", error));
-  }, []);
+  }, []); 
+
 
 // Fonction appelée par le BOUTON LOGOUT
 const handleLogout = () => 
@@ -62,18 +63,25 @@ const handleLogout = () =>
   navigation.navigate("LoadingScreen");
 };
 
-  // console.log("[USER_PS]:",user)
-  console.log('[POISFAV:',poisFav)
+//TODO - Passer en props au composant modal à utiliser les propriétés récupérés dans le State poisFav
   const tabFav = poisFav.map((item,index) => {
-    return (<View key = {index}><Text>Fav ID :{item}</Text></View>)
+    return (<View key = {index}>
+              <Text>Nom du Refuge:{item.name}</Text>
+              <Text>Tye de spot:{item.type}</Text>
+            </View>)
   })
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style= {styles.subHeader}>
+        <View style={styles.subHeader}>
           <Text style={styles.username}>{user.username}</Text>
-          <FontAwesome name='gear' size={20} color='white' onPress={() => setLogoutModalVisible(true)} />
+          <FontAwesome
+            name="gear"
+            size={20}
+            color="white"
+            onPress={() => setLogoutModalVisible(true)}
+          />
           <Modal
             transparent={true}
             animationType="slide"
@@ -100,9 +108,8 @@ const handleLogout = () =>
               </TouchableOpacity>
             </View>
           </Modal>
-
         </View>
-        <FontAwesome name='user-circle' size={40} color='white' />
+        <FontAwesome name="user-circle" size={40} color="white" />
       </View>
       <Tab
         value={index}
@@ -130,9 +137,7 @@ const handleLogout = () =>
 
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{ backgroundColor: "red", width: "100%" }}>
-          <View>
-            {tabFav}
-          </View>
+          <View>{tabFav}</View>
         </TabView.Item>
         <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
           <Text h1>Contenu Mes checklists</Text>
@@ -150,24 +155,24 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
   header: {
-    justifyContent:'center',
-    alignItems:'center',
-    gap:16,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
   },
   subHeader: {
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
-    gap:16,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
   },
   username: {
     color: "#ffffff",
     fontSize: 32,
-    textAlign:'center',
+    textAlign: "center",
   },
   modalContainer: {
-    backgroundColor: 'white',
-    position: 'absolute',
+    backgroundColor: "white",
+    position: "absolute",
     right: 10,
     top: 60,
     borderRadius: 5,
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
   modalOption: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
   },
 
   modalOptionText: {
