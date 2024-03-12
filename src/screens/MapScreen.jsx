@@ -89,7 +89,7 @@ const handleAddSpot = () => {
         <HotSpot
           name={selectedMarker.name}
           desc={selectedMarker.desc}
-          handlePress={handleCloseModal}
+         
         />
       </Modal>
       <Modal 
