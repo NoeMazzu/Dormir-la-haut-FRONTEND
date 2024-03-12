@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import * as Location from "expo-location";
 import { useDispatch } from "react-redux";
-import { setLocation, setToken, setUsername } from "../redux/slices/user";
+import { setLocation, setMassif, setToken, setUsername } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
 const RegisterScreen = ({ navigation }) => {
