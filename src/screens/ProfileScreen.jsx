@@ -18,11 +18,11 @@ export default function ProfileScreen({ navigation }) {
   const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
   const [checklistData, setChecklistData]= useState([])
 
-  // useEffect(() => {
-  //   if (!user?.token) {
-  //     navigation.navigate("TabNavigator");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user?.token) {
+      navigation.navigate("TabNavigator");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
