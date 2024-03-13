@@ -6,6 +6,8 @@ import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Icon } from "react-native-elements";
 import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
+import FavCard from "../components/FavCard";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -14,6 +16,7 @@ export default function ProfileScreen({ navigation }) {
   const [poisFav, setPoisFav] = useState([]);
   const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
   const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
+  const [checklistData, setChecklistData]= useState([])
 
   useEffect(() => {
     if (!user?.token) {
@@ -42,6 +45,18 @@ export default function ProfileScreen({ navigation }) {
         const secondData = await secondResponse.json();
 
         setPoisFav((prevPoisFav) => [...secondData]);
+        
+        //Récupération des données de checklists depuis le AsyncStorage
+        const fetchData = async () => {
+          try {
+            const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+            const parsedValue = JSON.parse(value);
+            setChecklistData(parsedValue);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };    
+        fetchData();
       } 
       catch (error) 
       {
@@ -63,12 +78,28 @@ const handleLogout = () =>
   navigation.navigate("LoadingScreen");
 };
 
-//TODO - Passer en props au composant modal à utiliser les propriétés récupérés dans le State poisFav
-  const tabFav = poisFav.map((item,index) => {
-    return (<View key = {index}>
-              <Text>Nom du Refuge:{item.name}</Text>
-              <Text>Tye de spot:{item.type}</Text>
-            </View>)
+//Creation de la listse des favoris utilisant le composant FavCard
+const tabFav = poisFav.map((item,index) => {
+    return (
+              <FavCard 
+              key = {index}
+              title ={item.name}
+              poiType = {item.type}
+              imageUrl = {"https://img.freepik.com/vecteurs-libre/paysage-montagne-degrade_23-2149152830.jpg?w=1800&t=st=1710320984~exp=1710321584~hmac=6b797a554ad3068d5ec028516529ebbbd5a4d3bc57091b0e2ceefb0a51bf235a"}
+              />
+)
+  })
+
+//Creation de la listse des favoris utilisant le composant CheckList
+  const tabChecklists = checklistData.map((item,index) => {
+    return (
+              <FavCard 
+              key = {index}
+              title ={item.title}
+              poiType = {`${item.items.length} items`}
+              imageUrl = {"https://media.istockphoto.com/id/1303877287/fr/vectoriel/liste-de-contr%C3%B4le-papier-et-pictogramme-plat-au-crayon.jpg?s=612x612&w=0&k=20&c=SIl78tq5-Ao4AZGw6C5dryrXj3XSiuctK4fHBBciuDI="}
+              />
+)
   })
 
   return (
@@ -136,11 +167,15 @@ const handleLogout = () =>
       </Tab>
 
       <TabView value={index} onChange={setIndex} animationType="spring">
-        <TabView.Item style={{ backgroundColor: "red", width: "100%" }}>
-          <View>{tabFav}</View>
+        <TabView.Item style={{ backgroundColor: "#161D46", width: "100%" }}>
+          <View style = {styles.favView}>
+            {tabFav}
+          </View>
         </TabView.Item>
-        <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
-          <Text h1>Contenu Mes checklists</Text>
+        <TabView.Item style={{ backgroundColor: "161D46", width: "100%" }}>
+          <View style = {styles.favView}>
+            {tabChecklists}
+          </View>
         </TabView.Item>
       </TabView>
     </View>
@@ -153,6 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingTop: 60,
+    gap: 16,
   },
   header: {
     justifyContent: "center",
@@ -188,4 +224,10 @@ const styles = StyleSheet.create({
   modalOptionText: {
     fontSize: 16,
   },
+  favView:{
+    flex:1,
+    gap:16,
+    alignItems:'center',
+    paddingTop:32,
+  }
 });
