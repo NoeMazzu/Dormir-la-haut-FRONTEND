@@ -7,6 +7,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Icon } from "react-native-elements";
 import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
 import FavCard from "../components/FavCard";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
@@ -15,6 +16,7 @@ export default function ProfileScreen({ navigation }) {
   const [poisFav, setPoisFav] = useState([]);
   const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
   const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
+  const [checklistData, setChecklistData]= useState([])
 
   useEffect(() => {
     if (!user?.token) {
@@ -43,6 +45,18 @@ export default function ProfileScreen({ navigation }) {
         const secondData = await secondResponse.json();
 
         setPoisFav((prevPoisFav) => [...secondData]);
+        
+        //Récupération des données de checklists depuis le AsyncStorage
+        const fetchData = async () => {
+          try {
+            const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+            const parsedValue = JSON.parse(value);
+            setChecklistData(parsedValue);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };    
+        fetchData();
       } 
       catch (error) 
       {
@@ -76,12 +90,15 @@ const tabFav = poisFav.map((item,index) => {
 )
   })
 
-  const tabChecklists = poisFav.map((item,index) => {
+
+
+//Creation de la listse des favoris utilisant le composant CheckList
+  const tabChecklists = checklistData.map((item,index) => {
     return (
               <FavCard 
               key = {index}
-              title ={item.name}
-              poiType = {item.type}
+              title ={item.title}
+              poiType = {`${item.items.length} items`}
               imageUrl = {"https://media.istockphoto.com/id/1303877287/fr/vectoriel/liste-de-contr%C3%B4le-papier-et-pictogramme-plat-au-crayon.jpg?s=612x612&w=0&k=20&c=SIl78tq5-Ao4AZGw6C5dryrXj3XSiuctK4fHBBciuDI="}
               />
 )
