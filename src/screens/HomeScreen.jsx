@@ -15,10 +15,12 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
-
+import { niktamere } from '../redux/slices/poi'
+ 
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
-  //  dispatch(setLogout());
+  // dispatch(setLogout())
+  //  dispatch(niktamere());
   const user = useSelector((state) => state.user.value);
   // console.log("[USER_HS:", user);
   const massifFavs = [

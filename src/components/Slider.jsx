@@ -11,7 +11,7 @@ const Slider = (props) => {
     { img: "https://source.unsplash.com/1024x768/?girl" },
     { img: "https://source.unsplash.com/1024x768/?tree" },
   ];
-  console.log(props);
+  
   return (
     <Carousel
       ref={(c) => {

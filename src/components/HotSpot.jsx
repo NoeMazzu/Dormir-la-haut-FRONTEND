@@ -1,49 +1,95 @@
-import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadBookmarks,
+  addBookmark,
+  removeBookmark,
+} from "../redux/slices/poi";
 
 function HotSpot(props) {
+  const dispatch = useDispatch()
   const pois = useSelector((state) => state.poi.value);
   const token = useSelector((state) => state.user.value.token);
-  const poiFound = pois.find((element) => element.name === props.name);
+  const poiFound = pois.POIs.find((element) => element.name === props.name);
 
-  // console.log("[HOTSPOT POI.ID]", poiFound._id);
+  console.log("poiFound", poiFound);
 
-  const handleBookmark = () => {
-    return (
-      fetch("https://dormir-la-haut-backend.vercel.app/poi/poiBookMark", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          token: token,
-          poiId: poiFound._id,
-        }),
-      })
-        .then((response) => response.json())
-        // .then((data) => console.log(data))
-        .catch((error) => console.error("Erreur :", error))
-    );
-  };
-
-  // get the hotspot dimensions on render to extrapolate slider size
+  const [isPressed, setIsPressed] = useState(true);
   const [componentHeight, setComponentHeight] = useState(0);
   const [componentWidth, setComponentWidth] = useState(0);
 
+  // get the hotspot dimensions on render to extrapolate slider size
   const onViewLayout = (event) => {
     const { width, height } = event.nativeEvent.layout;
     setComponentHeight(height);
     setComponentWidth(width);
   };
 
+  const isPoiBookmarked = pois.bookmarkedPOIs.some((e) =>
+    e.includes(props.name)
+  );
+
+  console.log('isPoiBookmarked', isPoiBookmarked);
+
+  useEffect(() => {
+    fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => data.result && dispatch(loadBookmarks(data.fav_POI)));
+  }, []);
+
+  function handleBookmark() {
+    if (!isPoiBookmarked) {
+      // console.log("book");
+      fetch("https://dormir-la-haut-backend.vercel.app/users/addAside", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: poiFound._id,
+          token
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          data.result && dispatch(addBookmark(data)); // todo gérer ce que rnevoie la route et créer le reducer
+        })
+        .catch((error) => console.error("Erreur :", error));
+    } else {
+      fetch("https://dormir-la-haut-backend.vercel.app/users/removeAside", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: poiFound._id,
+          token
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => data.result && dispatch(removeBookmark()))
+        .catch((error) => console.error("Erreur :", error));
+    }
+  }
+
+  let star;
+  if (isPressed) {
+    star = <FontAwesome name="star-o" size={30} />;
+  } else {
+    star = <FontAwesome name="star" size={30} />;
+  }
 
   return (
     <View style={styles.container} onLayout={onViewLayout}>
@@ -59,7 +105,11 @@ function HotSpot(props) {
       </View>
 
       <View style={styles.photoContainer}>
-        <Slider playing={false} height={componentHeight} width={componentWidth} />
+        <Slider
+          playing={false}
+          height={componentHeight}
+          width={componentWidth}
+        />
       </View>
       <View style={styles.infosContainer}>
         <View>
@@ -68,11 +118,15 @@ function HotSpot(props) {
         </View>
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity>
-              <FontAwesome name="star-o" size={30} style={{}} />
+            <TouchableOpacity onPress={() => setIsPressed(!isPressed)}>
+              {star}
             </TouchableOpacity>
             <TouchableOpacity onPress={handleBookmark}>
-              <FontAwesome name="bookmark-o" size={30} style={{}} />
+              {isPoiBookmarked ? (
+                <FontAwesome name="bookmark" size={30} />
+              ) : (
+                <FontAwesome name="bookmark-o" size={30} />
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -106,7 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    zIndex: -1
+    zIndex: -1,
   },
   title: {
     fontSize: 20,
@@ -120,7 +174,7 @@ const styles = StyleSheet.create({
   },
   logosContainer: {
     flexDirection: "row",
-    padding: "3%"
+    padding: "3%",
   },
   deleteLogo: {
     width: "100%",
@@ -130,10 +184,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   logo: {
-    position: 'absolute',
+    position: "absolute",
     top: 8,
-    right:  12,
-    color: "#35357F"
+    right: 12,
+    color: "#35357F",
   },
 });
 
