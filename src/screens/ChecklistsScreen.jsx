@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
   TextInput,
-  Modal, // Ajout
+  Modal,
 } from "react-native";
 import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -45,8 +45,8 @@ const ChecklistsScreen = ({ navigation }) => {
   const [checklists, setChecklists] = useState([]);
   const [newItemTexts, setNewItemTexts] = useState(checklists.map(() => ""));
   const [selectedItem, setSelectedItem] = useState(null);
-  const [isAddingChecklist, setIsAddingChecklist] = useState(false); // Ajout
-  const [newChecklistTitle, setNewChecklistTitle] = useState(""); // Ajout
+  const [isAddingChecklist, setIsAddingChecklist] = useState(false);
+  const [newChecklistTitle, setNewChecklistTitle] = useState("");
 
   useEffect(() => {
     const loadChecklists = async () => {
@@ -59,13 +59,14 @@ const ChecklistsScreen = ({ navigation }) => {
 
           if (storedChecklists) {
             loadedChecklists = JSON.parse(storedChecklists);
+          } else {
+            // Si aucune checklist n'est stockée, utilisez les checklists par défaut
+            loadedChecklists = getDefaultChecklists();
+
+            // Sauvegardez les checklists par défaut dans le AsyncStorage
+            await AsyncStorage.setItem(storageKey, JSON.stringify(loadedChecklists));
           }
         }
-
-        // Ensure default checklists are available
-        loadedChecklists = loadedChecklists.length
-          ? loadedChecklists
-          : getDefaultChecklists();
 
         setChecklists(loadedChecklists);
       } catch (error) {
@@ -91,20 +92,44 @@ const ChecklistsScreen = ({ navigation }) => {
     saveChecklists();
   }, [checklists, user?.token]);
 
-  const addItemToChecklist = (checklistIndex) => {
-    if (newItemTexts[checklistIndex].trim() !== "") {
-      const newItem = { text: newItemTexts[checklistIndex], checked: false };
-      const updatedChecklists = [...checklists];
-      updatedChecklists[checklistIndex].items.push(newItem);
-      setChecklists(updatedChecklists);
+  const testData = async () => {
+    const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+    console.log('[VALUE ASYNCSTORAGE]:',value)}
+    testData();
+  const addDefaultChecklists = async () => {
+    try {
+      if (user?.token) {
+        const storageKey = `checklists_${user.token}`;
+        const storedChecklists = await AsyncStorage.getItem(storageKey);
 
-      const updatedItemTexts = [...newItemTexts];
-      updatedItemTexts[checklistIndex] = "";
-      setNewItemTexts(updatedItemTexts);
+        if (!storedChecklists) {
+          // Si aucune checklist n'est stockée, utilisez les checklists par défaut
+          const defaultChecklists = getDefaultChecklists();
 
-      // Réinitialiser l'élément sélectionné
-      setSelectedItem(null);
+          // Sauvegardez les checklists par défaut dans le AsyncStorage
+          await AsyncStorage.setItem(storageKey, JSON.stringify(defaultChecklists));
+
+          // Mettez à jour l'état avec les checklists par défaut
+          setChecklists(defaultChecklists);
+        }
+      }
+    } catch (error) {
+      console.error("Error adding default checklists:", error);
     }
+  };
+
+  useEffect(() => {
+    // Appelez la fonction pour ajouter les checklists par défaut lors de la première connexion
+    addDefaultChecklists();
+  }, [user?.token]);
+
+  const addItemToChecklist = (checklistIndex, newItem) => {
+    const updatedChecklists = [...checklists];
+    updatedChecklists[checklistIndex].items.push(newItem);
+    setChecklists(updatedChecklists);
+
+    // Réinitialiser l'élément sélectionné
+    setSelectedItem(null);
   };
 
   const handleItemPress = (checklistIndex, itemIndex) => {
@@ -285,6 +310,7 @@ const ChecklistsScreen = ({ navigation }) => {
   </View>
 );
 };
+
 const styles = StyleSheet.create({
   filter: {
     backgroundColor: "#161D46",
