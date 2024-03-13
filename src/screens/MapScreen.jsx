@@ -9,27 +9,26 @@ export default function MapScreen({ navigation }) {
   const POIs = useSelector((state) => state.poi.value);
   const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
-  const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
-  const dispatch = useDispatch();
 
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
 
-  const [newSpotCoord, setNewSpotCoord] = useState (null);
+  const [newSpotCoord, setNewSpotCoord] = useState(null);
 
   useEffect(() => {
     if (!user?.token) {
       navigation.navigate("LoadingScreen");
     }
+    fetch('https://')
   }, []);
 
   // Je récupère les infos des pois depuis le store redux et j'en garde seulement 50 sur la mapScreen.
   // Puis je l'enregistre dans un état local.
-  useEffect(() => {
-    if (!user?.token) {
-      navigation.navigate("TabNavigator");
-    }
-  });
+  // useEffect(() => {
+  //   if (!user?.token) {
+  //     navigation.navigate("TabNavigator");
+  //   }
+  // });
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -37,7 +36,8 @@ export default function MapScreen({ navigation }) {
   };
 
   const Markers = () => {
-    return POIs.map((poi, i) => {
+    return POIs.POIs.map((poi, i) => {
+
       return (
         <Marker
           key={i}
@@ -51,18 +51,18 @@ export default function MapScreen({ navigation }) {
     });
   };
 
-const handleAddSpot = () => {
-  setIsVisibleAddSpot(true)
-}
+  const handleAddSpot = () => {
+    setIsVisibleAddSpot(true);
+  };
 
-const handleCloseAddSpot = () => {
-  setIsVisibleAddSpot(false)
-}
+  const handleCloseAddSpot = () => {
+    setIsVisibleAddSpot(false);
+  };
 
-const handleCloseModal =() => {
-  setIsVisible(false)
-}
-  
+  const handleCloseModal = () => {
+    setIsVisible(false);
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <MapView
@@ -75,9 +75,9 @@ const handleCloseModal =() => {
           longitudeDelta: 2,
         }}
         style={{ flex: 1 }}
-        onLongPress ={(e)=> {
+        onLongPress={(e) => {
           setNewSpotCoord(e.nativeEvent.coordinate);
-          handleAddSpot()
+          handleAddSpot();
         }}
       >
         <Marker
@@ -108,18 +108,13 @@ const handleCloseModal =() => {
           />
         </View>
       </Modal>
-      <Modal 
-        animationType='fade'
+      <Modal
+        animationType="fade"
         visible={isVisibleAddSpot}
         transparent={true}
-        onRequestClose={()=> setIsVisibleAddSpot(false)}
-        
-        >
-        <NewHotSpot
-          onClose={handleCloseAddSpot}
-          location={newSpotCoord}
-        />
-
+        onRequestClose={() => setIsVisibleAddSpot(false)}
+      >
+        <NewHotSpot onClose={handleCloseAddSpot} location={newSpotCoord} />
       </Modal>
     </View>
   );

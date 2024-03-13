@@ -82,7 +82,7 @@ const TabNavigator = () => {
 };
 
 export default function App() {
-  // AsyncStorage.clear()
+  // AsyncStorage.clear().catch(err => console.error(err))
 
   return (
     <Provider store={store}>
