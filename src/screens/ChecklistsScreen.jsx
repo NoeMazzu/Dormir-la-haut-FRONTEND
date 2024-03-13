@@ -43,7 +43,7 @@ const ChecklistsScreen = ({ navigation }) => {
   ];
 
   const [checklists, setChecklists] = useState([]);
-  const [newItemTexts, setNewItemTexts] = useState(checklists.map(() => ""));
+  const [newItemTexts, setNewItemTexts] = useState(getDefaultChecklists().map(() => ""));
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAddingChecklist, setIsAddingChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
@@ -298,7 +298,7 @@ const ChecklistsScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.addButton}
             onPress={() => {
-              const newItem = { text: "Nouvel item", checked: false };
+              const newItem = { text: newItemTexts[checklistIndex] || "Nouvel item", checked: false };
               addItemToChecklist(checklistIndex, newItem);
             }}
           >

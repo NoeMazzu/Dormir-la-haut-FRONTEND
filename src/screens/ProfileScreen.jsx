@@ -46,26 +46,24 @@ export default function ProfileScreen({ navigation }) {
 
         setPoisFav((prevPoisFav) => [...secondData]);
         
-
+        //Récupération des données de checklists depuis le AsyncStorage
+        const fetchData = async () => {
+          try {
+            const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+            const parsedValue = JSON.parse(value);
+            setChecklistData(parsedValue);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };    
+        fetchData();
       } 
       catch (error) 
       {
-        console.error('[RECUP DATA FAV] Erreur lors de l\'exécution des appels API :', error);
+        console.error('Erreur lors de l\'exécution des appels API :', error);
       }
     };
-            //Récupération des données de checklists depuis le AsyncStorage
-            const testData = async () => {
-              try {
-                const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-                console.log('[VALUE ASYNCSTORAGE]:',value)
-                const parsedValue = JSON.parse(value);
     
-                setChecklistData(parsedValue || []);
-              } catch (error) {
-                console.error('Error fetching data:', error);
-              }
-            };    
-            testData();
     fetchData();
 
   }, []); 
