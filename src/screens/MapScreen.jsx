@@ -9,7 +9,6 @@ export default function MapScreen({ navigation }) {
   const POIs = useSelector((state) => state.poi.value);
   const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
-  const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState("");
   const dispatch = useDispatch();
 

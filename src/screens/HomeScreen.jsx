@@ -101,10 +101,21 @@ export default function HomeScreen({ navigation }) {
       });
   }, []);
 
-  // console.log(meteoHome);
+ 
+  // get the hotspot dimensions on render to extrapolate slider size
+  const [componentHeight, setComponentHeight] = useState(0);
+  const [componentWidth, setComponentWidth] = useState(0);
+
+  const onViewLayout = (event) => {
+    const { width, height } = event.nativeEvent.layout;
+    setComponentHeight(height);
+    setComponentWidth(width);
+  };
+
+  console.log(componentHeight, componentWidth)
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onViewLayout}>
       <View style={styles.topContainer}>
         <View style={styles.meteoContainer}>
           <TouchableOpacity
@@ -183,7 +194,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-      <Slider playing={true} />
+        <Slider playing={true} height={componentHeight} width={componentWidth} />
       </TouchableOpacity>
     </View>
   );

@@ -1,5 +1,10 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useSelector } from "react-redux";
@@ -12,27 +17,49 @@ function HotSpot(props) {
   // console.log("[HOTSPOT POI.ID]", poiFound._id);
 
   const handleBookmark = () => {
-    return fetch("https://dormir-la-haut-backend.vercel.app/poi/poiBookMark", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        token: token,
-        poiId: poiFound._id,
-      }),
-    })
-      .then((response) => response.json())
-      // .then((data) => console.log(data))
-      .catch((error) => console.error("Erreur :", error));
+    return (
+      fetch("https://dormir-la-haut-backend.vercel.app/poi/poiBookMark", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          token: token,
+          poiId: poiFound._id,
+        }),
+      })
+        .then((response) => response.json())
+        // .then((data) => console.log(data))
+        .catch((error) => console.error("Erreur :", error))
+    );
   };
 
+  // get the hotspot dimensions on render to extrapolate slider size
+  const [componentHeight, setComponentHeight] = useState(0);
+  const [componentWidth, setComponentWidth] = useState(0);
+
+  const onViewLayout = (event) => {
+    const { width, height } = event.nativeEvent.layout;
+    setComponentHeight(height);
+    setComponentWidth(width);
+  };
+
+
   return (
-    <View style={styles.container}>
-      
+    <View style={styles.container} onLayout={onViewLayout}>
+      <View style={styles.deleteLogoContainer}>
+        <TouchableOpacity style={styles.deleteLogo}>
+          <FontAwesome
+            name="close"
+            size={30}
+            onPress={props.handlePress}
+            style={styles.logo}
+          />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.photoContainer}>
-        
-        <Slider playing={false}/>
+        <Slider playing={false} height={componentHeight} width={componentWidth} />
       </View>
       <View style={styles.infosContainer}>
         <View>
@@ -42,15 +69,12 @@ function HotSpot(props) {
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity>
-              <FontAwesome name="star-o" size={40} style={styles.logo}/>
+              <FontAwesome name="star-o" size={30} style={{}} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleBookmark}>
-              <FontAwesome name="bookmark-o" size={40} style={styles.logo}/>
+              <FontAwesome name="bookmark-o" size={30} style={{}} />
             </TouchableOpacity>
           </View>
-            <TouchableOpacity style={styles.deleteLogo}>
-              <FontAwesome name="close" size={40} onPress={props.handlePress} style={styles.logo} />
-            </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -65,6 +89,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#35357F",
+    // padding: "4%",
   },
   infosContainer: {
     flex: 1,
@@ -72,40 +97,44 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 20,
     height: "100%",
-    alignItems: "center",
+    width: "100%",
+    justifyContent: "space-between",
   },
   photoContainer: {
     overflow: "hidden",
     flex: 1,
-    paddingTop: "5%",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    zIndex: -1
   },
   title: {
     fontSize: 20,
     padding: "5%",
-    color: "white"
+    color: "white",
   },
   desc: {
     paddingBottom: "5%",
-    paddingLeft: "5%",
-    color: "white"
+    paddingHorizontal: "5%",
+    color: "white",
   },
   logosContainer: {
-    justifyContent: "space-between",
-    alignItems: "flex-end",
     flexDirection: "row",
-    width: "100%",
-    padding: "4%",
+    padding: "3%"
   },
   deleteLogo: {
-    padding: "2%",
-    height: "100%",
+    width: "100%",
+    alignItems: "flex-end",
+  },
+  deleteLogoContainer: {
+    flexDirection: "row",
   },
   logo: {
-    color: "white"
-  }
+    position: 'absolute',
+    top: 8,
+    right:  12,
+    color: "#35357F"
+  },
 });
 
 export default HotSpot;
