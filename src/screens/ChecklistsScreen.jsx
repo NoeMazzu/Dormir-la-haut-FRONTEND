@@ -192,7 +192,7 @@ const ChecklistsScreen = ({ navigation }) => {
           <TextInput
             style={styles.modalTextInput}
             placeholder="Titre de la checklist"
-            placeholderTextColor="#808080"
+            placeholderTextColor="#A9A9A9"
             value={newChecklistTitle}
             onChangeText={(text) => setNewChecklistTitle(text)}
           />
@@ -209,7 +209,7 @@ const ChecklistsScreen = ({ navigation }) => {
               setNewChecklistTitle("");
             }}
           >
-            <Text style={styles.modalButtonText}>Annuler</Text>
+            <Text style={styles.modalButtonText1}>Annuler</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#5050B2",
     borderRadius: 10,
     padding: 35,
     alignItems: "center",
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 10,
     shadowRadius: 4,
     elevation: 5,
   },
@@ -418,17 +418,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    color: 'white',
   },
   modalTextInput: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "white",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
   },
   modalButton: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "white",
     borderRadius: 5,
     padding: 10,
     elevation: 2,
@@ -442,6 +443,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   modalButtonText: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalButtonText1: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
