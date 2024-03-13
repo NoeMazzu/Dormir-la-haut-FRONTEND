@@ -108,35 +108,38 @@ const tabFav = poisFav.map((item,index) => {
         <View style={styles.subHeader}>
           <Text style={styles.username}>{user.username}</Text>
           <FontAwesome
-            name="gear"
-            size={20}
+            name="sign-out"
+            size={24}
             color="white"
             onPress={() => setLogoutModalVisible(true)}
           />
           <Modal
-            transparent={true}
             animationType="slide"
+            transparent={true}
             visible={logoutModalVisible}
-            onRequestClose={() => setLogoutModalVisible(false)}
+            onRequestClose={() => {
+              setLogoutModalVisible(false);
+            }}
           >
-            <View style={styles.modalContainer}>
-              {/* Contenu du modal de déconnexion */}
-              <TouchableOpacity
-                onPress={() => {
-                  setLogoutModalVisible(false);
-                  handleLogout(); // Appeler la fonction de déconnexion
-                }}
-                style={styles.modalOption}
-              >
-                <Text style={styles.modalOptionText}>Déconnexion</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() => setLogoutModalVisible(false)}
-                style={styles.modalOption}
-              >
-                <Text style={styles.modalOptionText}>Annuler</Text>
-              </TouchableOpacity>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalTitle}>Déconnexion ?</Text>
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={() => {
+                    setLogoutModalVisible(false);
+                    handleLogout(); // Appeler la fonction de déconnexion
+                  }}
+                >
+                  <Text style={styles.modalButtonText}>Confirmer</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.modalButton1}
+                  onPress={() => setLogoutModalVisible(false)}
+                >
+                  <Text style={styles.modalButtonText1}>Annuler</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </Modal>
         </View>
@@ -203,8 +206,31 @@ const styles = StyleSheet.create({
   },
   username: {
     color: "#ffffff",
-    fontSize: 32,
+    fontSize: 48,
     textAlign: "center",
+    fontWeight:'bold'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "#5050B2",
+    borderRadius: 10,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 10,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  centeredView: {
+    flex: 1,
+    // justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 88,
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   modalContainer: {
     backgroundColor: "white",
@@ -229,5 +255,44 @@ const styles = StyleSheet.create({
     gap:16,
     alignItems:'center',
     paddingTop:32,
-  }
+  },
+  modalTitle: {
+    marginBottom: 20,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: 'white',
+  },
+  modalTextInput: {
+    height: 40,
+    borderColor: "white",
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  modalButton: {
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 10,
+    elevation: 2,
+    marginBottom: 10,
+  },
+  modalButton1: {
+    backgroundColor: "#C23434",
+    borderRadius: 5,
+    padding: 10,
+    elevation: 2,
+    marginBottom: 10,
+  },
+  modalButtonText: {
+    color: "black",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalButtonText1: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
