@@ -9,7 +9,7 @@ function HotSpot(props) {
   const token = useSelector((state) => state.user.value.token);
   const poiFound = pois.find((element) => element.name === props.name);
 
-  console.log("[HOTSPOT POI.ID]", poiFound._id);
+  // console.log("[HOTSPOT POI.ID]", poiFound._id);
 
   const handleBookmark = () => {
     return fetch("https://dormir-la-haut-backend.vercel.app/poi/poiBookMark", {
@@ -23,7 +23,7 @@ function HotSpot(props) {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      // .then((data) => console.log(data))
       .catch((error) => console.error("Erreur :", error));
   };
 
