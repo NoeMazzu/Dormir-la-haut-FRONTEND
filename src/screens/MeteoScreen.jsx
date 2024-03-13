@@ -9,6 +9,7 @@ export default function MeteoScreen({navigation}) {
   const user = useSelector((state) => state.user.value);
 
   // const massifFavs = ["Chartreuse", "Vanoise", "Belledonne","Beaufortain"];
+  //TODO placer l'état massifFavs dans le store
   const[massifFavs,setMassifFavs] = useState([]);
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
@@ -20,6 +21,7 @@ export default function MeteoScreen({navigation}) {
   "Belledonne", "Mont Blanc","Vanoise", "Beaufortain","Aiguilles Rouge", "Bauges",
   "Grandes Rousses - Arves", "Cerces-Ambin", "Ecrins", "Taillefer-Matheysine","Chablais","Queyras","Bugey"]
 
+  //TODO Gerer les useEffect en *2
   useEffect(() => {
     if (!user?.token) {
       navigation.navigate("LoadingScreen");
@@ -28,7 +30,6 @@ export default function MeteoScreen({navigation}) {
   
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
-    console.log("URL:", url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => 
@@ -56,16 +57,17 @@ export default function MeteoScreen({navigation}) {
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
         updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
-        console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
+        // console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
         return updatedPrevMeteoData;            
       });
   };
 
-  const onSelectionsChange = (selectedMassif) => {
-    setSelectedMassif(selectedMassif);
+  //TODO - Revoir le nom de variable - peut preter à confusion - PATATE
+  const onSelectionsChange = (massifSelected) => {
+    setSelectedMassif(()=> massifSelected);
   };
 
-  console.log('[METEODATATEST]:',meteoDataTest)
+  // console.log('[METEODATATEST]:',meteoDataTest)
   const meteoCards = meteoDataTest.map((data, i) => {
     return (
       <MeteoCard
@@ -91,17 +93,51 @@ const openModal = () => {
   setModalVisible(true);
 };
 
+const majMeteoBdd = async (massifString) => 
+{
+  // console.log('[LAUNCH FUNCTION - MassifString]',typeof massifString)
+  try
+  {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("token", user.token);
+    urlencoded.append("newMeteo", massifString);
+
+    const requestOptions = 
+    {
+      method: 'PATCH',
+      headers: myHeaders,
+      body: urlencoded.toString(),
+      redirect: 'follow'
+    };
+    console.log('[REQUEST OPTIONS METEO2:',requestOptions)
+
+const result = await fetch("https://dormir-la-haut-backend.vercel.app/users/addmeteo2", requestOptions);
+const response = await result.json();
+console.log('RESULTFETCH METEO2:',result)
+}
+catch (error) {
+  console.error('Error fetching data:', error);
+}}
+
+
 const closeModal = () => {
-  setMassifFavs(() => selectedMassif.map(item => item.value));
+  // Mise à jour de l'état massifFavs
+  const newMassifFavs = selectedMassif.map(item => item.value);
+  setMassifFavs(newMassifFavs);
+  // console.log('[NEW MASSIF FAV]',newMassifFavs)
+  majMeteoBdd(newMassifFavs.join(','));
+
+  // Mise à jour des autres états
   setModalVisible(false);
   setMeteoData([]);
   setMeteoDataTmp([]);
   setMeteoDataTest([]);
-
 };
 
-console.log('[MASSIF FAV]',massifFavs)
-console.log('[SELECTED MASSIF]',selectedMassif)
+// console.log('[SELECTED MASSIF]',selectedMassif)
 
   return (
     <View style={styles.container}>

@@ -43,6 +43,7 @@ export default function ProfileScreen({ navigation }) {
 
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();
+        console.log('[SECONDDATA API:',secondResponse)
 
         setPoisFav((prevPoisFav) => [...secondData]);
         
@@ -68,7 +69,7 @@ export default function ProfileScreen({ navigation }) {
 
   }, [index]); 
 
-
+console.log('[POISFAV]:',poisFav)
 // Fonction appelée par le BOUTON LOGOUT
 const handleLogout = () => 
 {
