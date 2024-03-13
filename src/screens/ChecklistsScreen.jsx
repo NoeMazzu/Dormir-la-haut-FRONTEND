@@ -166,7 +166,7 @@ const ChecklistsScreen = ({ navigation }) => {
   return (
     <View style={styles.filter}>
     <Text style={styles.title}>
-      Retrouvez ici vos checklists pour votre prochaine sortie :
+      Vos checklists 
     </Text>
     <TouchableOpacity
       style={styles.addChecklistButton}
@@ -254,7 +254,7 @@ const ChecklistsScreen = ({ navigation }) => {
                   >
                     <Icon
                       name="trash"
-                      style={[styles.deleteButtonIcon, { color: iconColor }]}
+                      style={[styles.deleteButtonIcon, { color: iconColor1 }]}
                     />
                   </TouchableOpacity>
                 )}
@@ -296,6 +296,8 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 35,
     marginHorizontal: 30,
+    marginLeft: 87,
+    alignItems: 'center',
   },
   scrollView: {
     flex: 1,
@@ -303,6 +305,8 @@ const styles = StyleSheet.create({
   },
   checklistContainer: {
     marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   checklistTitle: {
     color: "#ffffff",
@@ -313,7 +317,7 @@ const styles = StyleSheet.create({
   checklistItem: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#2196F3",
+    backgroundColor: "#1E2A4A",
     padding: 10,
     margin: 5,
     borderRadius: 5,
@@ -341,7 +345,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#5050B2",
     padding: 10,
     margin: 5,
     borderRadius: 5,
@@ -363,9 +367,10 @@ const styles = StyleSheet.create({
   },
   deleteButtonIcon: {
     fontSize: 26, 
+    marginTop: 5,
   },
   addChecklistButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#5050B2",
     padding: 10,
     margin: 10,
     borderRadius: 5,
@@ -383,8 +388,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     padding: 1,
-    marginRight: 15,
-    marginBottom: 6,
+    marginRight: 5,
+    marginBottom: 10,
   },
   
   centeredView: {
