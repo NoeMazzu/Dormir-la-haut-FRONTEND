@@ -423,11 +423,14 @@ const styles = StyleSheet.create({
   },
   modalTextInput: {
     height: 40,
+    width: 200,
     borderColor: "white",
+    color: 'white',
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
+    textAlign: 'center'
   },
   modalButton: {
     backgroundColor: "white",
