@@ -183,7 +183,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-      <Slider />
+      <Slider playing={true} />
       </TouchableOpacity>
     </View>
   );

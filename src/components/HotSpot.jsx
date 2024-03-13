@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useSelector } from "react-redux";
@@ -29,8 +29,10 @@ function HotSpot(props) {
 
   return (
     <View style={styles.container}>
+      
       <View style={styles.photoContainer}>
-        <Slider />
+        
+        <Slider playing={false}/>
       </View>
       <View style={styles.infosContainer}>
         <View>
@@ -40,17 +42,15 @@ function HotSpot(props) {
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity>
-              <FontAwesome name="star-o" size={40} />
+              <FontAwesome name="star-o" size={40} style={styles.logo}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleBookmark}>
-              <FontAwesome name="bookmark-o" size={40} />
+              <FontAwesome name="bookmark-o" size={40} style={styles.logo}/>
             </TouchableOpacity>
           </View>
-          <View style={styles.deleteLogo}>
-            <TouchableOpacity>
-              <FontAwesome name="close" size={40} onPress={props.handlePress} />
+            <TouchableOpacity style={styles.deleteLogo}>
+              <FontAwesome name="close" size={40} onPress={props.handlePress} style={styles.logo} />
             </TouchableOpacity>
-          </View>
         </View>
       </View>
     </View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     height: "60%",
     width: "90%",
-    borderRadius: 20,
+    borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#35357F",
@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   photoContainer: {
-    borderRadius: 20,
     overflow: "hidden",
     flex: 1,
     paddingTop: "5%",
@@ -86,10 +85,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     padding: "5%",
+    color: "white"
   },
   desc: {
     paddingBottom: "5%",
     paddingLeft: "5%",
+    color: "white"
   },
   logosContainer: {
     justifyContent: "space-between",
@@ -97,12 +98,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     padding: "4%",
-    borderRadius: 20,
   },
   deleteLogo: {
     padding: "2%",
     height: "100%",
   },
+  logo: {
+    color: "white"
+  }
 });
 
 export default HotSpot;

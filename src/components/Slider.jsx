@@ -28,7 +28,7 @@ return (
               loop
               enableMomentum={false}
               ockScrollWhileSnapping={true} 
-              autoplay={true}
+              autoplay={props.playing}
               autoplayInterval={4000}
             />
 )
