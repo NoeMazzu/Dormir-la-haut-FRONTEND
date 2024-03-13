@@ -66,7 +66,7 @@ export default function ProfileScreen({ navigation }) {
     
     fetchData();
 
-  }, []); 
+  }, [index]); 
 
 
 // Fonction appelée par le BOUTON LOGOUT
