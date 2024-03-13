@@ -90,8 +90,6 @@ const tabFav = poisFav.map((item,index) => {
 )
   })
 
-
-
 //Creation de la listse des favoris utilisant le composant CheckList
   const tabChecklists = checklistData.map((item,index) => {
     return (
@@ -190,6 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     paddingTop: 60,
+    gap: 16,
   },
   header: {
     justifyContent: "center",
