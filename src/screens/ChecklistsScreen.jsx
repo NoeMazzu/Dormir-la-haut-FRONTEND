@@ -383,6 +383,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     padding: 1,
+    marginRight: 15,
+    marginBottom: 6,
   },
   
   centeredView: {
