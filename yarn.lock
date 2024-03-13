@@ -6668,6 +6668,11 @@ react-native-image-slider-box@^2.0.7:
   dependencies:
     react-native-snap-carousel latest
 
+react-native-keyboard-controller@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-controller/-/react-native-keyboard-controller-1.11.3.tgz#ed8bc04f8db505f53a94abc637c0b5f8483df613"
+  integrity sha512-ie3wQPRTQXZWGktz45J9SnQ3qzCEz/pxm6xCd1zWzVL6NcVrYq1RDgEy3YEShsVIDZkJor9Nj2WP/cmc9dqzHQ==
+
 react-native-maps@1.10.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.10.0.tgz#1b78270473f4caadc5ff8e8400285b6db9f14e12"

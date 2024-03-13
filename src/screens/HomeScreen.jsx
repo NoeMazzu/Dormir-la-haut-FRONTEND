@@ -5,6 +5,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Image,
+  SafeAreaView 
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +21,7 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   //  dispatch(setLogout());
   const user = useSelector((state) => state.user.value);
-  // console.log("[USER_HS:", user);
+
   const massifFavs = [
     { massif: "Chartreuse", temp: 1, weatherIcon: "01d" },
     { massif: "Vanoise", temp: 2, weatherIcon: "01d" },
@@ -101,9 +102,8 @@ export default function HomeScreen({ navigation }) {
       });
   }, []);
 
-  // console.log(meteoHome);
-
   return (
+  
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.meteoContainer}>
@@ -183,7 +183,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-      <Slider />
+      {/* <Slider /> */}
       </TouchableOpacity>
     </View>
   );
