@@ -66,6 +66,7 @@ const handleCloseModal =() => {
   return (
     <View style={{ flex: 1 }}>
       <MapView
+        provider="google"
         mapeType="terrain"
         initialRegion={{
           latitude: 45.7542305,
