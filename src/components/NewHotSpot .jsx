@@ -20,7 +20,7 @@ function NewHotSpot(props) {
   const [newSpotTitle, setNewSpotTitle] = useState(null);
   const [newSpotDesc, setNewSpotDesc] = useState(null);
   const [newSpotType, setNewSpotType] = useState(null);
-  const [fetchLoading, setFetchLoading] = useState('pending');
+  const [fetchLoading, setFetchLoading] = useState('waiting');
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageURL, setSelectedImageURL] = useState(null);
 
