@@ -40,23 +40,27 @@ export default function ProfileScreen({ navigation }) {
         const firstResponse = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
         const firstData = await firstResponse.json();
         const firstDataStr = firstData.fav_POI.join(',');
-
+        if (firstDataStr){
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();
+        console.log('[SECONDDATA API:',secondData)
 
-        setPoisFav((prevPoisFav) => [...secondData]);
+        setPoisFav((prevPoisFav) => [...secondData]);}
+        else{
+          setPoisFav(()=> [])
+        }
         
         //Récupération des données de checklists depuis le AsyncStorage
-        const fetchData = async () => {
-          try {
-            const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-            const parsedValue = JSON.parse(value);
-            setChecklistData(parsedValue);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };    
-        fetchData();
+        // const fetchData = async () => {
+        //   try {
+        //     const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+        //     const parsedValue = JSON.parse(value);
+        //     setChecklistData(parsedValue);
+        //   } catch (error) {
+        //     console.error('Error fetching data:', error);
+        //   }
+        // };    
+        // fetchData();
       } 
       catch (error) 
       {
@@ -64,11 +68,25 @@ export default function ProfileScreen({ navigation }) {
       }
     };
     
+    //Récupération des données de checklists depuis le AsyncStorage
+    const testData = async () => {
+      try {
+        const value = await AsyncStorage.getItem(`checklists_${user.token}`);
+        console.log('[VALUE ASYNCSTORAGE]:',value)
+        const parsedValue = JSON.parse(value);
+
+        setChecklistData(parsedValue || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };    
+    testData();
+    
     fetchData();
 
   }, [index]); 
 
-
+console.log('[POISFAV]:',poisFav)
 // Fonction appelée par le BOUTON LOGOUT
 const handleLogout = () => 
 {
