@@ -3,25 +3,17 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 const Slider = (props) => {
-  //! IMPORTER LES PHOTOS DEPUIS LA BDD
 
-  const gallery = [
-    { img: "https://source.unsplash.com/1024x768/?nature" },
-    { img: "https://source.unsplash.com/1024x768/?water" },
-    { img: "https://source.unsplash.com/1024x768/?girl" },
-    { img: "https://source.unsplash.com/1024x768/?tree" },
-  ];
-  
   return (
     <Carousel
       ref={(c) => {
         this._carousel = c;
       }}
-      data={gallery}
+      data={props.photos}
       renderItem={({ item, index }) => {
         return (
           <Image
-            source={{ uri: item.img }}
+            source={{ uri: item.url }}
             style={{
               height: "100%",
               resizeMode: "cover",

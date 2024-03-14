@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +36,7 @@ function HotSpot(props) {
     (name) => name === props.name
   );
 
-console.log('IS BOOKMARKED ?', isPoiBookmarked)
+  console.log("IS BOOKMARKED ?", isPoiBookmarked);
 
   function handleBookmark() {
     if (!isPoiBookmarked) {
@@ -93,12 +99,15 @@ console.log('IS BOOKMARKED ?', isPoiBookmarked)
           playing={false}
           height={componentHeight}
           width={componentWidth}
+          photos={props.photos}
         />
       </View>
       <View style={styles.infosContainer}>
-        <View>
+        <View style={styles.textContainer}>
           <Text style={styles.title}>{props.name}</Text>
-          <Text style={styles.desc}>{props.desc}</Text>
+          <ScrollView style={styles.scrollView}>
+            <Text style={styles.desc}>{props.desc}</Text>
+          </ScrollView>
         </View>
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>

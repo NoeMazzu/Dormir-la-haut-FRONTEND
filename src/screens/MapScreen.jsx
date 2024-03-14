@@ -117,6 +117,7 @@ export default function MapScreen({ navigation }) {
           <HotSpot
             name={selectedMarker.name}
             desc={selectedMarker.desc}
+            photos={selectedMarker.photos}
             handlePress={handleCloseModal}
           />
         </View>
