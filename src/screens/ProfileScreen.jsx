@@ -36,7 +36,7 @@ export default function ProfileScreen({ navigation }) {
           headers: myHeaders,
           redirect: "follow",
         };
-
+        //TODO - Voir pour passer sur une seule route avec instruction POPULATE sur la DB
         const firstResponse = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
         const firstData = await firstResponse.json();
         const firstDataStr = firstData.fav_POI.join(',');
