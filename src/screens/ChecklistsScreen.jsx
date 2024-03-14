@@ -43,7 +43,9 @@ const ChecklistsScreen = ({ navigation }) => {
   ];
 
   const [checklists, setChecklists] = useState([]);
-  const [newItemTexts, setNewItemTexts] = useState(getDefaultChecklists().map(() => ""));
+  const [newItemTexts, setNewItemTexts] = useState(
+    getDefaultChecklists().map(() => "")
+  );
   const [selectedItem, setSelectedItem] = useState(null);
   const [isAddingChecklist, setIsAddingChecklist] = useState(false);
   const [newChecklistTitle, setNewChecklistTitle] = useState("");
@@ -64,7 +66,10 @@ const ChecklistsScreen = ({ navigation }) => {
             loadedChecklists = getDefaultChecklists();
 
             // Sauvegardez les checklists par défaut dans le AsyncStorage
-            await AsyncStorage.setItem(storageKey, JSON.stringify(loadedChecklists));
+            await AsyncStorage.setItem(
+              storageKey,
+              JSON.stringify(loadedChecklists)
+            );
           }
         }
 
@@ -94,8 +99,9 @@ const ChecklistsScreen = ({ navigation }) => {
 
   const testData = async () => {
     const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-    console.log('[VALUE ASYNCSTORAGE]:',value)}
-    testData();
+    console.log("[VALUE ASYNCSTORAGE]:", value);
+  };
+  testData();
   const addDefaultChecklists = async () => {
     try {
       if (user?.token) {
@@ -107,7 +113,10 @@ const ChecklistsScreen = ({ navigation }) => {
           const defaultChecklists = getDefaultChecklists();
 
           // Sauvegardez les checklists par défaut dans le AsyncStorage
-          await AsyncStorage.setItem(storageKey, JSON.stringify(defaultChecklists));
+          await AsyncStorage.setItem(
+            storageKey,
+            JSON.stringify(defaultChecklists)
+          );
 
           // Mettez à jour l'état avec les checklists par défaut
           setChecklists(defaultChecklists);
@@ -190,125 +199,132 @@ const ChecklistsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.filter}>
-    <Text style={styles.title}>
-      Vos checklists 
-    </Text>
-    <TouchableOpacity
-      style={styles.addChecklistButton}
-      onPress={handleAddChecklist}
-    >
-      <Text style={styles.addChecklistButtonText}>
-        + Ajouter une checklist
-      </Text>
-    </TouchableOpacity>
+      <Text style={styles.title}>Vos checklists</Text>
+      <TouchableOpacity
+        style={styles.addChecklistButton}
+        onPress={handleAddChecklist}
+      >
+        <Text style={styles.addChecklistButtonText}>
+          + Ajouter une checklist
+        </Text>
+      </TouchableOpacity>
 
-    {/* Boîte de dialogue pour ajouter une nouvelle checklist */}
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={isAddingChecklist}
-      onRequestClose={() => {
-        setIsAddingChecklist(false);
-      }}
-    >
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalTitle}>Nouvelle Checklist</Text>
-          <TextInput
-            style={styles.modalTextInput}
-            placeholder="Titre de la checklist"
-            placeholderTextColor="#A9A9A9"
-            value={newChecklistTitle}
-            onChangeText={(text) => setNewChecklistTitle(text)}
-          />
-          <TouchableOpacity
-            style={styles.modalButton}
-            onPress={handleConfirmAddChecklist}
-          >
-            <Text style={styles.modalButtonText}>Confirmer</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.modalButton1}
-            onPress={() => {
-              setIsAddingChecklist(false);
-              setNewChecklistTitle("");
-            }}
-          >
-            <Text style={styles.modalButtonText1}>Annuler</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </Modal>
-
-    <ScrollView style={styles.scrollView}>
-      {checklists.map((checklist, checklistIndex) => (
-        <View key={checklistIndex} style={styles.checklistContainer}>
-          <View style={styles.checklistHeader}>
-            <Text style={styles.checklistTitle}>{checklist.title}</Text>
+      {/* Boîte de dialogue pour ajouter une nouvelle checklist */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isAddingChecklist}
+        onRequestClose={() => {
+          setIsAddingChecklist(false);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Nouvelle Checklist</Text>
+            <TextInput
+              style={styles.modalTextInput}
+              placeholder="Titre de la checklist"
+              placeholderTextColor="#A9A9A9"
+              value={newChecklistTitle}
+              onChangeText={(text) => setNewChecklistTitle(text)}
+            />
             <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => handleDeleteChecklist(checklistIndex)}
+              style={styles.modalButton}
+              onPress={handleConfirmAddChecklist}
             >
-              <Icon
-                name="trash"
-                style={[styles.deleteButtonIcon, { color: iconColor1 }]}
-              />
+              <Text style={styles.modalButtonText}>Confirmer</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.modalButton1}
+              onPress={() => {
+                setIsAddingChecklist(false);
+                setNewChecklistTitle("");
+              }}
+            >
+              <Text style={styles.modalButtonText1}>Annuler</Text>
             </TouchableOpacity>
           </View>
-          {checklist.items.map((item, itemIndex) => (
-            <TouchableOpacity
-              key={itemIndex}
-              style={styles.checklistItem}
-              onPress={() => handleItemPress(checklistIndex, itemIndex)}
-            >
-              <View
-                style={[
-                  styles.checkbox,
-                  item.checked && styles.checkedCheckbox,
-                ]}
-              >
-                {item.checked && <Text style={styles.checkmark}>✓</Text>}
-              </View>
-              <Text style={styles.checklistItemText}>{item.text}</Text>
-              {selectedItem &&
-                selectedItem.checklistIndex === checklistIndex &&
-                selectedItem.itemIndex === itemIndex && (
-                  <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={() => handleDeleteItem(checklistIndex, itemIndex)}
-                  >
-                    <Icon
-                      name="trash"
-                      style={[styles.deleteButtonIcon, { color: iconColor1 }]}
-                    />
-                  </TouchableOpacity>
-                )}
-            </TouchableOpacity>
-          ))}
-          <TextInput
-            style={styles.textInput}
-            placeholder="Nom de l'item"
-            value={newItemTexts[checklistIndex]}
-            onChangeText={(text) => {
-              const updatedItemTexts = [...newItemTexts];
-              updatedItemTexts[checklistIndex] = text;
-              setNewItemTexts(updatedItemTexts);
-            }}
-          />
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => {
-              const newItem = { text: newItemTexts[checklistIndex] || "Nouvel item", checked: false };
-              addItemToChecklist(checklistIndex, newItem);
-            }}
-          >
-            <Text style={styles.addButtonLabel}>+ Ajouter un item</Text>
-          </TouchableOpacity>
         </View>
-      ))}
-    </ScrollView>
-  </View>
-);
+      </Modal>
+
+      <ScrollView style={styles.scrollView}>
+        {checklists.map((checklist, checklistIndex) => (
+          <View key={checklistIndex} style={styles.checklistContainer}>
+            <View style={styles.checklistHeader}>
+              <Text style={styles.checklistTitle}>{checklist.title}</Text>
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => handleDeleteChecklist(checklistIndex)}
+              >
+                <Icon
+                  name="trash"
+                  style={[styles.deleteButtonIcon, { color: iconColor1 }]}
+                />
+              </TouchableOpacity>
+            </View>
+            {checklist.items.map((item, itemIndex) => (
+              <TouchableOpacity
+                key={itemIndex}
+                style={styles.checklistItem}
+                onPress={() => handleItemPress(checklistIndex, itemIndex)}
+              >
+                <View
+                  style={[
+                    styles.checkbox,
+                    item.checked && styles.checkedCheckbox,
+                  ]}
+                >
+                  {item.checked && <Text style={styles.checkmark}>✓</Text>}
+                </View>
+                <Text style={styles.checklistItemText}>{item.text}</Text>
+                {selectedItem &&
+                  selectedItem.checklistIndex === checklistIndex &&
+                  selectedItem.itemIndex === itemIndex && (
+                    <TouchableOpacity
+                      style={styles.deleteButton}
+                      onPress={() =>
+                        handleDeleteItem(checklistIndex, itemIndex)
+                      }
+                    >
+                      <Icon
+                        name="trash"
+                        style={[styles.deleteButtonIcon, { color: iconColor1 }]}
+                      />
+                    </TouchableOpacity>
+                  )}
+              </TouchableOpacity>
+            ))}
+            <TextInput
+              style={styles.textInput}
+              placeholder="Nom de l'item"
+              value={newItemTexts[checklistIndex]}
+              onChangeText={(text) => {
+                const updatedItemTexts = [...newItemTexts];
+                updatedItemTexts[checklistIndex] = text;
+                setNewItemTexts(updatedItemTexts);
+              }}
+            />
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => {
+                const newItemText = newItemTexts[checklistIndex].trim(); // Trim pour enlever les espaces vides avant et après le texte
+                if (newItemText !== "") {
+                  const newItem = { text: newItemText, checked: false };
+                  addItemToChecklist(checklistIndex, newItem);
+                  // Réinitialiser le champ d'entrée pour le nouvel élément après l'ajout
+                  const updatedItemTexts = [...newItemTexts];
+                  updatedItemTexts[checklistIndex] = ""; // Réinitialiser à une chaîne vide
+                  setNewItemTexts(updatedItemTexts);
+                }
+              }}
+            >
+              <Text style={styles.addButtonLabel}>+ Ajouter un item</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -323,7 +339,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginHorizontal: 30,
     marginLeft: 87,
-    alignItems: 'center',
+    alignItems: "center",
   },
   scrollView: {
     flex: 1,
@@ -388,11 +404,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   deleteButtonText: {
-    color: "#FFFFFF", 
+    color: "#FFFFFF",
     fontSize: 16,
   },
   deleteButtonIcon: {
-    fontSize: 26, 
+    fontSize: 26,
     marginTop: 5,
   },
   addChecklistButton: {
@@ -417,7 +433,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginBottom: 10,
   },
-  
+
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -445,18 +461,18 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    color: 'white',
+    color: "white",
   },
   modalTextInput: {
     height: 40,
     width: 200,
     borderColor: "white",
-    color: 'white',
+    color: "white",
     borderWidth: 1,
     marginBottom: 20,
     paddingHorizontal: 10,
     borderRadius: 5,
-    textAlign: 'center'
+    textAlign: "center",
   },
   modalButton: {
     backgroundColor: "white",
