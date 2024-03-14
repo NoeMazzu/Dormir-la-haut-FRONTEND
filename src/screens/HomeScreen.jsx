@@ -124,8 +124,6 @@ export default function HomeScreen({ navigation }) {
     setComponentWidth(width);
   };
 
-  console.log(componentHeight, componentWidth)
-
   return (
     <View style={styles.container} onLayout={onViewLayout}>
       <View style={styles.topContainer}>

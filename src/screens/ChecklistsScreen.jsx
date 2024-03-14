@@ -99,7 +99,7 @@ const ChecklistsScreen = ({ navigation }) => {
 
   const testData = async () => {
     const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-    console.log("[VALUE ASYNCSTORAGE]:", value);
+    // console.log("[VALUE ASYNCSTORAGE]:", value);
   };
   testData();
   const addDefaultChecklists = async () => {

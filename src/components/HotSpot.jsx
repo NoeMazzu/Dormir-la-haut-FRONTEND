@@ -36,7 +36,6 @@ function HotSpot(props) {
     (name) => name === props.name
   );
 
-  console.log("IS BOOKMARKED ?", isPoiBookmarked);
 
   function handleBookmark() {
     if (!isPoiBookmarked) {

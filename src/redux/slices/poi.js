@@ -18,7 +18,6 @@ export const poiSlice = createSlice({
       state.value.bookmarkedPOIs.push(action.payload);
     },
     removeBookmark: (state, action) => {
-      console.log('[PAYLOAD]', action.payload)
       state.value.bookmarkedPOIs = state.value.bookmarkedPOIs.filter(
         (name) => name !== action.payload
       );
