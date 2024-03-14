@@ -10,12 +10,10 @@ import {
 } from "../redux/slices/poi";
 
 function HotSpot(props) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const pois = useSelector((state) => state.poi.value);
   const token = useSelector((state) => state.user.value.token);
   const poiFound = pois.POIs.find((element) => element.name === props.name);
-
-  console.log("poiFound", poiFound);
 
   const [isPressed, setIsPressed] = useState(true);
   const [componentHeight, setComponentHeight] = useState(0);
@@ -28,27 +26,14 @@ function HotSpot(props) {
     setComponentWidth(width);
   };
 
-  const isPoiBookmarked = pois.bookmarkedPOIs.some((e) =>
-    e.includes(props.name)
+  const isPoiBookmarked = pois.bookmarkedPOIs.some(
+    (name) => name === props.name
   );
 
-  console.log('isPoiBookmarked', isPoiBookmarked);
-
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => data.result && dispatch(loadBookmarks(data.fav_POI)));
-  }, []);
+console.log('IS BOOKMARKED ?', isPoiBookmarked)
 
   function handleBookmark() {
     if (!isPoiBookmarked) {
-      // console.log("book");
       fetch("https://dormir-la-haut-backend.vercel.app/users/addAside", {
         method: "PATCH",
         headers: {
@@ -57,13 +42,12 @@ function HotSpot(props) {
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token
+          token,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          data.result && dispatch(addBookmark(data)); // todo gérer ce que rnevoie la route et créer le reducer
+          data.result && dispatch(addBookmark(props.name));
         })
         .catch((error) => console.error("Erreur :", error));
     } else {
@@ -75,11 +59,11 @@ function HotSpot(props) {
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token
+          token,
         }),
       })
         .then((response) => response.json())
-        .then((data) => data.result && dispatch(removeBookmark()))
+        .then((data) => data.result && dispatch(removeBookmark(props.name)))
         .catch((error) => console.error("Erreur :", error));
     }
   }
