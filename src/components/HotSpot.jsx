@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -9,11 +9,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadBookmarks,
-  addBookmark,
-  removeBookmark,
-} from "../redux/slices/poi";
+import { addBookmark, removeBookmark } from "../redux/slices/poi";
 
 function HotSpot(props) {
   const dispatch = useDispatch();
@@ -35,7 +31,6 @@ function HotSpot(props) {
   const isPoiBookmarked = pois.bookmarkedPOIs.some(
     (name) => name === props.name
   );
-
 
   function handleBookmark() {
     if (!isPoiBookmarked) {
