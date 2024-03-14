@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,12 +16,10 @@ import {
 } from "../redux/slices/poi";
 
 function HotSpot(props) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const pois = useSelector((state) => state.poi.value);
   const token = useSelector((state) => state.user.value.token);
   const poiFound = pois.POIs.find((element) => element.name === props.name);
-
-  console.log("poiFound", poiFound);
 
   const [isPressed, setIsPressed] = useState(true);
   const [componentHeight, setComponentHeight] = useState(0);
@@ -28,27 +32,12 @@ function HotSpot(props) {
     setComponentWidth(width);
   };
 
-  const isPoiBookmarked = pois.bookmarkedPOIs.some((e) =>
-    e.includes(props.name)
+  const isPoiBookmarked = pois.bookmarkedPOIs.some(
+    (name) => name === props.name
   );
-
-  console.log('isPoiBookmarked', isPoiBookmarked);
-
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => data.result && dispatch(loadBookmarks(data.fav_POI)));
-  }, []);
 
   function handleBookmark() {
     if (!isPoiBookmarked) {
-      // console.log("book");
       fetch("https://dormir-la-haut-backend.vercel.app/users/addAside", {
         method: "PATCH",
         headers: {
@@ -57,13 +46,12 @@ function HotSpot(props) {
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token
+          token,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          data.result && dispatch(addBookmark(data)); // todo gérer ce que rnevoie la route et créer le reducer
+          data.result && dispatch(addBookmark(props.name));
         })
         .catch((error) => console.error("Erreur :", error));
     } else {
@@ -75,11 +63,11 @@ function HotSpot(props) {
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token
+          token,
         }),
       })
         .then((response) => response.json())
-        .then((data) => data.result && dispatch(removeBookmark()))
+        .then((data) => data.result && dispatch(removeBookmark(props.name)))
         .catch((error) => console.error("Erreur :", error));
     }
   }
@@ -109,12 +97,15 @@ function HotSpot(props) {
           playing={false}
           height={componentHeight}
           width={componentWidth}
+          photos={props.photos}
         />
       </View>
       <View style={styles.infosContainer}>
-        <View>
+        <View style={styles.textContainer}>
           <Text style={styles.title}>{props.name}</Text>
-          <Text style={styles.desc}>{props.desc}</Text>
+          <ScrollView style={styles.scrollView}>
+            <Text style={styles.desc}>{props.desc}</Text>
+          </ScrollView>
         </View>
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>

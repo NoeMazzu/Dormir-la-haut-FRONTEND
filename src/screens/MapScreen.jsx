@@ -2,15 +2,17 @@ import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { loadBookmarks } from "../redux/slices/poi";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
+import { setPOIs } from "../redux/slices/poi";
 
 export default function MapScreen({ navigation }) {
-  const POIs = useSelector((state) => state.poi.value);
+  const dispatch = useDispatch()
   const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState("");
-
+  const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
 
   const [newSpotCoord, setNewSpotCoord] = useState(null);
@@ -19,6 +21,30 @@ export default function MapScreen({ navigation }) {
     if (!user?.token) {
       navigation.navigate("LoadingScreen");
     }
+    // get all available pois
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        setPOIsFromDataBase(data.poi)
+        dispatch(setPOIs(data.poi))
+      });
+
+    // fetch bookmarked pois for the logged user
+    fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          // create new array with only the POIS names
+          const POIS_names = data.fav_POI.map((e) => e.name);
+          dispatch(loadBookmarks(POIS_names));
+        }
+      });
   }, []);
 
   const handleMarkerPress = (marker) => {
@@ -27,8 +53,7 @@ export default function MapScreen({ navigation }) {
   };
 
   const Markers = () => {
-    return POIs.POIs.map((poi, i) => {
-
+    return POIsFromDataBase.map((poi, i) => {
       return (
         <Marker
           key={i}
@@ -95,6 +120,7 @@ export default function MapScreen({ navigation }) {
           <HotSpot
             name={selectedMarker.name}
             desc={selectedMarker.desc}
+            photos={selectedMarker.photos}
             handlePress={handleCloseModal}
           />
         </View>

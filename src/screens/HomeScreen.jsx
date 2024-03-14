@@ -16,12 +16,12 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
-import { niktamere } from '../redux/slices/poi'
+import { purgePersistor } from '../redux/slices/poi'
  
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   // dispatch(setLogout())
-  //  dispatch(niktamere());
+  //  dispatch(purgePersistor());
   const user = useSelector((state) => state.user.value);
 
   const massifFavs = [
@@ -115,8 +115,6 @@ export default function HomeScreen({ navigation }) {
     setComponentHeight(height);
     setComponentWidth(width);
   };
-
-  console.log(componentHeight, componentWidth)
 
   return (
     <View style={styles.container} onLayout={onViewLayout}>

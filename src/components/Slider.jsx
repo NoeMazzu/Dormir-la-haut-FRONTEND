@@ -3,7 +3,6 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 const Slider = (props) => {
-  
   return (
     <Carousel
       ref={(c) => {
@@ -13,7 +12,7 @@ const Slider = (props) => {
       renderItem={({ item, index }) => {
         return (
           <Image
-            source={{ uri: item.url}}
+            source={{ uri: item.url }}
             style={{
               height: "100%",
               resizeMode: "cover",
