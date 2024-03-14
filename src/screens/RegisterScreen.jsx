@@ -101,9 +101,11 @@ const RegisterScreen = ({ navigation }) => {
     >
       {imageLoaded ? (
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1, height: Dimensions.get("window").height }}
-        >
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, height: Dimensions.get("window").height }}
+
+      >
+      
           <View style={styles.filter}>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
             <Text style={styles.title}>S'inscrire</Text>
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
     color: "#000000",
-  },
+  },  
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
