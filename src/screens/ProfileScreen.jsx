@@ -43,7 +43,7 @@ export default function ProfileScreen({ navigation }) {
         if (firstDataStr){
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();
-        console.log('[SECONDDATA API:',secondData)
+        // console.log('[SECONDDATA API:',secondData)
 
         setPoisFav((prevPoisFav) => [...secondData]);}
         else{
@@ -72,7 +72,7 @@ export default function ProfileScreen({ navigation }) {
     const testData = async () => {
       try {
         const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-        console.log('[VALUE ASYNCSTORAGE]:',value)
+        // console.log('[VALUE ASYNCSTORAGE]:',value)
         const parsedValue = JSON.parse(value);
 
         setChecklistData(parsedValue || []);
@@ -86,7 +86,7 @@ export default function ProfileScreen({ navigation }) {
 
   }, [index]); 
 
-console.log('[POISFAV]:',poisFav)
+// console.log('[POISFAV]:',poisFav)
 // Fonction appelée par le BOUTON LOGOUT
 const handleLogout = () => 
 {

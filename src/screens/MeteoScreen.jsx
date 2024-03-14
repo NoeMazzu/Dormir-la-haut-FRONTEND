@@ -80,7 +80,7 @@ export default function MeteoScreen({navigation}) {
   const updateMeteoByDate = (index,day) => {
     return setMeteoDataTest(prevMeteoData => 
       {
-        console.log('[METEODATATEST:',meteoDataTest)
+        // console.log('[METEODATATEST:',meteoDataTest)
         const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[day] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
@@ -93,7 +93,7 @@ export default function MeteoScreen({navigation}) {
   //TODO - Revoir le nom de variable - peut preter à confusion - PATATE
   const onSelectionsChange = (selectedMassif) => {
     setSelectedMassif(() => selectedMassif);
-    console.log('[ONSELECTIONCHANGE: OK',selectedMassif)
+    // console.log('[ONSELECTIONCHANGE: OK',selectedMassif)
   };
 
   // console.log('[METEODATATEST]:',meteoDataTest)
