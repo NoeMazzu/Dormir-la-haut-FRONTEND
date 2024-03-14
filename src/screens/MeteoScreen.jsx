@@ -21,13 +21,40 @@ export default function MeteoScreen({navigation}) {
   "Belledonne", "Mont Blanc","Vanoise", "Beaufortain","Aiguilles Rouge", "Bauges",
   "Grandes Rousses - Arves", "Cerces-Ambin", "Ecrins", "Taillefer-Matheysine","Chablais","Queyras","Bugey"]
 
-  //TODO Gerer les useEffect en *2
+  //TODO Gerer les useEffect en *2 - OK 2 comportements différents ici - le premier uniquement au chargement
+  //TODO - le second au chargement et lors du changement d'état massifFavs
   useEffect(() => {
-    if (!user?.token) {
-      navigation.navigate("LoadingScreen");
-    }
+    const fetchData = async () => {
+      try {
+        if (!user?.token) {
+          navigation.navigate("LoadingScreen");
+          return; // Retourner immédiatement si le token utilisateur est manquant
+        }
+  
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+  
+        const requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+        const response = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
+        const firstData = await response.json();
+        setMassifFavs([...firstData.meteo]);
+        
+        // Mettre à jour l'état avec les données retournées
+      } catch (error) {
+        console.error('Erreur lors de l\'exécution des appels API MYPROFILE :', error);
+      }
+    };
+  
+    fetchData();
+  
   }, []);
   
+
   useEffect(() => {
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(',')}`;
     fetch(url)
@@ -53,6 +80,7 @@ export default function MeteoScreen({navigation}) {
   const updateMeteoByDate = (index,day) => {
     return setMeteoDataTest(prevMeteoData => 
       {
+        console.log('[METEODATATEST:',meteoDataTest)
         const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[day] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
@@ -63,8 +91,9 @@ export default function MeteoScreen({navigation}) {
   };
 
   //TODO - Revoir le nom de variable - peut preter à confusion - PATATE
-  const onSelectionsChange = (massifSelected) => {
-    setSelectedMassif(()=> massifSelected);
+  const onSelectionsChange = (selectedMassif) => {
+    setSelectedMassif(() => selectedMassif);
+    console.log('[ONSELECTIONCHANGE: OK',selectedMassif)
   };
 
   // console.log('[METEODATATEST]:',meteoDataTest)
@@ -91,6 +120,7 @@ const [modalVisible, setModalVisible] = useState(false);
 
 const openModal = () => {
   setModalVisible(true);
+  setSelectedMassif(() => massifFavs);
 };
 
 const majMeteoBdd = async (massifString) => 
@@ -112,11 +142,10 @@ const majMeteoBdd = async (massifString) =>
       body: urlencoded.toString(),
       redirect: 'follow'
     };
-    console.log('[REQUEST OPTIONS METEO2:',requestOptions)
 
 const result = await fetch("https://dormir-la-haut-backend.vercel.app/users/addmeteo2", requestOptions);
 const response = await result.json();
-console.log('RESULTFETCH METEO2:',result)
+// console.log('RESULTFETCH METEO2:',result)
 }
 catch (error) {
   console.error('Error fetching data:', error);
@@ -147,10 +176,7 @@ const closeModal = () => {
         <FontAwesome style ={styles.addIcon} name='plus-circle' size={32} color='white' />
       </TouchableOpacity>
       {/* Utiliser ScrollView pour permettre le défilement */}
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        {/* Utiliser la méthode map pour créer un composant MeteoCard pour chaque massif */}
-        {meteoCards}
-      </ScrollView>
+      
       <Modal
         animationType="slide"
         transparent={true}
@@ -172,6 +198,10 @@ const closeModal = () => {
           </View>       
         </View>
       </Modal>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        {/* Utiliser la méthode map pour créer un composant MeteoCard pour chaque massif */}
+        {meteoCards}
+      </ScrollView>
     </View>
   );
 }
@@ -218,8 +248,10 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   scrollView: {
-    flex: 1,
+    //!Flex: 1 empechait le scroll de fonctionner jusqu'en bas
+    // flex: 1, 
     marginTop: 10,
+    paddingBottom:24,
     alignItems:'center',
     gap:24,
   },
