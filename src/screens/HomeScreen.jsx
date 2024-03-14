@@ -16,9 +16,10 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
-import { purgePersistor } from '../redux/slices/poi'
+import { purgePersistor } from '../redux/slices/poi';
  
 export default function HomeScreen({ navigation }) {
+
   const dispatch = useDispatch();
   // dispatch(setLogout())
   //  dispatch(purgePersistor());
@@ -195,7 +196,7 @@ export default function HomeScreen({ navigation }) {
         onPress={() => {
           navigation.navigate("PhotosScreen");
         }}
-      >
+      ><View style={styles.mapTitle}><Text style={styles.titleText}>Voir les photos</Text></View>
         <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
     </View>
@@ -229,6 +230,7 @@ const styles = StyleSheet.create({
   textMeteo: {
     fontSize: 16,
     color: "white",
+    fontFamily: 'JosefinSansRegular',
   },
   textTitle: {
     color: "white",
@@ -236,8 +238,9 @@ const styles = StyleSheet.create({
   textTitle: {
     color: "white",
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     marginRight: 10,
+    fontFamily: 'JosefinSans',
   },
   highRigtContainers: {
     width: "50%",
@@ -290,4 +293,20 @@ const styles = StyleSheet.create({
     height: "70%",
     gap: 10,
   },
+  mapTitle : {
+  position: 'absolute', 
+  backgroundColor:'yellow', 
+  zIndex:1, 
+  top: 10,
+  left: 10,
+  padding: 5,
+  backgroundColor: 'rgba(53,53,127,0.2)',
+  borderRadius: 10,
+},
+titleText: {
+  color: "white",
+  fontSize: 16,
+  fontWeight: "bold",
+  fontFamily: 'JosefinSans-Regular',
+}
 });

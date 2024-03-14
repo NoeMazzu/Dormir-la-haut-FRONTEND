@@ -85,8 +85,8 @@ export default function MapScreen({ navigation }) {
         provider="google"
         mapeType="terrain"
         initialRegion={{
-          latitude: 45.7542305,
-          longitude: 4.8386187,
+          latitude: 45.7,
+          longitude: 6.4,
           latitudeDelta: 2,
           longitudeDelta: 2,
         }}
@@ -96,11 +96,11 @@ export default function MapScreen({ navigation }) {
           handleAddSpot();
         }}
       >
-        <Marker
+        {user.location ? <Marker
           title="My position"
           pinColor="#fecb2d"
-          coordinate={{ latitude: 45.7542305, longitude: 4.8386187 }}
-        />
+          coordinate={user.location}
+        /> : null }
         <Markers />
       </MapView>
       <Modal
