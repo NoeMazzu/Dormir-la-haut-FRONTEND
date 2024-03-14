@@ -9,7 +9,7 @@ export const poiSlice = createSlice({
   initialState,
   reducers: {
     setPOIs: (state, action) => {
-      state.value.POIs = action.payload;
+      state.value.POIs= action.payload;
     },
     loadBookmarks: (state, action) => { state.value.bookmarkedPOIs = action.payload },
     addBookmark: (state, action) => { state.value.bookmarkedPOIs.push(action.payload) },

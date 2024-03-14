@@ -96,13 +96,14 @@ export default function HomeScreen({ navigation }) {
     );
   });
 
-  useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/poi")
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setPOIs(data.poi));
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       dispatch(setPOIs(data.poi));
+        
+  //     });
+  // }, []);
 
  
   // get the hotspot dimensions on render to extrapolate slider size
