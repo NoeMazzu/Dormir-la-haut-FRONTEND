@@ -32,11 +32,19 @@ export default function HomeScreen({ navigation }) {
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
+  const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
 
   useEffect(() => {
     if (!user?.token) {
       return navigation.navigate("LoadingScreen");
     }
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('[data.POI]',data.poi.filter((e)=> e === photos))
+      setPOIsFromDataBase(data.poi);
+      const dataSorted = data.poi.map((data, i) => {data.photos})
+    });
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
@@ -198,7 +206,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-        <Slider playing={true} height={componentHeight} width={componentWidth} />
+        <Slider playing={true} height={componentHeight} width={componentWidth} photos={POIsFromDataBase}/>
       </TouchableOpacity>
     </View>
   );
