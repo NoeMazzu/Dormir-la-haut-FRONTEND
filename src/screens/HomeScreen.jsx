@@ -32,11 +32,21 @@ export default function HomeScreen({ navigation }) {
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
+  const [photoHomePage, setPhotoHomePage] = useState([])
 
   useEffect(() => {
     if (!user?.token) {
       return navigation.navigate("LoadingScreen");
     }
+    fetch("https://dormir-la-haut-backend.vercel.app/poi")
+      .then((response) => response.json())
+      .then((data) => {
+        const photoDDB = data.poi.reduce((acc, item) => {
+          return acc.concat(item.photos);
+        }, []);
+        setPhotoHomePage(...photoHomePage, photoDDB)
+        
+      })
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
@@ -95,16 +105,6 @@ export default function HomeScreen({ navigation }) {
       </View>
     );
   });
-
-  // useEffect(() => {
-  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(setPOIs(data.poi));
-        
-  //     });
-  // }, []);
-
  
   // get the hotspot dimensions on render to extrapolate slider size
   const [componentHeight, setComponentHeight] = useState(0);
@@ -198,7 +198,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-        <Slider playing={true} height={componentHeight} width={componentWidth} />
+        <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
     </View>
   );

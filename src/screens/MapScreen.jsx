@@ -6,23 +6,19 @@ import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
 
 export default function MapScreen({ navigation }) {
+  const POIs = useSelector((state) => state.poi.value);
   const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState("");
-  const [POIsFromDataBase, setPOIsFromDataBase] = useState([])
+
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
+
   const [newSpotCoord, setNewSpotCoord] = useState(null);
 
   useEffect(() => {
     if (!user?.token) {
       navigation.navigate("LoadingScreen");
     }
-      fetch("https://dormir-la-haut-backend.vercel.app/poi")
-        .then((response) => response.json())
-        .then((data) => {
-            setPOIsFromDataBase(data.poi)
-
-        });
   }, []);
 
   const handleMarkerPress = (marker) => {
@@ -31,10 +27,10 @@ export default function MapScreen({ navigation }) {
   };
 
   const Markers = () => {
-    return POIsFromDataBase.map((poi, i) => {
+    return POIs.POIs.map((poi, i) => {
 
       return (
-        <Marker 
+        <Marker
           key={i}
           coordinate={{
             latitude: poi.coordinates.longitude,
