@@ -3,7 +3,6 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import Carousel from "react-native-snap-carousel";
 
 const Slider = (props) => {
-
   return (
     <Carousel
       ref={(c) => {

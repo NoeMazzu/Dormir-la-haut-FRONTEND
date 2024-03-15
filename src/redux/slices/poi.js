@@ -22,7 +22,7 @@ export const poiSlice = createSlice({
         (name) => name !== action.payload
       );
     },
-    niktamere: (state) => {
+    purgePersistor: (state) => {
       state.value = { POIs: [], bookmarkedPOIs: [] };
     },
   },
@@ -31,7 +31,7 @@ export const poiSlice = createSlice({
 export const {
   setPOIs,
   loadBookmarks,
-  niktamere,
+  purgePersistor,
   addBookmark,
   removeBookmark,
 } = poiSlice.actions;

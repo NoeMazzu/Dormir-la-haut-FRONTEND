@@ -16,12 +16,12 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
-import { niktamere } from '../redux/slices/poi'
+import { purgePersistor } from '../redux/slices/poi'
  
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   // dispatch(setLogout())
-  //  dispatch(niktamere());
+   dispatch(purgePersistor()); //A decommenter au lancement initial - à recommenter ensuite
   const user = useSelector((state) => state.user.value);
 
   const massifFavs = [
@@ -32,19 +32,21 @@ export default function HomeScreen({ navigation }) {
   const [meteoData, setMeteoData] = useState([]);
   const [meteoDataTmp, setMeteoDataTmp] = useState([]);
   const [meteoDataTest, setMeteoDataTest] = useState([]);
-  const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
+  const [photoHomePage, setPhotoHomePage] = useState([])
 
   useEffect(() => {
     if (!user?.token) {
       return navigation.navigate("LoadingScreen");
     }
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('[data.POI]',data.poi.filter((e)=> e === photos))
-      setPOIsFromDataBase(data.poi);
-      const dataSorted = data.poi.map((data, i) => {data.photos})
-    });
+      .then((response) => response.json())
+      .then((data) => {
+        const photoDDB = data.poi.reduce((acc, item) => {
+          return acc.concat(item.photos);
+        }, []);
+        setPhotoHomePage(...photoHomePage, photoDDB)
+        
+      })
     const url = `https://dormir-la-haut-backend.vercel.app/meteo/${massifFavs.join(
       ","
     )}`;
@@ -103,16 +105,6 @@ export default function HomeScreen({ navigation }) {
       </View>
     );
   });
-
-  // useEffect(() => {
-  //   fetch("https://dormir-la-haut-backend.vercel.app/poi")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       dispatch(setPOIs(data.poi));
-        
-  //     });
-  // }, []);
-
  
   // get the hotspot dimensions on render to extrapolate slider size
   const [componentHeight, setComponentHeight] = useState(0);
@@ -204,7 +196,7 @@ export default function HomeScreen({ navigation }) {
           navigation.navigate("PhotosScreen");
         }}
       >
-        <Slider playing={true} height={componentHeight} width={componentWidth} photos={POIsFromDataBase}/>
+        <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
     </View>
   );

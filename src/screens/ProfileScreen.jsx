@@ -39,7 +39,8 @@ export default function ProfileScreen({ navigation }) {
         //TODO - Voir pour passer sur une seule route avec instruction POPULATE sur la DB
         const firstResponse = await fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", requestOptions);
         const firstData = await firstResponse.json();
-        const firstDataStr = firstData.fav_POI.join(',');
+        const datatest = await firstData.fav_POI.map(item => item._id); //MAJ pour prendre en compte le populate de la route
+        const firstDataStr = await datatest.join(',');
         if (firstDataStr){
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();

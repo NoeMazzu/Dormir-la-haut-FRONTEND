@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadBookmarks } from "../redux/slices/poi";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
+import { setPOIs } from "../redux/slices/poi";
 
 export default function MapScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ export default function MapScreen({ navigation }) {
   const [selectedMarker, setSelectedMarker] = useState("");
   const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
+
   const [newSpotCoord, setNewSpotCoord] = useState(null);
 
   useEffect(() => {
@@ -23,7 +25,8 @@ export default function MapScreen({ navigation }) {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
       .then((response) => response.json())
       .then((data) => {
-        setPOIsFromDataBase(data.poi);
+        setPOIsFromDataBase(data.poi)
+        dispatch(setPOIs(data.poi))
       });
 
     // fetch bookmarked pois for the logged user
