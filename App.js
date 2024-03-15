@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
@@ -23,6 +23,7 @@ import {
   RegisterScreen,
 } from "./src/screens";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
+import { useFonts } from 'expo-font';
 
 LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
@@ -82,6 +83,20 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  const [fontsLoaded, fontsError] = useFonts({
+		JosefinSansRegular: require('./src/assets/fonts/JosefinSans-Regular.ttf'),
+		JosefinSansBold: require('./src/assets/fonts/JosefinSans-Bold.ttf'),
+		// Add more fonts as needed
+	});
+
+	if (!fontsLoaded)
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+
+	if (fontsError) console.log(fontsError);
   // AsyncStorage.clear().catch(err => console.error(err))
 
   return (

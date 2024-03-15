@@ -6,15 +6,15 @@ import { loadBookmarks } from "../redux/slices/poi";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
 import { setPOIs } from "../redux/slices/poi";
+import { width } from "@fortawesome/free-solid-svg-icons/faEllipsis";
 
-export default function MapScreen({ navigation }) {
-  const dispatch = useDispatch()
+export default function MapScreen({ navigation, route }) {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState("");
   const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
-
   const [newSpotCoord, setNewSpotCoord] = useState(null);
 
   useEffect(() => {
@@ -25,10 +25,9 @@ export default function MapScreen({ navigation }) {
     fetch("https://dormir-la-haut-backend.vercel.app/poi")
       .then((response) => response.json())
       .then((data) => {
-        setPOIsFromDataBase(data.poi)
-        dispatch(setPOIs(data.poi))
+        setPOIsFromDataBase(data.poi);
+        dispatch(setPOIs(data.poi));
       });
-
     // fetch bookmarked pois for the logged user
     fetch("https://dormir-la-haut-backend.vercel.app/users/myprofile", {
       method: "GET",
@@ -45,7 +44,13 @@ export default function MapScreen({ navigation }) {
           dispatch(loadBookmarks(POIS_names));
         }
       });
+    //Met à jour l'état qui arrive dePhotoScreen
+    if (route.params) {
+      setSelectedMarker(route.params);
+    }
   }, []);
+
+
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
@@ -57,9 +62,10 @@ export default function MapScreen({ navigation }) {
       return (
         <Marker
           key={i}
+          pinColor={poi.name === selectedMarker.name ? 'navy': 'red'}
           coordinate={{
-            latitude: poi.coordinates.longitude,
-            longitude: poi.coordinates.latitude,
+            latitude: poi.coordinates.latitude,
+            longitude: poi.coordinates.longitude,
           }}
           onPress={() => handleMarkerPress(poi)}
         ></Marker>
@@ -84,23 +90,20 @@ export default function MapScreen({ navigation }) {
       <MapView
         provider="google"
         mapeType="terrain"
-        initialRegion={{
-          latitude: 45.7,
-          longitude: 6.4,
-          latitudeDelta: 2,
-          longitudeDelta: 2,
-        }}
+        initialRegion={route.params ? {latitude: route.params.coordinates.latitude, longitude: route.params.coordinates.longitude, latitudeDelta: 0.1,longitudeDelta: 0.1} :{latitude: 45.7, longitude: 6.4, latitudeDelta: 2,longitudeDelta: 2}}
         style={{ flex: 1 }}
         onLongPress={(e) => {
           setNewSpotCoord(e.nativeEvent.coordinate);
           handleAddSpot();
         }}
       >
-        {user.location ? <Marker
-          title="My position"
-          pinColor="#fecb2d"
-          coordinate={user.location}
-        /> : null }
+        {user.location ? (
+          <Marker
+            title="My position"
+            pinColor="#fecb2d"
+            coordinate={user.location}
+          />
+        ) : null}
         <Markers />
       </MapView>
       <Modal

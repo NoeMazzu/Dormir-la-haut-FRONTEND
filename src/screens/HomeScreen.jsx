@@ -43,7 +43,7 @@ export default function HomeScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         const photoDDB = data.poi.reduce((acc, item) => {
-          return acc.concat(item.photos);
+          return acc.concat(item.photos.map(photos => ({...photos, name: item.name, desc: item.desc, coordinates: item.coordinates})));
         }, []);
         setPhotoHomePage(...photoHomePage, photoDDB)
         
@@ -115,6 +115,14 @@ export default function HomeScreen({ navigation }) {
     const { width, height } = event.nativeEvent.layout;
     setComponentHeight(height);
     setComponentWidth(width);
+  };
+
+  const handleNavigation = () => {
+    if (photoHomePage.length === 0) {
+      alert("Photos en cours de chargement.");
+      return;
+    }
+    navigation.navigate("PhotosScreen", {photoHomePage});
   };
 
   return (
@@ -193,9 +201,7 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.photoContainer}
-        onPress={() => {
-          navigation.navigate("PhotosScreen");
-        }}
+        onPress={handleNavigation}
       ><View style={styles.mapTitle}><Text style={styles.titleText}>Voir les photos</Text></View>
         <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
@@ -238,9 +244,8 @@ const styles = StyleSheet.create({
   textTitle: {
     color: "white",
     fontSize: 20,
-    // fontWeight: "bold",
     marginRight: 10,
-    fontFamily: 'JosefinSans',
+    fontFamily: 'JosefinSansRegular',
   },
   highRigtContainers: {
     width: "50%",
@@ -305,8 +310,7 @@ const styles = StyleSheet.create({
 },
 titleText: {
   color: "white",
-  fontSize: 16,
-  fontWeight: "bold",
-  fontFamily: 'JosefinSans-Regular',
+  fontSize: 20,
+  fontFamily: 'JosefinSansRegular',
 }
 });
