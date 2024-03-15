@@ -2,7 +2,7 @@ import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadBookmarks } from "../redux/slices/poi";
+import poi, { loadBookmarks } from "../redux/slices/poi";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
 import { setPOIs } from "../redux/slices/poi";
@@ -15,6 +15,8 @@ export default function MapScreen({ navigation, route }) {
   const [selectedMarker, setSelectedMarker] = useState("");
   const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
+  const [countAddPoi, setCountAddPoi] = useState(0);
+
   const [newSpotCoord, setNewSpotCoord] = useState(null);
 
   useEffect(() => {
@@ -44,11 +46,7 @@ export default function MapScreen({ navigation, route }) {
           dispatch(loadBookmarks(POIS_names));
         }
       });
-    //Met à jour l'état qui arrive dePhotoScreen
-    if (route.params) {
-      setSelectedMarker(route.params);
-    }
-  }, []);
+  }, [countAddPoi]);
 
 
 
@@ -56,6 +54,8 @@ export default function MapScreen({ navigation, route }) {
     setSelectedMarker(marker);
     setIsVisible(true);
   };
+
+  console.log('[POISFROMDATABASE',POIsFromDataBase.length)
 
   const Markers = () => {
     return POIsFromDataBase.map((poi, i) => {
@@ -79,6 +79,7 @@ export default function MapScreen({ navigation, route }) {
 
   const handleCloseAddSpot = () => {
     setIsVisibleAddSpot(false);
+    setCountAddPoi(prevCount => prevCount + 1);
   };
 
   const handleCloseModal = () => {

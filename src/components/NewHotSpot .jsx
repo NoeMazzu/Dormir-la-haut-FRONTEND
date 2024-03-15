@@ -1,4 +1,3 @@
-import React from "react";
 import {
   View,
   Text,
@@ -12,17 +11,18 @@ import {
   Platform,
   ScrollView,
   Alert,
-  Keyboard
+  Keyboard,
+  Modal,
 } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
+import SelectMultiple from "react-native-select-multiple";
 import * as ImagePicker from "expo-image-picker";
 
-
 function NewHotSpot(props) {
-  const userName = useSelector((state) => state.user.value.username);
+  // const userName = useSelector((state) => state.user.value.username);
 
   const [newSpotTitle, setNewSpotTitle] = useState(null);
   const [newSpotDesc, setNewSpotDesc] = useState(null);
@@ -32,54 +32,49 @@ function NewHotSpot(props) {
   const [disableButton, setDisableButton] = useState(false);
   const [isTabBarVisible, setTabBarVisible] = useState(true);
   const [error, setError] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [lastValue, setLastValue] = useState();
+  const formData = new FormData();
+
+  const handleSelectionsChange = (types) => {
+    setNewSpotType(types);
+  };
 
   useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      () => {
-        setTabBarVisible(false);
-      }
-    );
-
-    const keyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      () => {
-        setTabBarVisible(true);
-      }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
-
-  const formData = new FormData();
+    if (newSpotType && newSpotType.length > 0) {
+      setLastValue(newSpotType[0].value);
+      console.log("[LASTVALUE]", lastValue);
+      console.log("[newSpotType]", newSpotType);
+    }
+  }, [newSpotType]);
 
   //Informations à envoyer par la route à la BDD
   const newSpot = {
     name: newSpotTitle,
     coordinates: props.location,
     desc: newSpotDesc,
-    photos: [{ url: null, liked: [] }],
-    username: userName,
-    type: newSpotType,
-    isPublic: false,
+    photos: [{ url: null }],
+    // username: userName,
+    type: lastValue,
+    isPublic: true,
   };
 
   // Image Picker (pour choisir une image locale)
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: false,
-      quality: 1,});
+      quality: 1,
+    });
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
-    } else {alert("You did not select any image.");}
+    } else {
+      alert("You did not select any image.");
+    }
   };
 
   const handleSubmit = async () => {
-    if (!newSpotTitle || !newSpotDesc || !newSpotType){
-      return setError("Tous les champs doivent être remplis.")
+    if (!newSpotTitle || !newSpotDesc || !newSpotType) {
+      return setError("Tous les champs doivent être remplis.");
     }
     setFetchLoading(true);
     formData.append("photoNewPoi", {
@@ -90,31 +85,37 @@ function NewHotSpot(props) {
 
     const uploadPhoto = await fetch(
       "https://dormir-la-haut-backend.vercel.app/cloudinary/upload-image-mewen",
-      { method: "POST", body: formData}
+      { method: "POST", body: formData }
     );
 
     const uploadResult = await uploadPhoto.json();
 
     if (uploadResult.cdn_url) {
-      newSpot.photos[0].url = uploadResult.cdn_url
+      newSpot.photos[0].url = uploadResult.cdn_url;
+
+      console.log("[NS]", newSpot);
       fetch("https://dormir-la-haut-backend.vercel.app/poi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newSpot),
       })
-        .then((response) => response.json())
+        .then(
+          (response) => (
+            console.log("[Clg1]", response.json()), response.json()
+          )
+        )
         .then((data) => console.log("final result", data))
-        .finally(props.onClose, Alert.alert('Coucou'), 
-        setFetchLoading(false),
-        setNewSpotDesc(null),
-        setNewSpotTitle(null),
-        setNewSpotType(null),
-        setSelectedImage(null),
+        .finally(
+          props.onClose,
+          Alert.alert("Coucou"),
+          setFetchLoading(false),
+          setNewSpotDesc(null),
+          setNewSpotTitle(null),
+          setNewSpotType(null),
+          setSelectedImage(null)
         );
-        
     }
   };
-
 
   function GalleryToShow() {
     if (!fetchLoading && !selectedImage) {
@@ -127,7 +128,11 @@ function NewHotSpot(props) {
             <FontAwesomeIcon name="upload" size={60} color={"white"} />
             <Text style={styles.textUpload}>UPLOADER UNE PHOTO*</Text>
           </TouchableOpacity>
-          {error ? <View style={{position: 'absolute',bottom:10}}><Text style={styles.errorText}>{error}</Text></View> : null}
+          {error ? (
+            <View style={{ position: "absolute", bottom: 10 }}>
+              <Text style={styles.errorText}>{error}</Text>
+            </View>
+          ) : null}
         </View>
       );
     } else if (selectedImage && !fetchLoading) {
@@ -139,20 +144,19 @@ function NewHotSpot(props) {
           />
         </View>
       );
-    } else if(fetchLoading){
+    } else if (fetchLoading) {
       <View style={styles.gallery}>
-          <Text>LOADING...</Text>
-      </View>
+        <Text>LOADING...</Text>
+      </View>;
     }
   }
 
   return (
-   
     <View style={styles.container}>
       <View style={styles.subContainer}>
         <GalleryToShow />
         <View style={styles.infosContainer}>
-        {/* {error ? <Text style={styles.errorText}>{error}</Text> : null} */}
+          {/* {error ? <Text style={styles.errorText}>{error}</Text> : null} */}
           <TextInput
             style={styles.input}
             onChangeText={(value) => setNewSpotTitle(value)}
@@ -167,31 +171,59 @@ function NewHotSpot(props) {
             value={newSpotDesc}
             placeholder="Description du spot*"
             placeholderTextColor="#808080"
-            maxLength={300} ></TextInput>
-          <Picker
-            selectedValue={newSpotType}
-            onValueChange={(itemValue, itemIndex) => {
-              setNewSpotType(itemValue)}}
-            style={styles.input}
-            itemStyle={styles.inputLabel}>
-              <Picker.Item label="Choisissez un type*" value="none" />
-              <Picker.Item label="Cabane" value="cabane" />
-              <Picker.Item label="Bivouac" value="bivouac" />
-              <Picker.Item label="Gîte" value="gîte" />
-              <Picker.Item label="Refuge" value="refuge" />
-              <Picker.Item label="Autre" value="autre" />
-          </Picker>
+            maxLength={300}
+          ></TextInput>
+          <TouchableOpacity
+            style={styles.typeButton}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.typeButtonText}>Choisissez un type*</Text>
+          </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(false);
+            }}
+          >
+            <View style={styles.modalBackground}>
+              <View style={styles.modalContent}>
+                <SelectMultiple
+                  items={[
+                    { label: "Cabane", value: "Cabane" },
+                    { label: "Bivouac", value: "Bivouac" },
+                    { label: "Gîte", value: "Gîte" },
+                    { label: "Refuge", value: "Refuge" },
+                    { label: "Autre", value: "Autre" },
+                  ]}
+                  selectedItems={newSpotType}
+                  onSelectionsChange={handleSelectionsChange}
+
+                  // onValueChange={(itemValue, itemIndex) => {
+                  //   setNewSpotType(itemValue)}}
+                />
+                <Button
+                  title="Fermer"
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                />
+              </View>
+            </View>
+          </Modal>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.cancelButton}
-              onPress={props.onClose}>
+              onPress={props.onClose}
+            >
               <Text style={styles.buttonText}>Annuler</Text>
             </TouchableOpacity>
             <TouchableOpacity
               disabled={disableButton}
               style={styles.submitButton}
               onPress={() => {
-               handleSubmit();
+                handleSubmit();
               }}
             >
               <Text style={styles.buttonText2}>Soumettre</Text>
@@ -283,14 +315,39 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  inputLabel:{
-    color:'red'
+  inputLabel: {
+    color: "red",
   },
-  errorText:{
+  errorText: {
     color: "#FF0000",
     textAlign: "center",
     fontSize: 12,
-  }
+  },
+  typeButtonText: {
+    color: "#808080",
+    fontSize: 16,
+  },
+  typeButton: {
+    backgroundColor: "white",
+    width: "80%",
+    padding: 12,
+    margin: 10,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    width: "80%",
+  },
 });
 
 export default NewHotSpot;

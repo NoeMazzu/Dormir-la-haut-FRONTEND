@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   View,
   Text,
@@ -9,11 +9,7 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Slider from "../components/Slider";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loadBookmarks,
-  addBookmark,
-  removeBookmark,
-} from "../redux/slices/poi";
+import { addBookmark, removeBookmark } from "../redux/slices/poi";
 
 function HotSpot(props) {
   const dispatch = useDispatch();
@@ -72,11 +68,11 @@ function HotSpot(props) {
     }
   }
 
-  let star;
+  let heart;
   if (isPressed) {
-    star = <FontAwesome name="star-o" size={30} />;
+    heart = <FontAwesome name="heart-o" size={30} style={styles.logos}/>;
   } else {
-    star = <FontAwesome name="star" size={30} />;
+    heart = <FontAwesome name="heart" size={30} style={styles.logos}/>;
   }
 
   return (
@@ -110,13 +106,13 @@ function HotSpot(props) {
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity onPress={() => setIsPressed(!isPressed)}>
-              {star}
+              {heart}
             </TouchableOpacity>
             <TouchableOpacity onPress={handleBookmark}>
               {isPoiBookmarked ? (
-                <FontAwesome name="bookmark" size={30} />
+                <FontAwesome name="bookmark" size={30} style={styles.logos}/>
               ) : (
-                <FontAwesome name="bookmark-o" size={30} />
+                <FontAwesome name="bookmark-o" size={30} style={styles.logos}/>
               )}
             </TouchableOpacity>
           </View>
@@ -133,7 +129,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#35357F",
+    backgroundColor: "#161D46",
     // padding: "4%",
   },
   infosContainer: {
@@ -153,6 +149,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     zIndex: -1,
   },
+  textContainer: {
+    width: "100%",
+    height: "80%"
+  },
   title: {
     fontSize: 20,
     padding: "5%",
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     paddingBottom: "5%",
-    paddingHorizontal: "5%",
+    marginHorizontal: "5%",
     color: "white",
   },
   logosContainer: {
@@ -178,7 +178,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 8,
     right: 12,
-    color: "#35357F",
+    color: "white",
+    backgroundColor: "#161D46",
+    paddingHorizontal: "1.5%",
+    padding: "0.5%",
+    borderRadius: 20,
+  },
+  logos: {
+    color: "white"
   },
 });
 
