@@ -16,8 +16,7 @@ import {
 } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Picker } from "@react-native-picker/picker";
+
 import SelectMultiple from "react-native-select-multiple";
 import * as ImagePicker from "expo-image-picker";
 
@@ -37,14 +36,12 @@ function NewHotSpot(props) {
   const formData = new FormData();
 
   const handleSelectionsChange = (types) => {
-    setNewSpotType(types);
+    setNewSpotType(types.slice(-1));
   };
 
   useEffect(() => {
     if (newSpotType && newSpotType.length > 0) {
       setLastValue(newSpotType[0].value);
-      console.log("[LASTVALUE]", lastValue);
-      console.log("[newSpotType]", newSpotType);
     }
   }, [newSpotType]);
 
@@ -93,7 +90,6 @@ function NewHotSpot(props) {
     if (uploadResult.cdn_url) {
       newSpot.photos[0].url = uploadResult.cdn_url;
 
-      console.log("[NS]", newSpot);
       fetch("https://dormir-la-haut-backend.vercel.app/poi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -189,7 +185,9 @@ function NewHotSpot(props) {
           >
             <View style={styles.modalBackground}>
               <View style={styles.modalContent}>
+                
                 <SelectMultiple
+                 style={styles.selectMultiple}
                   items={[
                     { label: "Cabane", value: "Cabane" },
                     { label: "Bivouac", value: "Bivouac" },
@@ -199,16 +197,20 @@ function NewHotSpot(props) {
                   ]}
                   selectedItems={newSpotType}
                   onSelectionsChange={handleSelectionsChange}
-
-                  // onValueChange={(itemValue, itemIndex) => {
-                  //   setNewSpotType(itemValue)}}
+                  rowStyle={{ borderBottomWidth: 1, borderBottomColor: 'white', padding: 10, backgroundColor: '#5050B2', }}
+                  labelStyle={{ fontSize: 18, color: 'white' }}
+                  checkboxStyle={{ width: 20, height: 20, marginRight: 10, tintColor:'white' }}
+                  selectedCheckboxStyle={{tintColor: '#00FF00'}}
+                  single 
                 />
                 <Button
+                color="white"
                   title="Fermer"
                   onPress={() => {
                     setModalVisible(false);
                   }}
                 />
+                
               </View>
             </View>
           </Modal>
@@ -337,17 +339,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalBackground: {
+    shadowOpacity: 10,
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
   modalContent: {
-    backgroundColor: "#fff",
+    backgroundColor: '#5050B2',
     padding: 20,
     borderRadius: 10,
     width: "80%",
   },
+  
 });
 
 export default NewHotSpot;
