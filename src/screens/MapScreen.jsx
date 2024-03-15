@@ -60,7 +60,7 @@ export default function MapScreen({ navigation, route }) {
       return (
         <Marker
           key={i}
-          pinColor={poi.name === selectedMarker.name ? 'navy': 'red'}
+          pinColor={poi.name === selectedMarker.name ? 'green': 'red'}
           coordinate={{
             latitude: poi.coordinates.latitude,
             longitude: poi.coordinates.longitude,

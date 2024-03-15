@@ -172,16 +172,19 @@ const styles = StyleSheet.create({
   deleteLogo: {
     width: "100%",
     alignItems: "flex-end",
+    borderRadius: 20,
+    backgroundColor: "#161D46",
   },
   deleteLogoContainer: {
     flexDirection: "row",
+    borderRadius: 20,
   },
   logo: {
     position: "absolute",
     top: 8,
     right: 12,
     color: "white",
-    backgroundColor: "#161D46",
+    
     paddingHorizontal: "1.5%",
     padding: "0.5%",
     borderRadius: 20,

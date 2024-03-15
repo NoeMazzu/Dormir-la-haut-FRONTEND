@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -27,7 +28,7 @@ export default function PhotosScreen({ navigation, route }) {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.mainTitle}>Photos</Text>
       <FlatList
         style={styles.liste}
@@ -38,7 +39,7 @@ export default function PhotosScreen({ navigation, route }) {
           <View style={styles.spotContainer}>
             <Image
               source={{ uri: item.url }}
-              style={{ resizeMode: "cover", height: 120, borderWidth: 10 }}
+              style={{ resizeMode: "cover", height: 120 }}
             />
             <View style={styles.headerItem}>
               <Text style={styles.textItem}>{item.name}</Text>
@@ -61,7 +62,7 @@ export default function PhotosScreen({ navigation, route }) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity onPress={() => navigation.navigate("MapScreen", selectedItem)}>
+            <TouchableOpacity onPress={() => {navigation.navigate("MapScreen", selectedItem); setModalVisible(!modalVisible)}}>
               <Text>Voir sur la carte</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
@@ -70,7 +71,7 @@ export default function PhotosScreen({ navigation, route }) {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -85,14 +86,17 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 45,
     fontFamily: 'JosefinSansRegular',
+    marginLeft: 20,
+    marginBottom: 10,
   },
   liste: {
     width: "100%",
+    borderRadius: 10,
   },
   textItem: {
     color: "white",
     backgroundColor: "rgba(53,53,127,0.2)",
-    fontSize: 11,
+    fontSize: 12,
     borderRadius: 10,
     padding: 5,
     numberOfLines: 1,
