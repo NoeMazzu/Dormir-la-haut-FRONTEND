@@ -2,7 +2,7 @@ import { View, Modal } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadBookmarks } from "../redux/slices/poi";
+import poi, { loadBookmarks } from "../redux/slices/poi";
 import HotSpot from "../components/HotSpot";
 import NewHotSpot from "../components/NewHotSpot ";
 import { setPOIs } from "../redux/slices/poi";
@@ -14,6 +14,7 @@ export default function MapScreen({ navigation }) {
   const [selectedMarker, setSelectedMarker] = useState("");
   const [POIsFromDataBase, setPOIsFromDataBase] = useState([]);
   const [isVisibleAddSpot, setIsVisibleAddSpot] = useState(false);
+  const [countAddPoi, setCountAddPoi] = useState(0);
 
   const [newSpotCoord, setNewSpotCoord] = useState(null);
 
@@ -45,12 +46,14 @@ export default function MapScreen({ navigation }) {
           dispatch(loadBookmarks(POIS_names));
         }
       });
-  }, []);
+  }, [countAddPoi]);
 
   const handleMarkerPress = (marker) => {
     setSelectedMarker(marker);
     setIsVisible(true);
   };
+
+  console.log('[POISFROMDATABASE',POIsFromDataBase.length)
 
   const Markers = () => {
     return POIsFromDataBase.map((poi, i) => {
@@ -58,8 +61,8 @@ export default function MapScreen({ navigation }) {
         <Marker
           key={i}
           coordinate={{
-            latitude: poi.coordinates.longitude,
-            longitude: poi.coordinates.latitude,
+            latitude: poi.coordinates.latitude,
+            longitude: poi.coordinates.longitude,
           }}
           onPress={() => handleMarkerPress(poi)}
         ></Marker>
@@ -73,6 +76,7 @@ export default function MapScreen({ navigation }) {
 
   const handleCloseAddSpot = () => {
     setIsVisibleAddSpot(false);
+    setCountAddPoi(prevCount => prevCount + 1);
   };
 
   const handleCloseModal = () => {
