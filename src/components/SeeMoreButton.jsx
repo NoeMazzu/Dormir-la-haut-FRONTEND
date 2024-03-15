@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   title: {
     color: "white",
     fontSize: 18,
+    fontFamily: 'JosefinSansRegular',
   },
 });
 

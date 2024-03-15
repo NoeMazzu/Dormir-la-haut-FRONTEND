@@ -62,9 +62,9 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
 
-          if (route.name === "HomeStack") {
+          if (route.name === "Accueil") {
             iconName = "home";
-          } else if (route.name === "ProfileScreen") {
+          } else if (route.name === "Mon profil") {
             iconName = "user";
           }
 
@@ -74,10 +74,11 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "#161D46",
         headerShown: false,
         tabBarStyle: { backgroundColor: "#35357F" },
+        tabBarLabelStyle : {fontSize: 10, fontFamily: 'JosefinSansRegular'}
       })}
     >
-      <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Tab.Screen name="Accueil" component={HomeStack} />
+      <Tab.Screen name="Mon profil" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     marginVertical: 10,
+    fontFamily: 'JosefinSansRegular',
   },
   background: {
     flex: 1,
@@ -172,16 +173,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   buttonText2: {
     color: "#000",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   title: {
     color: "#ffffff",
-    fontSize: 60,
+    fontSize: 48,
+    fontFamily: 'JosefinSansRegular',
+    marginBottom: 20,
   },
 });
 

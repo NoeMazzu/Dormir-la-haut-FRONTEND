@@ -157,11 +157,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: "5%",
     color: "white",
+    fontFamily: 'JosefinSansRegular',
   },
   desc: {
     paddingBottom: "5%",
     marginHorizontal: "5%",
     color: "white",
+    fontFamily: 'JosefinSansRegular',
   },
   logosContainer: {
     flexDirection: "row",

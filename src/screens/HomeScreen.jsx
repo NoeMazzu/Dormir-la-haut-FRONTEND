@@ -100,7 +100,7 @@ export default function HomeScreen({ navigation }) {
             source={{
               uri: `https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`,
             }}
-            style={{ height: 20, width: 20, backgroundColor: "red" }}
+            style={{ height: 20, width: 20 }}
           />
         </View>
       </View>

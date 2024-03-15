@@ -241,11 +241,14 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   title: {
     color: "#ffffff",
     fontSize: 45,
     marginLeft: 15,
+    
+    fontFamily: 'JosefinSansRegular',
   },
   scrollView: {
     //!Flex: 1 empechait le scroll de fonctionner jusqu'en bas

@@ -288,14 +288,14 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   buttonText2: {
     color: "#000",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   input: {
     backgroundColor: "white",
@@ -303,6 +303,7 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 10,
     borderRadius: 10,
+    fontFamily: 'JosefinSansRegular',
   },
   boutonUpload: {
     justifyContent: "center",
@@ -312,8 +313,8 @@ const styles = StyleSheet.create({
   textUpload: {
     color: "#fff",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   inputLabel: {
     color: "red",

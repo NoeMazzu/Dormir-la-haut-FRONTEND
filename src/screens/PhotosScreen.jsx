@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   mainTitle: {
     color: "#ffffff",
     fontSize: 45,
+    fontFamily: 'JosefinSansRegular',
   },
   liste: {
     width: "100%",
@@ -96,6 +97,7 @@ const styles = StyleSheet.create({
     padding: 5,
     numberOfLines: 1,
     maxWidth: "60%",
+    fontFamily: 'JosefinSansRegular',
   },
   spotContainer: {
     width: "50%",

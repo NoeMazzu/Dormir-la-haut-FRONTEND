@@ -157,12 +157,12 @@ const tabFav = poisFav.map((item,index) => {
       >
         <Tab.Item
           title="Mes Spots"
-          titleStyle={{ fontSize: 12, color: "white" }}
+          titleStyle={{ fontSize: 12, color: "white",  fontFamily: 'JosefinSansRegular', }}
           icon={{ name: "bookmark", type: "font-awesome", color: "white" }}
         />
         <Tab.Item
           title="Mes checklists"
-          titleStyle={{ fontSize: 12, color: "white" }}
+          titleStyle={{ fontSize: 12, color: "white",  fontFamily: 'JosefinSansRegular', }}
           icon={{
             name: "check-square-o",
             type: "font-awesome",
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
   username: {
     color: "#ffffff",
     fontSize: 48,
+    fontFamily: 'JosefinSansRegular',
     textAlign: "center",
-    fontWeight:'bold'
   },
   modalView: {
     margin: 20,
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
 
   modalOptionText: {
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   favView:{
     flex:1,
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     marginBottom: 20,
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: 'JosefinSansRegular',
     textAlign: "center",
     color: 'white',
   },
@@ -293,8 +294,8 @@ const styles = StyleSheet.create({
   },
   modalButtonText: {
     color: "black",
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: 'JosefinSansRegular',
   },
   modalButtonText1: {
     color: "white",

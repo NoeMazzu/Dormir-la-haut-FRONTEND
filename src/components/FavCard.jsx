@@ -47,9 +47,9 @@ const styles = StyleSheet.create({
   },
   textTypo: {
     display: "flex",
-    fontWeight: "700",
     fontSize: 12,
     alignItems: "center",
+    fontFamily: 'JosefinSansRegular',
   },
   frameFlexBox: {
     padding: 8,
@@ -63,14 +63,14 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   titleText: {
-    fontFamily: 'Arial',
+    fontFamily: 'JosefinSansRegular',
     color: '#161D46',
     textAlign: "left",
     // width: 90,
     height: 13,
   },
   typeText: {
-    fontFamily: 'Arial',
+    fontFamily: 'JosefinSansRegular',
     color: 'white',
     textAlign: "center",
     justifyContent: "center",

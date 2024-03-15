@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 45,
     marginLeft: 15,
+    fontFamily: 'JosefinSansRegular',
   },
   scrollView: {
     flex: 1,
