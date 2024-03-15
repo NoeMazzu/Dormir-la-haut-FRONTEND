@@ -66,7 +66,7 @@ export default function PhotosScreen({ navigation, route }) {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("MapScreen", selectedItem)} style={styles.modalTouchableVoirSurLaCarte}
+              onPress={() => {navigation.navigate("MapScreen", selectedItem); setModalVisible(!modalVisible)}} style={styles.modalTouchableVoirSurLaCarte}
             >
               <Text style={styles.modalText}>Voir sur la carte</Text>
             </TouchableOpacity>
