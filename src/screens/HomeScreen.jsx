@@ -21,7 +21,7 @@ import { purgePersistor } from '../redux/slices/poi'
 export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   // dispatch(setLogout())
-  //  dispatch(purgePersistor());
+   dispatch(purgePersistor()); //A decommenter au lancement initial - à recommenter ensuite
   const user = useSelector((state) => state.user.value);
 
   const massifFavs = [
