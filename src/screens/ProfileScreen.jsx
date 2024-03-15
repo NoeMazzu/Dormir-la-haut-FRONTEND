@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Tab, TabView } from "@rneui/themed";
 import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { Icon } from "react-native-elements";
 import { setLogout } from "../redux/slices/user"; // BOUTON LOGOUT
 import FavCard from "../components/FavCard";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,7 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ProfileScreen({ navigation }) {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
-
   const [poisFav, setPoisFav] = useState([]);
   const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
   const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
@@ -44,24 +42,12 @@ export default function ProfileScreen({ navigation }) {
         if (firstDataStr){
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();
-        // console.log('[SECONDDATA API:',secondData)
+        // console.log('[SECONDDATA API:',secondData[0].photos[0])
 
         setPoisFav((prevPoisFav) => [...secondData]);}
         else{
           setPoisFav(()=> [])
         }
-        
-        //Récupération des données de checklists depuis le AsyncStorage
-        // const fetchData = async () => {
-        //   try {
-        //     const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-        //     const parsedValue = JSON.parse(value);
-        //     setChecklistData(parsedValue);
-        //   } catch (error) {
-        //     console.error('Error fetching data:', error);
-        //   }
-        // };    
-        // fetchData();
       } 
       catch (error) 
       {
@@ -73,9 +59,7 @@ export default function ProfileScreen({ navigation }) {
     const testData = async () => {
       try {
         const value = await AsyncStorage.getItem(`checklists_${user.token}`);
-        // console.log('[VALUE ASYNCSTORAGE]:',value)
         const parsedValue = JSON.parse(value);
-
         setChecklistData(parsedValue || []);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -87,7 +71,6 @@ export default function ProfileScreen({ navigation }) {
 
   }, [index]); 
 
-// console.log('[POISFAV]:',poisFav)
 // Fonction appelée par le BOUTON LOGOUT
 const handleLogout = () => 
 {
@@ -104,12 +87,12 @@ const tabFav = poisFav.map((item,index) => {
               key = {index}
               title ={item.name}
               poiType = {item.type}
-              imageUrl = {"https://img.freepik.com/vecteurs-libre/paysage-montagne-degrade_23-2149152830.jpg?w=1800&t=st=1710320984~exp=1710321584~hmac=6b797a554ad3068d5ec028516529ebbbd5a4d3bc57091b0e2ceefb0a51bf235a"}
+              imageUrl = {item.photos[0].url}
               />
 )
   })
 
-//Creation de la listse des favoris utilisant le composant CheckList
+//Creation de la liste des favoris utilisant le composant CheckList
   const tabChecklists = checklistData.map((item,index) => {
     return (
               <FavCard 
