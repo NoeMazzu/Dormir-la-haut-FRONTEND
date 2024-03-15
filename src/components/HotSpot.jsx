@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   logosContainer: {
     flexDirection: "row",
-    padding: "3%",
+    padding: "4%",
   },
   deleteLogo: {
     width: "100%",

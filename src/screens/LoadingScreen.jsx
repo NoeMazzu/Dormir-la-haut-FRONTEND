@@ -44,7 +44,6 @@ const LoadingScreen = ({ navigation }) => {
             <Text style={styles.buttonTextU}>Se connecter</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={styles.forgotPasswordText}>Mot de passe oublié ?</Text>
           </TouchableOpacity>
         </View>
       ) : null}
