@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: "100%",
-    height: "80%"
+    height: "70%"
   },
   title: {
     fontSize: 20,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   },
   logosContainer: {
     flexDirection: "row",
-    padding: "3%",
+    padding: "4%",
   },
   deleteLogo: {
     width: "100%",
