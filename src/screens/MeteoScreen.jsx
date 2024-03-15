@@ -190,6 +190,7 @@ const closeModal = () => {
                 items={massifs}
                 selectedItems={selectedMassif}
                 onSelectionsChange={onSelectionsChange}
+                labelStyle={{fontFamily:'JosefinSansRegular'}}
               />
             </ScrollView>
             <TouchableOpacity style = {styles.okButton} onPress={closeModal}>
@@ -247,7 +248,6 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 45,
     marginLeft: 15,
-    
     fontFamily: 'JosefinSansRegular',
   },
   scrollView: {

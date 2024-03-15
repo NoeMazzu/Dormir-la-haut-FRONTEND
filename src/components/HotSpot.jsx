@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "5%",
     color: "white",
     fontFamily: 'JosefinSansRegular',
+    fontSize: 10,
   },
   logosContainer: {
     flexDirection: "row",
