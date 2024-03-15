@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Modal, TouchableOpacity,ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Tab, TabView } from "@rneui/themed";
@@ -173,9 +173,9 @@ const tabFav = poisFav.map((item,index) => {
         }}
       >
         <Tab.Item
-          title="Mes favoris"
+          title="Mes Spots"
           titleStyle={{ fontSize: 12, color: "white" }}
-          icon={{ name: "heart-o", type: "font-awesome", color: "white" }}
+          icon={{ name: "bookmark", type: "font-awesome", color: "white" }}
         />
         <Tab.Item
           title="Mes checklists"
@@ -191,12 +191,16 @@ const tabFav = poisFav.map((item,index) => {
       <TabView value={index} onChange={setIndex} animationType="spring">
         <TabView.Item style={{ backgroundColor: "#161D46", width: "100%" }}>
           <View style = {styles.favView}>
-            {tabFav}
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              {tabFav}
+            </ScrollView>
           </View>
         </TabView.Item>
         <TabView.Item style={{ backgroundColor: "161D46", width: "100%" }}>
           <View style = {styles.favView}>
-            {tabChecklists}
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              {tabChecklists}
+            </ScrollView>
           </View>
         </TabView.Item>
       </TabView>
@@ -313,5 +317,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  scrollView: {
+    //!Flex: 1 empechait le scroll de fonctionner jusqu'en bas
+    // flex: 1, 
+    marginTop: 10,
+    paddingBottom:24,
+    alignItems:'center',
+    gap:24,
   },
 });
