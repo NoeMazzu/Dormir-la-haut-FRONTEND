@@ -40,12 +40,13 @@ const styles = StyleSheet.create({
   newsTitle: {
     color: "#161D46",
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: 'JosefinSansRegular',
   },
   newsDescription: {
     color: "#161D46",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
 
   iconContainer: {

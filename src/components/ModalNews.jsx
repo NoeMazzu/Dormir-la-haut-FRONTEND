@@ -80,11 +80,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#161D46",
+    fontFamily: 'JosefinSansRegular',
   },
   modalDescription: {
     fontSize: 18,
     color: "#161D46",
     marginBottom: 10,
+    fontFamily: 'JosefinSansRegular',
   },
   closeButton: {
     backgroundColor: "#161D46",

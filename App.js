@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Provider } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
@@ -23,6 +23,7 @@ import {
   RegisterScreen,
 } from "./src/screens";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
+import { useFonts } from 'expo-font';
 
 LogBox.ignoreAllLogs();
 const Stack = createNativeStackNavigator();
@@ -61,9 +62,9 @@ const TabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName = "";
 
-          if (route.name === "HomeStack") {
+          if (route.name === "Accueil") {
             iconName = "home";
-          } else if (route.name === "ProfileScreen") {
+          } else if (route.name === "Mon profil") {
             iconName = "user";
           }
 
@@ -73,15 +74,30 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: "#161D46",
         headerShown: false,
         tabBarStyle: { backgroundColor: "#35357F" },
+        tabBarLabelStyle : {fontSize: 10, fontFamily: 'JosefinSansRegular'}
       })}
     >
-      <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Tab.Screen name="Accueil" component={HomeStack} />
+      <Tab.Screen name="Mon profil" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
 
 export default function App() {
+  const [fontsLoaded, fontsError] = useFonts({
+		JosefinSansRegular: require('./src/assets/fonts/JosefinSans-Regular.ttf'),
+		JosefinSansBold: require('./src/assets/fonts/JosefinSans-Bold.ttf'),
+		// Add more fonts as needed
+	});
+
+	if (!fontsLoaded)
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+
+	if (fontsError) console.log(fontsError);
   // AsyncStorage.clear().catch(err => console.error(err))
 
   return (

@@ -340,6 +340,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginLeft: 87,
     alignItems: "center",
+    fontFamily: 'JosefinSansRegular',
   },
   scrollView: {
     flex: 1,
@@ -355,6 +356,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     marginLeft: 20,
+    fontFamily: 'JosefinSansRegular',
   },
   checklistItem: {
     flexDirection: "row",
@@ -385,6 +387,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     flex: 1,
+    fontFamily: 'JosefinSansRegular',
   },
   addButton: {
     backgroundColor: "#5050B2",
@@ -396,20 +399,24 @@ const styles = StyleSheet.create({
   addButtonLabel: {
     color: "#ffffff",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   textInput: {
     backgroundColor: "#ffffff",
     padding: 10,
     margin: 5,
     borderRadius: 5,
+    fontFamily: 'JosefinSansRegular',
   },
   deleteButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   deleteButtonIcon: {
     fontSize: 26,
     marginTop: 5,
+    fontFamily: 'JosefinSansRegular',
   },
   addChecklistButton: {
     backgroundColor: "#5050B2",
@@ -421,6 +428,7 @@ const styles = StyleSheet.create({
   addChecklistButtonText: {
     color: "#ffffff",
     fontSize: 16,
+    fontFamily: 'JosefinSansRegular',
   },
   checklistHeader: {
     flexDirection: "row",
@@ -459,9 +467,9 @@ const styles = StyleSheet.create({
   modalTitle: {
     marginBottom: 20,
     fontSize: 24,
-    fontWeight: "bold",
     textAlign: "center",
     color: "white",
+    fontFamily: 'JosefinSansRegular',
   },
   modalTextInput: {
     height: 40,
@@ -473,6 +481,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 5,
     textAlign: "center",
+    fontFamily: 'JosefinSansRegular',
   },
   modalButton: {
     backgroundColor: "white",
@@ -490,13 +499,13 @@ const styles = StyleSheet.create({
   },
   modalButtonText: {
     color: "black",
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: 'JosefinSansRegular',
   },
   modalButtonText1: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: 'JosefinSansRegular',
   },
 });
 export default ChecklistsScreen;

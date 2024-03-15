@@ -88,18 +88,19 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     textDecorationLine: "underline",
+    fontFamily: 'JosefinSansRegular',
   },
   buttonTextU: {
     color: "#000000",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 18,
+    fontFamily: 'JosefinSansRegular',
   },
   buttonTextI: {
     color: "#ffffff",
     textAlign: "center",
-    fontWeight: "bold",
     fontSize: 18,
+    fontFamily: 'JosefinSansRegular',
   },
 });
 

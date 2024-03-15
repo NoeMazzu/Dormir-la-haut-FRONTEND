@@ -16,9 +16,10 @@ import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Slider from "../components/Slider";
-import { purgePersistor } from '../redux/slices/poi'
+import { purgePersistor } from '../redux/slices/poi';
  
 export default function HomeScreen({ navigation }) {
+
   const dispatch = useDispatch();
   // dispatch(setLogout())
    dispatch(purgePersistor()); //A decommenter au lancement initial - à recommenter ensuite
@@ -42,7 +43,7 @@ export default function HomeScreen({ navigation }) {
       .then((response) => response.json())
       .then((data) => {
         const photoDDB = data.poi.reduce((acc, item) => {
-          return acc.concat(item.photos);
+          return acc.concat(item.photos.map(photos => ({...photos, name: item.name, desc: item.desc, coordinates: item.coordinates})));
         }, []);
         setPhotoHomePage(...photoHomePage, photoDDB)
         
@@ -99,7 +100,7 @@ export default function HomeScreen({ navigation }) {
             source={{
               uri: `https://openweathermap.org/img/wn/${data.weatherIcon}@2x.png`,
             }}
-            style={{ height: 20, width: 20, backgroundColor: "red" }}
+            style={{ height: 20, width: 20 }}
           />
         </View>
       </View>
@@ -114,6 +115,14 @@ export default function HomeScreen({ navigation }) {
     const { width, height } = event.nativeEvent.layout;
     setComponentHeight(height);
     setComponentWidth(width);
+  };
+
+  const handleNavigation = () => {
+    if (photoHomePage.length === 0) {
+      alert("Photos en cours de chargement.");
+      return;
+    }
+    navigation.navigate("PhotosScreen", {photoHomePage});
   };
 
   return (
@@ -192,10 +201,8 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.photoContainer}
-        onPress={() => {
-          navigation.navigate("PhotosScreen");
-        }}
-      >
+        onPress={handleNavigation}
+      ><View style={styles.mapTitle}><Text style={styles.titleText}>Voir les photos</Text></View>
         <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
     </View>
@@ -229,6 +236,7 @@ const styles = StyleSheet.create({
   textMeteo: {
     fontSize: 16,
     color: "white",
+    fontFamily: 'JosefinSansRegular',
   },
   textTitle: {
     color: "white",
@@ -236,8 +244,8 @@ const styles = StyleSheet.create({
   textTitle: {
     color: "white",
     fontSize: 20,
-    fontWeight: "bold",
     marginRight: 10,
+    fontFamily: 'JosefinSansRegular',
   },
   highRigtContainers: {
     width: "50%",
@@ -290,4 +298,19 @@ const styles = StyleSheet.create({
     height: "70%",
     gap: 10,
   },
+  mapTitle : {
+  position: 'absolute', 
+  backgroundColor:'yellow', 
+  zIndex:1, 
+  top: 10,
+  left: 10,
+  padding: 5,
+  backgroundColor: 'rgba(53,53,127,0.2)',
+  borderRadius: 10,
+},
+titleText: {
+  color: "white",
+  fontSize: 20,
+  fontFamily: 'JosefinSansRegular',
+}
 });
