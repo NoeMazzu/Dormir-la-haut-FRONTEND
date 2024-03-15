@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: "100%",
-    height: "80%"
+    height: "77%"
   },
   title: {
     fontSize: 20,
@@ -160,11 +160,10 @@ const styles = StyleSheet.create({
     fontFamily: 'JosefinSansRegular',
   },
   desc: {
-    paddingBottom: "5%",
     marginHorizontal: "5%",
     color: "white",
     fontFamily: 'JosefinSansRegular',
-    fontSize: 10,
+    fontSize: 14,
   },
   logosContainer: {
     flexDirection: "row",

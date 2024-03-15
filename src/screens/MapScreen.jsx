@@ -55,8 +55,6 @@ export default function MapScreen({ navigation, route }) {
     setIsVisible(true);
   };
 
-  console.log('[POISFROMDATABASE',POIsFromDataBase.length)
-
   const Markers = () => {
     return POIsFromDataBase.map((poi, i) => {
       return (
