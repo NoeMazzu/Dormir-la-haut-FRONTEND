@@ -8,8 +8,8 @@
 		"android": "expo start --android",
 		"ios": "expo start --ios",
 		"web": "expo start --web",
-		"lint": "eslint --fix .",
-		"format": "prettier --write ."
+		"lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+		"format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -26,6 +26,7 @@
 		"@reduxjs/toolkit": "^2.2.1",
 		"@rneui/base": "^4.0.0-rc.8",
 		"@rneui/themed": "^4.0.0-rc.8",
+		"eslint-plugin-react-hooks": "^4.6.0",
 		"expo": "50.0.11",
 		"expo-image-picker": "^14.7.1",
 		"expo-location": "~16.5.5",
@@ -89,7 +90,9 @@
 		],
 		"plugins": [
 			"react",
+			"import",
 			"prettier",
+			"react-hooks",
 			"react-native"
 		],
 		"env": {
@@ -100,9 +103,14 @@
 		},
 		"rules": {
 			"react/prop-types": "off",
-			"prettier/prettier": "error",
+			"import/namespace": "off",
+			"react/display-name": "off",
+			"react/jsx-uses-vars": "off",
+			"react/jsx-uses-react": "off",
 			"react/react-in-jsx-scope": "off",
-			"react-native/no-inline-styles": "off"
+			"react/no-unescaped-entities": "off",
+			"react-native/no-inline-styles": "off",
+			"react-native/no-color-literals": "off"
 		},
 		"parserOptions": {
 			"sourceType": "module",
