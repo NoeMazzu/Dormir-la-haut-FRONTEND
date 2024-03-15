@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     zIndex: -1,
   },
+  textContainer: {
+    width: "100%",
+    height: "80%"
+  },
   title: {
     fontSize: 20,
     padding: "5%",
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
   },
   desc: {
     paddingBottom: "5%",
-    paddingHorizontal: "5%",
+    margin: "5%",
     color: "white",
   },
   logosContainer: {
