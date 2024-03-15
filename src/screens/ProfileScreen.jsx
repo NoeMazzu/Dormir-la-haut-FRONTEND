@@ -41,7 +41,6 @@ export default function ProfileScreen({ navigation }) {
         const firstData = await firstResponse.json();
         const datatest = await firstData.fav_POI.map(item => item._id); //MAJ pour prendre en compte le populate de la route
         const firstDataStr = await datatest.join(',');
-        console.log('firstDATA', firstDataStr)
         if (firstDataStr){
         const secondResponse = await fetch(`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`);
         const secondData = await secondResponse.json();
