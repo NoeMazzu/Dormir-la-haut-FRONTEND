@@ -60,7 +60,7 @@ function NewHotSpot(props) {
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: false,
-      quality: 1,
+      quality: 0.5,
     });
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
@@ -103,7 +103,7 @@ function NewHotSpot(props) {
         .then((data) => console.log("final result", data))
         .finally(
           props.onClose,
-          Alert.alert("Coucou"),
+          Alert.alert('Merci', "Votre Spot a bien été envoyé !"),
           setFetchLoading(false),
           setNewSpotDesc(null),
           setNewSpotTitle(null),

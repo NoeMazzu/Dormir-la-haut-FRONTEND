@@ -1,56 +1,111 @@
 {
-  "name": "dormir-la-haut-frontend",
-  "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.5.1",
-    "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/react-native-fontawesome": "^0.3.0",
-    "@react-native-async-storage/async-storage": "1.21.0",
-    "@react-native-community/checkbox": "^0.5.17",
-    "@react-native-community/masked-view": "^0.1.11",
-    "@react-native-picker/picker": "^2.6.1",
-    "@react-navigation/bottom-tabs": "^6.5.16",
-    "@react-navigation/native": "^6.1.14",
-    "@react-navigation/native-stack": "^6.9.22",
-    "@react-navigation/stack": "^6.3.25",
-    "@reduxjs/toolkit": "^2.2.1",
-    "@rneui/base": "^4.0.0-rc.8",
-    "@rneui/themed": "^4.0.0-rc.8",
-    "expo": "50.0.11",
-    "expo-font": "^11.10.3",
-    "expo-image-picker": "^14.7.1",
-    "expo-location": "~16.5.5",
-    "expo-status-bar": "~1.11.1",
-    "native-base": "^3.4.28",
-    "react": "18.2.0",
-    "react-native": "0.73.4",
-    "react-native-awesome-gallery": "^0.3.8",
-    "react-native-elements": "^3.4.3",
-    "react-native-gesture-handler": "^2.15.0",
-    "react-native-image-slider-banner": "^1.0.3",
-    "react-native-image-slider-box": "^2.0.7",
-    "react-native-keyboard-controller": "^1.11.3",
-    "react-native-maps": "1.10.0",
-    "react-native-popup-menu": "^0.16.1",
-    "react-native-reanimated": "3.6.2",
-    "react-native-safe-area-context": "3.3.2",
-    "react-native-screens": "^3.29.0",
-    "react-native-select-multiple": "^2.1.0",
-    "react-native-snap-carousel": "^3.9.1",
-    "react-native-svg": "^14.1.0",
-    "react-native-vector-icons": "^10.0.3",
-    "react-redux": "^9.1.0",
-    "redux-persist": "^6.0.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.20.0"
-  },
-  "private": true
+	"name": "dormir-la-haut-frontend",
+	"private": true,
+	"version": "1.0.0",
+	"main": "node_modules/expo/AppEntry.js",
+	"scripts": {
+		"start": "expo start",
+		"android": "expo start --android",
+		"ios": "expo start --ios",
+		"web": "expo start --web",
+		"lint": "eslint --fix .",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.5.1",
+		"@fortawesome/free-solid-svg-icons": "^6.5.1",
+		"@fortawesome/react-native-fontawesome": "^0.3.0",
+		"@react-native-async-storage/async-storage": "1.21.0",
+		"@react-native-community/checkbox": "^0.5.17",
+		"@react-native-community/masked-view": "^0.1.11",
+		"@react-native-picker/picker": "^2.6.1",
+		"@react-navigation/bottom-tabs": "^6.5.16",
+		"@react-navigation/native": "^6.1.14",
+		"@react-navigation/native-stack": "^6.9.22",
+		"@react-navigation/stack": "^6.3.25",
+		"@reduxjs/toolkit": "^2.2.1",
+		"@rneui/base": "^4.0.0-rc.8",
+		"@rneui/themed": "^4.0.0-rc.8",
+		"expo": "50.0.11",
+		"expo-image-picker": "^14.7.1",
+		"expo-location": "~16.5.5",
+		"expo-status-bar": "~1.11.1",
+		"native-base": "^3.4.28",
+		"react": "18.2.0",
+		"react-native": "0.73.4",
+		"react-native-awesome-gallery": "^0.3.8",
+		"react-native-elements": "^3.4.3",
+		"react-native-gesture-handler": "^2.15.0",
+		"react-native-image-slider-banner": "^1.0.3",
+		"react-native-image-slider-box": "^2.0.7",
+		"react-native-keyboard-controller": "^1.11.3",
+		"react-native-maps": "1.10.0",
+		"react-native-popup-menu": "^0.16.1",
+		"react-native-reanimated": "3.6.2",
+		"react-native-safe-area-context": "3.3.2",
+		"react-native-screens": "^3.29.0",
+		"react-native-select-multiple": "^2.1.0",
+		"react-native-snap-carousel": "^3.9.1",
+		"react-native-svg": "^14.1.0",
+		"react-native-vector-icons": "^10.0.3",
+		"react-redux": "^9.1.0",
+		"redux-persist": "^6.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.20.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.1.3",
+		"eslint-plugin-react": "^7.34.0",
+		"prettier": "^3.2.5"
+	},
+	"prettier": {
+		"semi": true,
+		"tabWidth": 2,
+		"useTabs": true,
+		"printWidth": 80,
+		"endOfLine": "lf",
+		"singleQuote": true,
+		"proseWrap": "always",
+		"trailingComma": "all",
+		"bracketSpacing": true,
+		"jsxSingleQuote": true,
+		"arrowParens": "avoid",
+		"bracketSameLine": false,
+		"quoteProps": "as-needed",
+		"singleAttributePerLine": false
+	},
+	"eslintConfig": {
+		"extends": [
+			"eslint:recommended",
+			"plugin:react/recommended",
+			"plugin:prettier/recommended"
+		],
+		"plugins": [
+			"react",
+			"prettier"
+		],
+		"rules": {
+			"react/prop-types": "off",
+			"react/react-in-jsx-scope": "off",
+			"react/no-unescaped-entities": "off"
+		},
+		"env": {
+			"node": true,
+			"es2021": true,
+			"browser": false
+		},
+		"parserOptions": {
+			"ecmaVersion": 12,
+			"sourceType": "module",
+			"ecmaFeatures": {
+				"jsx": true
+			}
+		},
+		"settings": {
+			"react": {
+				"version": "detect"
+			}
+		}
+	}
 }

@@ -126,7 +126,7 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container} onLayout={onViewLayout}>
+    <SafeAreaView style={styles.container} onLayout={onViewLayout}>
       <View style={styles.topContainer}>
         <View style={styles.meteoContainer}>
           <TouchableOpacity
@@ -205,7 +205,7 @@ export default function HomeScreen({ navigation }) {
       ><View style={styles.mapTitle}><Text style={styles.titleText}>Voir les photos</Text></View>
         <Slider playing={true} height={componentHeight} width={componentWidth} photos={photoHomePage} />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -220,13 +220,15 @@ const styles = StyleSheet.create({
   meteoContainer: {
     width: "50%",
     padding: 4,
+    
   },
   meteoButton: {
     flex: 1,
     borderRadius: 10,
     backgroundColor: "#35357F",
-    gap: 10,
+    gap: 20,
     padding: 10,
+    justifyContent:'center'
   },
   meteoDetails: {
     flexDirection: "row",
@@ -295,7 +297,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   meteosInfos: {
-    height: "70%",
+    // height: "70%",
     gap: 10,
   },
   mapTitle : {
