@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     color: '#161D46',
     textAlign: "left",
     // width: 90,
-    height: 13,
+    height: 15,
   },
   typeText: {
     fontFamily: 'JosefinSansRegular',
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#161D46',
     width: 60,
-    height: 16,
+    height: 20,
     paddingHorizontal: 4,
     paddingVertical: 0,
     justifyContent: "center",
