@@ -55,14 +55,12 @@ export default function MapScreen({ navigation, route }) {
     setIsVisible(true);
   };
 
-  console.log('[POISFROMDATABASE',POIsFromDataBase.length)
-
   const Markers = () => {
     return POIsFromDataBase.map((poi, i) => {
       return (
         <Marker
           key={i}
-          pinColor={poi.name === selectedMarker.name ? 'navy': 'red'}
+          pinColor={poi.name === selectedMarker.name ? 'green': 'red'}
           coordinate={{
             latitude: poi.coordinates.latitude,
             longitude: poi.coordinates.longitude,

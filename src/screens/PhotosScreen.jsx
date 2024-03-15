@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -18,7 +19,7 @@ export default function PhotosScreen({ navigation, route }) {
   const data = route.params;
   const [modalVisible, setModalVisible] = useState(false);
   const galleryPhoto = route.params.photoHomePage;
-  const [selectedItem, setSelectedItem] = useState(null)
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     if (!user?.token) {
@@ -27,7 +28,7 @@ export default function PhotosScreen({ navigation, route }) {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.mainTitle}>Photos</Text>
       <FlatList
         style={styles.liste}
@@ -38,15 +39,17 @@ export default function PhotosScreen({ navigation, route }) {
           <View style={styles.spotContainer}>
             <Image
               source={{ uri: item.url }}
-              style={{ resizeMode: "cover", height: 120, borderWidth: 10 }}
+              style={{ resizeMode: "cover", height: 120 }}
             />
             <View style={styles.headerItem}>
               <Text style={styles.textItem}>{item.name}</Text>
-              <TouchableOpacity onPress={()=> {
-                setSelectedItem(item);
-                setModalVisible(!modalVisible)
-              }}>
-                <FontAwesomeIcon icon={faEllipsis} size={20} color="white"/>
+              <TouchableOpacity
+                onPress={() => {
+                  setSelectedItem(item);
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <FontAwesomeIcon icon={faEllipsis} size={20} color="white" />
               </TouchableOpacity>
             </View>
           </View>
@@ -56,21 +59,24 @@ export default function PhotosScreen({ navigation, route }) {
         animationType="none"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => {setModalVisible(!modalVisible);
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TouchableOpacity onPress={() => navigation.navigate("MapScreen", selectedItem)}>
-              <Text>Voir sur la carte</Text>
+            <TouchableOpacity
+              onPress={() => {navigation.navigate("MapScreen", selectedItem); setModalVisible(!modalVisible)}} style={styles.modalTouchableVoirSurLaCarte}
+            >
+              <Text style={styles.modalText}>Voir sur la carte</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
-              <Text>Close</Text>
+            <TouchableOpacity style={styles.modalTouchableFermer} onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={styles.modalText}>Fermer</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -84,20 +90,21 @@ const styles = StyleSheet.create({
   mainTitle: {
     color: "#ffffff",
     fontSize: 45,
-    fontFamily: 'JosefinSansRegular',
+    fontFamily: "JosefinSansRegular",
   },
   liste: {
     width: "100%",
+    borderRadius: 10,
   },
   textItem: {
     color: "white",
     backgroundColor: "rgba(53,53,127,0.2)",
-    fontSize: 11,
+    fontSize: 12,
     borderRadius: 10,
     padding: 5,
     numberOfLines: 1,
     maxWidth: "60%",
-    fontFamily: 'JosefinSansRegular',
+    fontFamily: "JosefinSansRegular",
   },
   spotContainer: {
     width: "50%",
@@ -116,15 +123,29 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: "#161D46",
+    borderRadius: 10,
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    padding: 15,
   },
+  modalText: {
+    fontFamily: "JosefinSansRegular",
+    color: "white",
+  },
+  modalTouchableVoirSurLaCarte: {
+    backgroundColor:"#5050B2",
+    margin: 16,
+    padding: 10,
+    borderRadius: 10,
+    width: 140,
+    alignItems: 'center'
+  },
+  modalTouchableFermer: {
+    backgroundColor:"#C23434",
+    margin: 16,
+    padding: 10,
+    borderRadius: 10,
+    width: 140,
+    alignItems: 'center'
+  }
 });

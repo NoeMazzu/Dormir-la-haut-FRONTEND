@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     width: "100%",
-    height: "80%"
+    height: "77%"
   },
   title: {
     fontSize: 20,
@@ -160,29 +160,31 @@ const styles = StyleSheet.create({
     fontFamily: 'JosefinSansRegular',
   },
   desc: {
-    paddingBottom: "5%",
     marginHorizontal: "5%",
     color: "white",
     fontFamily: 'JosefinSansRegular',
-    fontSize: 10,
+    fontSize: 14,
   },
   logosContainer: {
     flexDirection: "row",
-    padding: "3%",
+    padding: "4%",
   },
   deleteLogo: {
     width: "100%",
     alignItems: "flex-end",
+    borderRadius: 20,
+    backgroundColor: "#161D46",
   },
   deleteLogoContainer: {
     flexDirection: "row",
+    borderRadius: 20,
   },
   logo: {
     position: "absolute",
     top: 8,
     right: 12,
     color: "white",
-    backgroundColor: "#161D46",
+    
     paddingHorizontal: "1.5%",
     padding: "0.5%",
     borderRadius: 20,
