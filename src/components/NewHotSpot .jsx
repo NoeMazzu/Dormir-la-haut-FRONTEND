@@ -103,7 +103,7 @@ function NewHotSpot(props) {
         .then((data) => console.log("final result", data))
         .finally(
           props.onClose,
-          Alert.alert("Coucou"),
+          Alert.alert('Merci', "Votre Spot a bien été envoyé !"),
           setFetchLoading(false),
           setNewSpotDesc(null),
           setNewSpotTitle(null),
