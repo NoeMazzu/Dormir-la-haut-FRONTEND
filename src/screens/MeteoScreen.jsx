@@ -130,9 +130,10 @@ const majMeteoBdd = async (massifString) =>
   {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Authorization", `Bearer ${user.token}`);
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("token", user.token);
+    // urlencoded.append("token", user.token);
     urlencoded.append("newMeteo", massifString);
 
     const requestOptions = 
