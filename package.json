@@ -8,8 +8,8 @@
 		"android": "expo start --android",
 		"ios": "expo start --ios",
 		"web": "expo start --web",
-		"lint": "eslint --fix .",
-		"format": "prettier --write ."
+		"lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+		"format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -26,6 +26,7 @@
 		"@reduxjs/toolkit": "^2.2.1",
 		"@rneui/base": "^4.0.0-rc.8",
 		"@rneui/themed": "^4.0.0-rc.8",
+		"eslint-plugin-react-hooks": "^4.6.0",
 		"expo": "50.0.11",
 		"expo-image-picker": "^14.7.1",
 		"expo-location": "~16.5.5",
@@ -55,8 +56,10 @@
 		"@babel/core": "^7.20.0",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-prettier": "^5.1.3",
 		"eslint-plugin-react": "^7.34.0",
+		"eslint-plugin-react-native": "^4.1.0",
 		"prettier": "^3.2.5"
 	},
 	"prettier": {
@@ -77,27 +80,41 @@
 	},
 	"eslintConfig": {
 		"extends": [
+			"prettier",
 			"eslint:recommended",
+			"plugin:import/errors",
+			"plugin:import/warnings",
+			"plugin:react-native/all",
 			"plugin:react/recommended",
 			"plugin:prettier/recommended"
 		],
 		"plugins": [
 			"react",
-			"prettier"
+			"import",
+			"prettier",
+			"react-hooks",
+			"react-native"
 		],
+		"env": {
+			"node": false,
+			"es2021": true,
+			"browser": false,
+			"react-native/react-native": true
+		},
 		"rules": {
 			"react/prop-types": "off",
+			"import/namespace": "off",
+			"react/display-name": "off",
+			"react/jsx-uses-vars": "off",
+			"react/jsx-uses-react": "off",
 			"react/react-in-jsx-scope": "off",
-			"react/no-unescaped-entities": "off"
-		},
-		"env": {
-			"node": true,
-			"es2021": true,
-			"browser": false
+			"react/no-unescaped-entities": "off",
+			"react-native/no-inline-styles": "off",
+			"react-native/no-color-literals": "off"
 		},
 		"parserOptions": {
-			"ecmaVersion": 12,
 			"sourceType": "module",
+			"ecmaVersion": "latest",
 			"ecmaFeatures": {
 				"jsx": true
 			}
@@ -105,6 +122,20 @@
 		"settings": {
 			"react": {
 				"version": "detect"
+			},
+			"import/resolver": {
+				"node": {
+					"extensions": [
+						".js",
+						".jsx",
+						".ts",
+						".tsx"
+					],
+					"moduleDirectory": [
+						"node_modules",
+						"src/"
+					]
+				}
 			}
 		}
 	}
