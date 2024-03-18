@@ -22,7 +22,16 @@ const NewsScreen = ({ navigation }) => {
   const [selectedNews, setSelectedNews] = useState(null);
 
   useEffect(() => {
-    fetch("https://dormir-la-haut-backend.vercel.app/newsApi")
+    const myHeaders = new Headers();
+      myHeaders.append("authorization", `bearer ${user.token}`);
+
+    const requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("https://dormir-la-haut-backend.vercel.app/newsApi", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         const uniqueActuData = data.articles.filter(
