@@ -38,11 +38,11 @@ function HotSpot(props) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token,
+          // token,
         }),
       })
         .then((response) => response.json())
@@ -55,11 +55,11 @@ function HotSpot(props) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${token}`,
+          "authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           id: poiFound._id,
-          token,
+          // token,
         }),
       })
         .then((response) => response.json())
