@@ -33,17 +33,13 @@ export default function MeteoCard(props) {
             <Image source={{ uri: props.weatherIcon }} style={styles.weatherIcon} />
           </View>
           <View style={[styles.image30Parent, styles.parentWrapperFlexBox]}>
-            <FontAwesome name='thermometer-full' size={16} color='#161D46' />
-            <FontAwesome name='wind' size={16} color='#161D46' />
+            <FontAwesome name='thermometer-full' size={20} color='#161D46' />
+            <FontAwesome name='wind' size={20} color='#161D46' />
           </View>
           <View style={[styles.tempParent, styles.frameSpaceBlock]}>
             <Text style={[styles.temp, styles.tempTypo]}>{props.temp} °C </Text>
             <Text style={[styles.wind, styles.windTypo]}>{props.windSpe}  km/h - {props.windOri} </Text>
           </View>
-        </View>
-        <View style={styles.beraParent}>
-          <Text style={[styles.bera, styles.beraTypo]}>BERA</Text>
-          <FontAwesome name='arrow-circle-right' size={16} color='#161D46' />
         </View>
       </View>
     </View>
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
       overflow: "hidden",
     },
     massifText: {
-      height: 40,
+      height: 25,
       width: 120,
       textAlign: "left",
       fontSize: 12,
@@ -88,6 +84,8 @@ const styles = StyleSheet.create({
       paddingVertical: 0,
       flexDirection: "row",
       alignItems: "center",
+      paddingTop:3,
+      marginLeft: 6,
     },
     dayTextBox: {
       fontFamily: 'JosefinSansRegular',
@@ -189,9 +187,12 @@ const styles = StyleSheet.create({
     },
     massifWrap: {
       width: 104,
-      padding: 8,
+      marginRight: 14,
       alignItems: "center",
       flexDirection: "row",
+      paddingRight: 15,
+      paddingTop: 12,
+      paddingLeft: 5,
     },
     default: {
       color:  "#fff",
@@ -241,7 +242,6 @@ const styles = StyleSheet.create({
     //   marginLeft: 8,
     // },
     badgeMeteoParent: {
-      marginLeft: 8,
       padding: 8,
       alignItems: "center",
       flexDirection: "row",
@@ -259,7 +259,8 @@ const styles = StyleSheet.create({
       position: "absolute",
     },
     image32Wrapper: {
-      width: 32,
+      width: 48, // Augmentez la largeur pour créer de l'espace
+      marginRight: 10, // Ajoutez une marge à droite
     },
     image30Icon: {
       width: 12,
@@ -271,8 +272,9 @@ const styles = StyleSheet.create({
       marginTop: 8,
     },
     image30Parent: {
-      marginLeft: 8,
+      marginLeft: 60,
       justifyContent: "center",
+      marginTop : 1,
     },
     temp: {
       color:  "#000",
@@ -281,12 +283,11 @@ const styles = StyleSheet.create({
       color:  "#000",
     },
     tempParent: {
-      width: 123,
+      width: 100,
       paddingVertical: 6,
-      marginLeft: 8,
     },
     frameContainer: {
-      width: 203,
+      width: 300,
       paddingVertical: 0,
       flexDirection: "row",
       alignItems: "center",
@@ -371,8 +372,8 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     weatherIcon: {
-      width: 24,
-      height: 24,
+      width: 48,
+      height: 48,
       alignSelf:'flex-start',
       shadowColor: '#161D46', // Couleur de l'ombre
       shadowOffset: { width: 0, height: 2 }, // Décalage de l'ombre (horizontale, verticale)
