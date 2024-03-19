@@ -68,12 +68,7 @@ function HotSpot(props) {
     }
   }
 
-  let heart;
-  if (isPressed) {
-    heart = <FontAwesome name="heart-o" size={30} style={styles.logos}/>;
-  } else {
-    heart = <FontAwesome name="heart" size={30} style={styles.logos}/>;
-  }
+  
 
   return (
     <View style={styles.container} onLayout={onViewLayout}>
@@ -105,9 +100,6 @@ function HotSpot(props) {
         </View>
         <View style={styles.logosContainer}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity onPress={() => setIsPressed(!isPressed)}>
-              {heart}
-            </TouchableOpacity>
             <TouchableOpacity onPress={handleBookmark}>
               {isPoiBookmarked ? (
                 <FontAwesome name="bookmark" size={30} style={styles.logos}/>
@@ -141,6 +133,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     justifyContent: "space-between",
+    position: "relative", // Ajoutez cette ligne
   },
   photoContainer: {
     overflow: "hidden",
@@ -190,7 +183,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   logos: {
-    color: "white"
+    color: "white",
+  right: -300, // Position à droite
   },
 });
 
