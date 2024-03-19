@@ -18,6 +18,10 @@ export default function MapScreen({ navigation, route }) {
   const [countAddPoi, setCountAddPoi] = useState(0);
 
   const [newSpotCoord, setNewSpotCoord] = useState(null);
+  //newState to rerender with route
+    // const [routeState, setRouteState] = useState();
+    // route.params && setRouteState(preroute => route.params);
+    // console.log('[ROUTEPARAMS STATE]:', routeState)
 
   useEffect(() => {
     if (!user?.token) {
@@ -46,6 +50,7 @@ export default function MapScreen({ navigation, route }) {
           dispatch(loadBookmarks(POIS_names));
         }
       });
+      console.log('[USEEFFECT MAPSCREEN LOAD')
   }, [countAddPoi]);
 
 
@@ -83,6 +88,9 @@ export default function MapScreen({ navigation, route }) {
   const handleCloseModal = () => {
     setIsVisible(false);
   };
+
+  console.log('[ROUTE.PARAMS',route.params)
+
 
   return (
     <View style={{ flex: 1 }}>
