@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     alignSelf: "stretch",
+    paddingTop: 3,
   },
   typeBadge: {
     borderRadius: 8,

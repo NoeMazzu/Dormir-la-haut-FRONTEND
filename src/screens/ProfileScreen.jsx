@@ -22,6 +22,7 @@ export default function ProfileScreen({ navigation }) {
 	const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
 	const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
 	const [checklistData, setChecklistData] = useState([]);
+	const [selectedItem,setSelectedItem] = useState();
 
 	useEffect(() => {
 		if (!user?.token) {
@@ -99,10 +100,15 @@ export default function ProfileScreen({ navigation }) {
     }
 };
 
-	//Creation de la listse des favoris utilisant le composant FavCard
+	//Creation de la liste des Bookmarks utilisant le composant FavCard
+	// const handlePress = async (item) => {
+	// 	await setSelectedItem(item);
+	// 	navigation.navigate("MapScreen", selectedItem);
+	//   };
+
 	const tabFav = poisFav.map((item, index) => {
     return (
-        <TouchableOpacity key={index} onPress={() => navigateToChecklistByTitle(item.name)}>
+        <TouchableOpacity key={index} onPress={() => {navigation.navigate("MapScreen", item)}}>
             <FavCard
                 key={index}
                 title={item.name}
