@@ -13,8 +13,8 @@ recherche globale ou par fichier dans VS Code) —
 
 — Supprimer tous les commentaires inutiles —
 
-— Appliquer une charte cohérente sur les déclarations de fonctions et le code
-asynchrone (fonction classique ou fléchée ? async/await ou then/catch ?) —
+— u fléAppliquer une charte cohérente sur les déclarations de fonctions et le code
+asynchrone (fonction classique ochée ? async/await ou then/catch ?) —
 
 — Extraire la logique/structure JSX réutilisée sur de multiples écrans pour en
 faire un module (algo vanilla JS) ou un composant graphique JSX (par exemple, un
