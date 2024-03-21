@@ -93,7 +93,7 @@ export default function MapScreen({ navigation, route }) {
 	};
 
   return (
-    <View style={{ flex: 1}}>
+    <View style={{ flex: 1 }}>
       <MapView
         provider="google"
         mapeType="terrain"

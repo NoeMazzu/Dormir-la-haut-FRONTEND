@@ -56,6 +56,7 @@ export default function HomeScreen({ navigation }) {
 			.then(response => response.json())
 			.then(data => {
 				setMeteoData(data.meteoInfo);
+				console.log(data);
 				setMeteoDataTmp(prevMeteoDataTmp => {
 					const newData = [...prevMeteoDataTmp, ...data.meteoInfo];
 					return newData;
