@@ -47,6 +47,7 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   const handleInscription = () => {
+    
     if (userNameInputRef && userNameInputRef.textValue.length < 4) {
       return setError("Le nom d'utilisateur doit avoir au moins 4 caractères.");
     }

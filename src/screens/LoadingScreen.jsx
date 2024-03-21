@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     marginBottom: "60%",
     marginTop: "15%",
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+	marginTop: '0%', // Ajuster cette valeur selon vos besoins
   },
 	logo: {
 		height: '70%',
