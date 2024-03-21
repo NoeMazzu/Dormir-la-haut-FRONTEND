@@ -38,6 +38,9 @@ const LoadingScreen = ({ navigation }) => {
 							source={require('../assets/img/logoDormirLaHaut.png')}
 						/>
 					</View>
+					<Text style={styles.infoText}>
+  Veuillez créer un compte ou vous connecter pour accéder à l'application
+</Text>
 					<View style={styles.buttonContainer} >
 						<TouchableOpacity
 							style={styles.signup}
@@ -124,6 +127,13 @@ const styles = StyleSheet.create({
 		height: '50%',
 		width: '50%',
 	},
+	infoText: {
+		color: '#ffffff',
+		fontSize: 16,
+		textAlign: 'center',
+		marginVertical: 10, // Ajoutez une marge pour l'espace vertical
+		fontFamily: 'JosefinSansRegular',
+	  },
 });
 
 export default LoadingScreen;
