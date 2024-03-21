@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
-  ImageSourcePropType,
 } from "react-native";
 
 const FavCard = ({
