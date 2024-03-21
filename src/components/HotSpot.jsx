@@ -102,9 +102,9 @@ function HotSpot(props) {
           <View style={styles.buttonsContainer}>
             <TouchableOpacity onPress={handleBookmark}>
               {isPoiBookmarked ? (
-                <FontAwesome name="bookmark" size={30} style={styles.logos}/>
+                <FontAwesome name="bookmark" size={30} color="white"/>
               ) : (
-                <FontAwesome name="bookmark-o" size={30} style={styles.logos}/>
+                <FontAwesome name="bookmark-o" size={30} color="white"/>
               )}
             </TouchableOpacity>
           </View>
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#161D46",
-    // padding: "4%",
   },
   infosContainer: {
     flex: 1,
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
     width: "100%",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     position: "relative", // Ajoutez cette ligne
   },
   photoContainer: {
@@ -177,14 +176,9 @@ const styles = StyleSheet.create({
     top: 8,
     right: 12,
     color: "white",
-    
     paddingHorizontal: "1.5%",
     padding: "0.5%",
     borderRadius: 20,
-  },
-  logos: {
-    color: "white",
-  right: -300, // Position à droite
   },
 });
 
