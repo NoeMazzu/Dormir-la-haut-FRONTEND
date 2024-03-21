@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import SelectMultiple from 'react-native-select-multiple';
+import { styles } from '../styles/screens/MeteoScreen.style'
 
 export default function MeteoScreen({navigation}) {
   const user = useSelector((state) => state.user.value);
@@ -68,10 +69,10 @@ export default function MeteoScreen({navigation}) {
         })
         return data.meteoInfo;
       })        
-      .then((patate) =>
+      .then((data) =>
       {
         setMeteoDataTest(prevMeteoData => {
-          const meteoDay = patate.map(item => ({massif: item.massif, meteoData: item.meteoData[0]}));
+          const meteoDay = data.map(item => ({massif: item.massif, meteoData: item.meteoData[0]}));
           const newData = [...prevMeteoData, ...meteoDay];
           return newData;
       })});;
@@ -80,23 +81,18 @@ export default function MeteoScreen({navigation}) {
   const updateMeteoByDate = (index,day) => {
     return setMeteoDataTest(prevMeteoData => 
       {
-        // console.log('[METEODATATEST:',meteoDataTest)
         const updatedMeteoCard = { ...meteoDataTmp[index].meteoData[day] };
         // updatedMeteoCard.meteoData[0].today.temp = updateMeteoData.meteoData[0];
         const updatedPrevMeteoData = [...prevMeteoData];
         updatedPrevMeteoData[index].meteoData = updatedMeteoCard;
-        // console.log('[PrevMeteoData]', updatedPrevMeteoData[index]);
         return updatedPrevMeteoData;            
       });
   };
 
-  //TODO - Revoir le nom de variable - peut preter à confusion - PATATE
   const onSelectionsChange = (selectedMassif) => {
     setSelectedMassif(() => selectedMassif);
-    // console.log('[ONSELECTIONCHANGE: OK',selectedMassif)
   };
 
-  // console.log('[METEODATATEST]:',meteoDataTest)
   const meteoCards = meteoDataTest.map((data, i) => {
     return (
       <MeteoCard
@@ -125,7 +121,6 @@ const openModal = () => {
 
 const majMeteoBdd = async (massifString) => 
 {
-  // console.log('[LAUNCH FUNCTION - MassifString]',typeof massifString)
   try
   {
     const myHeaders = new Headers();
@@ -146,7 +141,6 @@ const majMeteoBdd = async (massifString) =>
 
 const result = await fetch("https://dormir-la-haut-backend.vercel.app/users/addmeteo2", requestOptions);
 const response = await result.json();
-// console.log('RESULTFETCH METEO2:',result)
 }
 catch (error) {
   console.error('Error fetching data:', error);
@@ -157,7 +151,7 @@ const closeModal = () => {
   // Mise à jour de l'état massifFavs
   const newMassifFavs = selectedMassif.map(item => item.value);
   setMassifFavs(newMassifFavs);
-  // console.log('[NEW MASSIF FAV]',newMassifFavs)
+
   majMeteoBdd(newMassifFavs.join(','));
 
   // Mise à jour des autres états
@@ -208,55 +202,4 @@ const closeModal = () => {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#161D46",
-    flex: 1,
-    width: "100%",
-    paddingTop: 60,
-    gap: 40,
-  },
-  addIcon: {
-    alignSelf:'center',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Arrière-plan semi-transparent
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    width: '80%',
-    height: '75%',
-    padding: 20,
-    borderRadius: 10,
-  },
-  okButton: {
-    backgroundColor: '#161D46',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 10,
-  },
-  okButtonText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontFamily: 'JosefinSansRegular',
-  },
-  title: {
-    color: "#ffffff",
-    fontSize: 45,
-    marginLeft: 15,
-    fontFamily: 'JosefinSansRegular',
-  },
-  scrollView: {
-    //!Flex: 1 empechait le scroll de fonctionner jusqu'en bas
-    // flex: 1, 
-    marginTop: 10,
-    paddingBottom:24,
-    alignItems:'center',
-    gap:24,
-  },
-});
+

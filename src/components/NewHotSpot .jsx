@@ -1,9 +1,7 @@
 import {
   Alert,
-  Dimensions,
   Image,
   Modal,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -14,6 +12,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import SelectMultiple from 'react-native-select-multiple';
+import { styles } from '../styles/components/NewHotSpot.style'
 
 function NewHotSpot(props) {
   // const userName = useSelector((state) => state.user.value.username);
@@ -24,7 +23,6 @@ function NewHotSpot(props) {
   const [fetchLoading, setFetchLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [disableButton, setDisableButton] = useState(false);
-  const [isTabBarVisible, setTabBarVisible] = useState(true);
   const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [lastValue, setLastValue] = useState();
@@ -91,7 +89,7 @@ function NewHotSpot(props) {
               body: JSON.stringify(newSpot),
           })
               .then(
-                  response => (console.log('[Clg1]', response.json()), response.json()),
+                  response => response.json(),
               )
               .then(data => console.log('final result', data))
               .finally(
@@ -244,120 +242,6 @@ function NewHotSpot(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: Dimensions.get('window').height,
-  },
-  subContainer: {
-      width: '80%',
-      height: 600,
-      borderRadius: 10,
-  },
-  gallery: {
-      height: '30%',
-      width: '100%',
-      backgroundColor: '#35357F',
-      borderTopLeftRadius: 10,
-      borderTopRightRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-  },
-  infosContainer: {
-      height: '50%',
-      width: '100%',
-      backgroundColor: '#35357F',
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-  },
-  buttonsContainer: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-  },
-  cancelButton: {
-      backgroundColor: '#C23434',
-      padding: 10,
-      margin: 8,
-      borderRadius: 10,
-      width: '40%',
-      alignItems: 'center',
-  },
-  submitButton: {
-      backgroundColor: '#ffffff',
-      padding: 10,
-      margin: 8,
-      borderRadius: 10,
-      width: '40%',
-      alignItems: 'center',
-  },
-  buttonText: {
-      color: '#fff',
-      textAlign: 'center',
-      fontSize: 16,
-      fontFamily: 'JosefinSansRegular',
-  },
-  buttonText2: {
-      color: '#000',
-      textAlign: 'center',
-      fontSize: 16,
-      fontFamily: 'JosefinSansRegular',
-  },
-  input: {
-      backgroundColor: 'white',
-      width: '80%',
-      padding: 12,
-      margin: 10,
-      borderRadius: 10,
-      fontFamily: 'JosefinSansRegular',
-  },
-  boutonUpload: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: 10,
-  },
-  textUpload: {
-      color: '#fff',
-      textAlign: 'center',
-      fontSize: 16,
-      fontFamily: 'JosefinSansRegular',
-  },
-  inputLabel: {
-      color: 'red',
-  },
-  errorText: {
-      color: '#FF0000',
-      textAlign: 'center',
-      fontSize: 12,
-  },
-  typeButtonText: {
-      color: '#808080',
-      fontSize: 16,
-  },
-  typeButton: {
-      backgroundColor: 'white',
-      width: '80%',
-      padding: 12,
-      margin: 10,
-      borderRadius: 10,
-      justifyContent: 'center',
-      alignItems: 'center',
-  },
-  modalBackground: {
-      shadowOpacity: 10,
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-  },
-  modalContent: {
-      backgroundColor: '#5050B2',
-      padding: 20,
-      borderRadius: 10,
-      width: '80%',
-  },
-});
+
 
 export default NewHotSpot;

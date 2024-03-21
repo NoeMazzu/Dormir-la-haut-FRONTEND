@@ -9,7 +9,6 @@ import { setPOIs } from '../redux/slices/poi';
 import MapView from 'react-native-map-clustering';
 
 export default function MapScreen({ navigation, route }) {
-  
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.user.value);
 	const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +21,6 @@ export default function MapScreen({ navigation, route }) {
   //newState to rerender with route
     // const [routeState, setRouteState] = useState();
     // route.params && setRouteState(preroute => route.params);
-    // console.log('[ROUTEPARAMS STATE]:', routeState)
 
   useEffect(() => {
     if (!user?.token) {
@@ -93,12 +91,6 @@ export default function MapScreen({ navigation, route }) {
 		latitudeDelta: 2,
 		longitudeDelta: 2,
 	};
-
-  const hotSpotFromPhotosScreen = {
-  }
-
-  console.log('[ROUTE.PARAMS',route.params)
-
 
   return (
     <View style={{ flex: 1 }}>

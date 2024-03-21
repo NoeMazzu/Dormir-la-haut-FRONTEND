@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   ScrollView,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
 import LittleNews from "../components/LittleNews";
 import ModalNews from "../components/ModalNews";
 import { useSelector } from "react-redux";
+import { styles } from '../styles/screens/NewsScreen.style'
 
 
 export default function NewsScreen  ({ navigation })  {
@@ -87,22 +87,3 @@ export default function NewsScreen  ({ navigation })  {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  filter: {
-    backgroundColor: "#161D46",
-    flex: 1,
-    width: "100%",
-    paddingTop: 40,
-  },
-  title: {
-    color: "#ffffff",
-    fontSize: 45,
-    marginLeft: 15,
-    fontFamily: 'JosefinSansRegular',
-  },
-  scrollView: {
-    flex: 1,
-    marginTop: 10,
-  },
-});
