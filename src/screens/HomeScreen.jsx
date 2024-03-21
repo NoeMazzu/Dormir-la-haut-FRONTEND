@@ -13,7 +13,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import { faCircleChevronRight } from '@fortawesome/free-solid-svg-icons';
 import Slider from '../components/Slider';
 import { purgePersistor } from '../redux/slices/poi';
-import { styles } from '../styles/screens/HomeScreen.style'
+import { styles } from '../styles/screens/HomeScreen.style';
+
 export default function HomeScreen({ navigation }) {
 	const dispatch = useDispatch();
 	// dispatch(setLogout())
@@ -135,25 +136,17 @@ export default function HomeScreen({ navigation }) {
 						style={styles.meteoButton}
 						onPress={() => {
 							navigation.navigate('MeteoScreen');
-						}}
-					>
+						}}>
 						<View
 							style={{
 								flexDirection: 'row',
 								justifyContent: 'space-between',
-								alignItems: 'center',
-							}}
-						>
+								alignItems: 'center',}}>
 							<Text style={styles.textTitle}>METEO</Text>
 							<FontAwesome name='arrow-circle-right' color='#fff' size={20} />
 						</View>
 
 						<View style={styles.meteosInfos}>{meteoHome}</View>
-						<FontAwesomeIcon
-							icon={faCircleChevronRight}
-							color='#fff'
-							size={20}
-						/>
 					</TouchableOpacity>
 				</View>
 				<View style={styles.highRigtContainers}>

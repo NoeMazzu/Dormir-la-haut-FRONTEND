@@ -86,7 +86,7 @@ export const styles = StyleSheet.create({
   },
   meteosInfos: {
     // height: "70%",
-    gap: 10,
+    gap: 5,
   },
   mapTitle : {
   position: 'absolute', 
