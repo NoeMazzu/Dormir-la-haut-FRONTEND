@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import Slider from "../components/Slider";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons/faEllipsis";
 

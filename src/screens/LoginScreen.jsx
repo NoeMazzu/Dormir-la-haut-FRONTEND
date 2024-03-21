@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { setToken, setUsername } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
-const LoginScreen = ({ navigation }) => {
+export default function LoginScreen  ({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
@@ -189,5 +189,3 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
-export default LoginScreen;

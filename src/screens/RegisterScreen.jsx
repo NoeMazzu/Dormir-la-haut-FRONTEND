@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { setLocation, setMassif, setToken, setUsername } from "../redux/slices/user";
 import { useSelector } from "react-redux";
 
-const RegisterScreen = ({ navigation }) => {
+export default function RegisterScreen  ({ navigation }) {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
@@ -156,6 +156,7 @@ const RegisterScreen = ({ navigation }) => {
     </ImageBackground>
   );
 };
+
 const styles = StyleSheet.create({
   errorText: {
     color: "#FF0000",
@@ -231,6 +232,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'JosefinSansRegular',
   },
-});
+}); 
 
-export default RegisterScreen;
+

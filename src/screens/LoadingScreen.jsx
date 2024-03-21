@@ -8,7 +8,9 @@ import {
 	Image,
 } from 'react-native';
 import { useSelector } from 'react-redux';
-const LoadingScreen = ({ navigation }) => {
+
+export default function LoadingScreen ({ navigation }) {
+
 	const [imageLoaded, setImageLoaded] = useState(false);
 
 	const user = useSelector(state => state.user.value);
@@ -124,5 +126,3 @@ const styles = StyleSheet.create({
 		width: '50%',
 	},
 });
-
-export default LoadingScreen;

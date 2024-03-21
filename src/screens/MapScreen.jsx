@@ -2,14 +2,14 @@ import { View, Modal } from 'react-native';
 import { Marker } from 'react-native-maps';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import poi, { loadBookmarks } from '../redux/slices/poi';
+import { loadBookmarks } from '../redux/slices/poi';
 import HotSpot from '../components/HotSpot';
 import NewHotSpot from '../components/NewHotSpot ';
 import { setPOIs } from '../redux/slices/poi';
-import { width } from '@fortawesome/free-solid-svg-icons/faEllipsis';
 import MapView from 'react-native-map-clustering';
 
 export default function MapScreen({ navigation, route }) {
+  
 	const dispatch = useDispatch();
 	const user = useSelector(state => state.user.value);
 	const [isVisible, setIsVisible] = useState(false);
@@ -51,7 +51,6 @@ export default function MapScreen({ navigation, route }) {
           dispatch(loadBookmarks(POIS_names));
         }
       });
-      console.log('[USEEFFECT MAPSCREEN LOAD')
   }, [countAddPoi]);
 
 	const handleMarkerPress = marker => {

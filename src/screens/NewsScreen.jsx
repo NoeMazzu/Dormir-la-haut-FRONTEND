@@ -10,7 +10,7 @@ import ModalNews from "../components/ModalNews";
 import { useSelector } from "react-redux";
 
 
-const NewsScreen = ({ navigation }) => {
+export default function NewsScreen  ({ navigation })  {
   const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
@@ -106,5 +106,3 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-
-export default NewsScreen;

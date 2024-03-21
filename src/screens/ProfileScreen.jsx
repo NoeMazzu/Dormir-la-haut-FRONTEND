@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { Tab, TabView } from '@rneui/themed';
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { setLogout } from '../redux/slices/user'; // BOUTON LOGOUT
+import { setLogout } from '../redux/slices/user';
 import FavCard from '../components/FavCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -20,7 +20,7 @@ export default function ProfileScreen({ navigation }) {
 	const dispatch = useDispatch();
 	const [poisFav, setPoisFav] = useState([]);
 	const [index, setIndex] = React.useState(0); //Utilisé pour la gestion du TAB
-	const [logoutModalVisible, setLogoutModalVisible] = useState(false); //BOUTONLOGOUT
+	const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 	const [checklistData, setChecklistData] = useState([]);
 	const [selectedItem,setSelectedItem] = useState();
 
@@ -55,7 +55,6 @@ export default function ProfileScreen({ navigation }) {
 						`https://dormir-la-haut-backend.vercel.app/poi/listOfPoi?poisFav=${firstDataStr}`,
 					);
 					const secondData = await secondResponse.json();
-					// console.log('[SECONDDATA API:',secondData[0].photos[0])
 
 					setPoisFav(prevPoisFav => [...secondData]);
 				} else {
@@ -271,7 +270,6 @@ const styles = StyleSheet.create({
 	},
 	centeredView: {
 		flex: 1,
-		// justifyContent: "center",
 		alignItems: 'center',
 		paddingTop: 88,
 		backgroundColor: 'rgba(0,0,0,0.5)',

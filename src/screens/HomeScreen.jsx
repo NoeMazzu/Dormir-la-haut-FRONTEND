@@ -2,15 +2,12 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
   TouchableOpacity,
   Image,
   SafeAreaView 
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
-import { setPOIs } from "../redux/slices/poi";
-import { setLogout } from "../redux/slices/user";
 import { useState, useEffect } from "react";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
