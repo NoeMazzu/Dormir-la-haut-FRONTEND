@@ -40,6 +40,9 @@ export default function LoadingScreen ({ navigation }) {
 							source={require('../assets/img/logoDormirLaHaut.png')}
 						/>
 					</View>
+					<Text style={styles.infoText}>
+  Veuillez créer un compte ou vous connecter pour accéder à l'application
+</Text>
 					<View style={styles.buttonContainer} >
 						<TouchableOpacity
 							style={styles.signup}
@@ -114,7 +117,8 @@ const styles = StyleSheet.create({
     marginBottom: "60%",
     marginTop: "15%",
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
+	marginTop: '0%', // Ajuster cette valeur selon vos besoins
   },
 	logo: {
 		height: '70%',
@@ -125,4 +129,11 @@ const styles = StyleSheet.create({
 		height: '50%',
 		width: '50%',
 	},
+	infoText: {
+		color: '#ffffff',
+		fontSize: 16,
+		textAlign: 'center',
+		marginVertical: 10, // Ajoutez une marge pour l'espace vertical
+		fontFamily: 'JosefinSansRegular',
+	  },
 });
